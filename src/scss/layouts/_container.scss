@@ -1,0 +1,21 @@
+.container {
+
+    @media (min-width: $screen-xxl) {
+
+        margin-right: auto;
+        margin-left: auto;
+        max-width: $screen-xxl;
+    }
+
+    @media (min-width: $screen-sm) {
+
+        padding-left: 21px;
+        padding-right: 21px;
+    }
+
+    @media (max-width: $screen-sm) {
+
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}

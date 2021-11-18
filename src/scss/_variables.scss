@@ -1,8 +1,40 @@
-$black: #232323;
-$background: #ffdf8c;
-$gray-line: #f6f6f6;
-$orange: #fe5f1e;
+//Цвета
 
-$container-width: 90%;
+$white:                #fff;
+$gray--lighten:        #F2F2FB;
+$gray--light:          #CBCCD2;
+$gray:                 #B7B7B7;
+$gray--dark:           #595858;
+$gray--darken:         #4f5d73;
+$black:                #4F5568;
 
-$duration: 0.15s;
+$color-main:                  #0AC780;
+$color-secondary:             #29383B;
+$color-main-gray:             #457ba1;
+$color-success:               hsl(120, 39%, 54%);
+$color-danger:                #cc0000;
+$color-warning:               hsl(35, 84%, 62%);
+
+
+
+// Семантические цвета
+
+$text-color:                  $black;
+$body-bg:                     $white;
+
+// Базовая типографика
+
+$font-size:                   2rem;
+
+$line-height:                 1.5;
+
+// $font-family:                'Roboto', -apple-system, BlinkMacSystemFont, 'Roboto', 'Ubuntu', 'Droid Sans', 'Helvetica Neue', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+
+
+// Ширины
+$screen-sm:                   480px;
+$screen-md:                   768px;
+$screen-lg:                   992px;
+$screen-xl:                   1160px;
+$screen-xxl:                  1596px;
