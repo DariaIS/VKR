@@ -13,7 +13,7 @@
         padding-right: 21px;
     }
 
-    @media (max-width: $screen-sm) {
+    @media (max-width: ($screen-sm - 1)) {
 
         padding-left: 15px;
         padding-right: 15px;
