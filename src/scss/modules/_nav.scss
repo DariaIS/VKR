@@ -34,8 +34,11 @@
     }
 }
 
-.nav-list {
-    position: relative;
+.nav__list {
+    
+    @media (min-width: $screen-lg) {
+        display: flex;
+    }
 }
 
 .nav__item {
@@ -61,10 +64,8 @@
     }
 
     @media (min-width: $screen-lg) {
-        display: flex;
-        align-items: center;
-        text-align: center;
-        color: $text-color;
+        display: block;
+        font-weight: 500;
     }
 }
 
@@ -72,8 +73,13 @@
 
     @media (min-width: $screen-lg) {
 
+        color: $color-main;
+        display: block;
+        padding: 2.6rem;
+
         &:hover {
             background-color: $color-main;
+            color: $white;
         }
     }
 }

@@ -3,10 +3,11 @@ import React from "react";
 function HeaderSecurity() {
     return (
         <header className="header">
-            <div className="container">
+            <div className="header__content container">
                 <h1 className="header__logo">
                     <a className="header__logo-link" href="/">
-                        Пропускная система
+                        <span>Пропускная</span>
+                        <span>система</span>
                     </a>
                 </h1>
                 <div className="header__nav">
