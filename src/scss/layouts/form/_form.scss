@@ -1,0 +1,19 @@
+.form__item {
+    display: block;
+
+    &:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+
+    &--row {
+
+        @media (min-width: $screen-lg) {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+    &--center {
+        text-align: center;
+    }
+}

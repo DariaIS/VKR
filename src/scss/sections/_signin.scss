@@ -1,0 +1,29 @@
+.signin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media (min-width: $screen-lg) {
+        padding: 20rem 0;
+    }
+}
+
+.signin__logo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: $color-main;
+    font-weight: bold;
+    line-height: 1.1;
+    text-transform: uppercase;
+
+    @media (min-width: $screen-lg) {
+        font-size: 6rem;
+        margin-bottom: 3rem;
+    }
+}
+
+.signin__form {
+    display: flex;
+    flex-direction: column;
+}

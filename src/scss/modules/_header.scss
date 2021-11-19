@@ -1,9 +1,6 @@
-@import '../variables';
-
 .header {
 
     @media (min-width: $screen-lg) {
-
         border-bottom: 1px solid $color-main;
     }
 }
@@ -20,8 +17,11 @@
     text-align: center;
     color: $color-main;
     font-size: 3.1rem;
+    font-weight: bold;
     line-height: 1.1;
     padding: 0.7rem 0;
+    text-transform: uppercase;
+
 }
 
 .header__nav-trigger {

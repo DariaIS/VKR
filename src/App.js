@@ -3,7 +3,7 @@ import React from "react";
 // import logoSvg from "./assets/img/pizza-logo.svg";
 
 import { HeaderSecurity } from './components';
-import { HomeSecurity } from './pages';
+import { HomeSecurity, SignIn } from './pages';
 import { Route, Routes } from 'react-router-dom';
 
 
@@ -13,10 +13,11 @@ import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <div className="wrapper">
-        <HeaderSecurity />
-            <div className="content">
+        {/* <HeaderSecurity /> */}
+        <div className="content">
             <Routes>
-                <Route path="/" component={HomeSecurity} exact />
+                <Route path="/" element={<SignIn/>} exact />
+                <Route path="/homeSecurity" element={<HomeSecurity/>} exact />
             </Routes>
             </div>
           {/* <Footer /> */}

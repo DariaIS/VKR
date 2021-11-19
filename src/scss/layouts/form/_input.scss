@@ -1,0 +1,121 @@
+.input {
+    background: $white;
+    border: none;
+    font-family: inherit;
+    transition: 0.3s;
+
+    &--small {
+        padding: 1.6rem 1.5rem;
+        border-radius: 10px;
+
+        @media (min-width: $screen-lg) {
+            width: 366px;
+            font-size: 20px;
+        }
+
+        @media (max-width: ($screen-lg - 1)) {
+            width: 200px;
+            font-size: 12px;
+        }
+    }
+
+    &--default {
+        border: 1px solid $gray;
+        color: $black;
+
+        &:focus {
+            border-color: $color-main;
+            outline: none;
+        }
+
+        &::placeholder {
+            color: $gray;
+        }
+    }
+
+    &--gray-light {
+        border: 1px solid $gray--light;
+        color: $black;
+
+        &:focus {
+            border-color: $color-main;
+            box-shadow: 5px 5px 10px rgba(13, 19, 184, 0.31);
+            outline: none;
+        }
+
+        &::placeholder {
+            color: $gray--light;
+        }
+    }
+
+    &--error {
+        border: 1px solid $color-danger;
+
+        &:focus {
+            border: 1px solid $color-danger;
+        }
+    }
+
+    &--success {
+        border: 1px solid $color-success;
+
+        &:focus {
+            border: 1px solid $color-success;
+        }
+    }
+
+    &--search {
+        border: 1px solid $gray--light;
+        color: $black;
+        border-radius: 25px;
+
+        &:focus {
+            border-color: $color-main;
+            outline: none;
+        }
+
+        &::placeholder {
+            color: $gray--light;
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    &--m {
+        @media (min-width: $screen-md) {
+            width: 700px;
+        }
+    }
+}
+
+.input__submit {
+    border: 1px solid $color-main;
+    padding: 1.6rem 1.5rem;
+    border-radius: 10px;
+    background-color: $color-main;
+    color: $white;
+    font-family: $font-family;
+    transition: 0.3s;
+
+    @media (min-width: $screen-lg) {
+        font-size: 20px;
+    }
+
+    @media (max-width: ($screen-lg - 1)) {
+        font-size: 12px;
+    }
+
+    &:hover {
+        background-color: $white;
+        color: $color-main;
+    }
+
+    &:focus {
+        border-color: $color-main;
+        outline: none;
+    }
+
+}
