@@ -7,8 +7,27 @@ import { HomeSecurity, SignIn } from './pages';
 import { Route, Routes } from 'react-router-dom';
 
 
-// import Footer from './components/Footer';
-// import Button from './components/Button';
+import Footer from './components/Footer';
+import Button from './components/Button';
+
+const mysql = require('mysql');
+
+const conn = mysql.createConnection({
+  host: "127.0.0.1", 
+  port: '3306',
+  user: 'root',
+  database: "vkr",
+});
+
+conn.connect(function (err) {
+  if (err) {
+      return console.error("Ошибка: " + err.message);
+  }
+  else {
+      console.log("Подключение к серверу MySQL успешно установлено");
+  }
+});
+
 
 function App() {
   return (
