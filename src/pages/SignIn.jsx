@@ -1,9 +1,19 @@
 import React, { useState } from "react";
+import Axios from "axios";
 
 function SignIn() {
 
     const [usernameReg, setUsernameReg] = useState('');
     const [passwordReg, setPasswordReg] = useState('');
+
+    const register = () => {
+        Axios.post('http://localhost:3001/register', {
+            username: usernameReg, 
+            password: passwordReg
+        }).then((response) => {
+            console.log(response);
+        });
+    };
 
     return (
         <div className="signin container">
@@ -26,7 +36,7 @@ function SignIn() {
                         }}
                     />
                 </label>
-                <input className="input__submit" type="submit" value="Войти" />
+                <input className="input__submit" type="submit" value="Войти" onClick={register}/>
             </form>
         </div>
     );
