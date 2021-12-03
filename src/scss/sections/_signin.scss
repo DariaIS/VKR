@@ -4,7 +4,8 @@
     align-items: center;
 
     @media (min-width: $screen-lg) {
-        padding: 20rem 0;
+        padding-top: 15rem;
+        padding-bottom: 15rem;
     }
 }
 
@@ -23,7 +24,32 @@
     }
 }
 
+.signin__forms {
+
+    @media (min-width: $screen-lg) {
+        display: flex;
+    }
+}
+
 .signin__form {
     display: flex;
     flex-direction: column;
+    text-align: center;
+
+    @media (min-width: $screen-lg) {
+        &:not(:last-child) {
+            margin-right: 10rem;
+        }
+    }
+}
+
+.signin__button {
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
+
+.signin__status {
+    color: $color-danger;
+    font-size: 1.7rem;
 }
