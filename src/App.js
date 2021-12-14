@@ -1,7 +1,7 @@
 import React from "react";
 
 import { HeaderSecurity } from './components';
-import { HomeSecurity, SignIn } from './pages';
+import { HomeSecurity, SignIn, Main } from './pages';
 import { Route, Routes } from 'react-router-dom';
 
 import Footer from './components/Footer';
@@ -14,7 +14,7 @@ function App() {
         <div className="content">
             <Routes>
                 <Route path="/" element={<SignIn/>} exact />
-                <Route path="/homeSecurity" element={<HomeSecurity/>} exact />
+                <Route path="/main" element={<Main/>} exact />
             </Routes>
             </div>
           {/* <Footer /> */}
