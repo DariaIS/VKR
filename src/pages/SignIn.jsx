@@ -3,22 +3,22 @@ import Axios from "axios";
 
 function SignIn() {
 
-    const [usernameReg, setUsernameReg] = useState('');
-    const [passwordReg, setPasswordReg] = useState('');
+    // const [usernameReg, setUsernameReg] = useState('');
+    // const [passwordReg, setPasswordReg] = useState('');
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const [loginStatus, setLoginStatus] = useState('');
 
-    const register = () => {
-        Axios.post('http://localhost:3001/register', {
-            username: usernameReg, 
-            password: passwordReg
-        }).then((response) => {
-            console.log(response);
-        });
-    };
+    // const register = () => {
+    //     Axios.post('http://localhost:3001/register', {
+    //         username: usernameReg, 
+    //         password: passwordReg
+    //     }).then((response) => {
+    //         console.log(response);
+    //     });
+    // };
 
     const login = () => {
         Axios.post('http://localhost:3001/login', {
@@ -38,7 +38,7 @@ function SignIn() {
                 <span>Система</span>
             </div>
             <div className="signin__forms">
-                <form className="signin__form form">
+                {/* <form className="signin__form form">
                     <label className="form__item">
                         <input className="input input--small input--default" placeholder="Имя пользователя" type="text" name="name" 
                             onChange={(e) => {
@@ -54,7 +54,7 @@ function SignIn() {
                         />
                     </label>
                     <button type='button' className="button" onClick={register}>Зарегистрироваться</button>
-                </form>
+                </form> */}
                 <form className="signin__form form">
                     <label className="form__item">
                         <input className="input input--small input--default" placeholder="Имя пользователя" type="text" name="name"
