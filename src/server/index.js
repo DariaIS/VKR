@@ -1,13 +1,10 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
-const authRouter = require('./authRouter')
 
 const app = express();
 
-app.use(express.json());
-app.use('/auth', authRouter);
-// app.use(cors());
+app.use(express.json());app.use(cors());
 
 const db = mysql.createConnection({
     host: "127.0.0.1", 
@@ -21,7 +18,7 @@ db.connect(function (err) {
         return console.error("Ошибка: " + err.message);
     }
     else {
-        console.log("Подключение к серверу MySQL успешно установлено");
+        console.log("CONNECTED TO mySQL SERVER SUCCESSFULLY");
     }
 });
 

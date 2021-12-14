@@ -1,7 +1,4 @@
 import React from "react";
-import Axios from "axios";
-
-// import logoSvg from "./assets/img/pizza-logo.svg";
 
 import { HeaderSecurity } from './components';
 import { HomeSecurity, SignIn } from './pages';

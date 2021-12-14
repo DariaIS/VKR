@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
 function SignIn() {
@@ -10,6 +10,8 @@ function SignIn() {
     const [password, setPassword] = useState('');
 
     const [loginStatus, setLoginStatus] = useState('');
+
+    Axios.defaults.withCredentials = true;
 
     // const register = () => {
     //     Axios.post('http://localhost:3001/register', {
@@ -30,6 +32,14 @@ function SignIn() {
             else setLoginStatus(response.data[0].username);
         });
     };
+
+    useEffect(() => {
+        Axios.post('http://localhost:3001/login').then((response) => {
+            if (response.data.loggedIn = true) {
+                setLoginStatus(response.data.user[0].username);
+            }
+        });
+    }, []);
 
     return (
         <div className="signin container">
