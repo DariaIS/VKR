@@ -1,0 +1,17 @@
+.section {
+
+    @media (min-width: $screen-xl) {
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+    }
+}
+
+.title {
+    text-align: center;
+    font-weight: 400;
+    color: $black;
+
+    @media (min-width: $screen-xl) {
+        
+    }
+}

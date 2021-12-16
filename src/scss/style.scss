@@ -4,6 +4,7 @@
 @import 'layouts/container';
 @import 'layouts/base';
 @import 'layouts/button';
+@import 'layouts/section';
 
 @import 'layouts/form/form';
 @import 'layouts/form/input';
@@ -13,4 +14,7 @@
 @import 'modules/footer';
 
 @import 'sections/signin';
+@import 'sections/admin';
+@import 'sections/analyst';
+@import 'sections/security';
 

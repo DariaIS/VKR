@@ -1,0 +1,12 @@
+.admin__form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.admin__button {
+    text-align: center;
+}
+
+.admin__item {
+    text-align: center;
+}

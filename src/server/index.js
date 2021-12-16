@@ -48,15 +48,71 @@ db.connect(function (err) {
     }
 });
 
-app.post("/register", (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
+app.post("/add", (req, res) => {
+    const plate = req.body.plate;
+    const brand = req.body.brand;
+    const name = req.body.name;
+    const chair = req.body.chair;
+    const gates = req.body.gates;
+    const space = req.body.space;
+    
+    let id_person;
+
+    function setValue(someVar, value) {
+        someVar = value;
+    }
+
 
     db.query(
-        "INSERT INTO users (username, password) VALUES (?, ?)",
-        [username, password], (err, result) => {
-            console.log(err);
-    })
+        "SELECT id_person FROM person WHERE full_name=? AND chair=?",
+        [name, chair], (err, result) => {
+            if (result.length === 0){
+                db.query(
+                    "INSERT INTO person (full_name, chair) VALUES (?, ?)",
+                    [name, chair], (err, result) => {
+                        id_person = result.insertId;
+                });
+            }
+            else id_person = result[0].id_person;
+        }
+    );
+    
+    db.query(
+        "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
+        [space], (err, result) => {
+            console.log(id_person);
+
+            if  (result.length === 0){
+                db.query(
+                    "INSERT INTO parking_space (parking_space_number, is_free) VALUES (?, true)",
+                    [space], (err, result) => {
+                        console.log(id_person);
+                });
+            }
+        }
+    );
+
+    // db.query(
+    //     "SELECT id_car FROM car WHERE license_plate=?",
+    //     [plate], (err, result) => {
+    //         console.log(result);
+    //         if  (result.length === 0){
+    //             db.query(
+    //                 "INSERT INTO car (id_car, id_person, id_parking_space, car_brand) VALUES (?, ?, ?, ?)",
+    //                 [name, chair], (err, result) => {
+    //                     console.log(err);
+    //             });
+    //         }
+    //     }
+    // );
+
+
+
+    // db.query(
+    //     "INSERT INTO car (id_person, car_brand, license_plate) VALUES (?, ?, ?)",
+    //     [name, chair], (err, result) => {
+    //         console.log(err);
+    // });
 });
 
 app.get('/login', (req, res) => {
