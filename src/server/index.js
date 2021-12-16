@@ -3,7 +3,6 @@ const mysql = require('mysql');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
 const session = require('express-session');
 
 
@@ -85,6 +84,12 @@ app.post('/login', (req, res) => {
                 res.send( { message: 'Неверный логин или пароль!' });
         }
     );
+});
+
+app.get('/logout', (req, res) => {
+    if (req.session.user) {
+        res.send({ loggedIn: false, user: req.session.user });
+    }
 });
 
 app.listen(3001, () => {

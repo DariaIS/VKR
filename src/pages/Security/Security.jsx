@@ -1,6 +1,7 @@
 import React from "react";
 
-function HomeSecurity() {
+function Security() {
+
     return (
         <div>
 
@@ -8,4 +9,4 @@ function HomeSecurity() {
     );
 }
 
-export default HomeSecurity;
+export default Security;

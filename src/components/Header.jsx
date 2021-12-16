@@ -1,11 +1,21 @@
 import React from "react";
+import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function HeaderSecurity() {
+function Header() {
+
+    let navigate = useNavigate();
+
+    const logOut = () => {
+        console.log(navigate)
+        // sessionStorage.data.loggedIn = false;
+    };
+
     return (
         <header className="header">
             <div className="header__content container">
                 <h1 className="header__logo">
-                    <a className="header__logo-link" href="/">
+                    <a className="header__logo-link" href="/home">
                         <span>Пропускная</span>
                         <span>система</span>
                     </a>
@@ -14,14 +24,14 @@ function HeaderSecurity() {
                     <nav className="nav">
                         <ul className="nav__list">
                             <li className="nav__item">
-                                <a href="/#" className="nav__link">Экстренное открытие</a>
-                            </li>
-                            <li className="nav__item">
                                 <a href="/#" className="nav__link">Поддержка </a>
                             </li>
                             <li className="nav__item">
                                 <a href="/#" className="nav__link">Контакты</a>
-                                </li>
+                            </li>
+                            <li className="nav__item">
+                                <a href="/" className="nav__link" onClick={logOut}>Выйти</a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -30,4 +40,4 @@ function HeaderSecurity() {
     );
 }
 
-export default HeaderSecurity;
+export default Header;
