@@ -7,7 +7,9 @@ function Header() {
     let navigate = useNavigate();
 
     const logOut = () => {
-        console.log(navigate)
+        Axios.post('http://localhost:3001/logout').then((response) => {
+            console.log(response);
+        });
         // sessionStorage.data.loggedIn = false;
     };
 

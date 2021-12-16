@@ -26,7 +26,7 @@ function SignIn() {
 
     useEffect(() => {
         Axios.get('http://localhost:3001/login').then((response) => {
-            // console.log(response);
+            console.log(response);
             if (response.data.loggedIn === true) {
                 return navigate('/home');
             }

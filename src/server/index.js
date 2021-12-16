@@ -86,10 +86,10 @@ app.post('/login', (req, res) => {
     );
 });
 
-app.get('/logout', (req, res) => {
-    if (req.session.user) {
-        res.send({ loggedIn: false, user: req.session.user });
-    }
+app.post('/logout', (req, res) => {
+    req.session.loggedIn = false;
+    delete req.session.user;
+    res.send({ loggedIn: false, user: req.session.user });
 });
 
 app.listen(3001, () => {
