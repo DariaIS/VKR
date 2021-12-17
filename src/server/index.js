@@ -68,54 +68,99 @@ app.post("/add", (req, res) => {
         
         let idPerson, idParkingSpace, idCar;
 
-        db.query(
-            "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
-            [space], (err, result) => {
-
-                if (result.length === 0){
+            resParkingSpace = () => {
+                return new Promise((resolve, reject) => {
                     db.query(
-                        "INSERT INTO parking_space (parking_space_number, is_free) VALUES (?, true)",
+                        "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
                         [space], (err, result) => {
-                            idParkingSpace = result.insertId;
-                    });
-                } else res.send( { message: 'Данное парковочное место занято!' });
-            }
-        );
-    
-        db.query(
-            "SELECT id_person FROM person WHERE full_name=? AND chair=?",
-            [name, chair], (err, result) => {
 
-                if (result.length === 0){
+                            if (result.length === 0){
+                                db.query(
+                                    "INSERT INTO parking_space (parking_space_number, is_free) VALUES (?, true)",
+                                    [space], (err, result) => {
+                                        idParkingSpace = result.insertId;
+                                });
+                            } else res.send( { message: 'Данное парковочное место занято!' });
+
+                            if(err){
+                                return reject(error);
+                            }
+                            return resolve(result);
+                        }
+                    );
+                });
+            }
+        
+            resPerson = () => {
+                return new Promise((resolve, reject) => {
                     db.query(
-                        "INSERT INTO person (full_name, chair) VALUES (?, ?)",
+                        "SELECT id_person FROM person WHERE full_name=? AND chair=?",
                         [name, chair], (err, result) => {
-                            idPerson = result.insertId;
-                    });
-                }
-                else idPerson = result[0].id_person;
-            }
-        );
+                        console.log(result);
 
-            db.query(
-                "SELECT * FROM car WHERE license_plate=?",
-                [plate], (err, result) => {
-                    console.log(idPerson);
-                    console.log(idParkingSpace);
-                    if (idParkingSpace != undefined)
-                        if  (result.length === 0){
-                            // console.log(idParkingSpace);
-                            // console.log(idPerson);
-                            db.query(
-                                "INSERT INTO car (id_person, id_parking_space, car_brand, license_plate) VALUES (?, ?, ?, ?)",
-                                [idPerson, idParkingSpace, brand, name], (err, result) => {
-                                    console.log(err);
-                                    console.log(result);
-                                    // idCar = result.insertId;
-                            });
-                        } else res.send( { message: 'Машина с веденным номером уже есть в базе данных!' });
-                }
-            );
+                            if (result.length === 0){
+                                db.query(
+                                    "INSERT INTO person (full_name, chair) VALUES (?, ?)",
+                                    [name, chair], (err, result) => {
+                                        idPerson = result.insertId;
+                                });
+                            }
+                            else idPerson = result[0].id_person;
+
+                            if(err){
+                                return reject(error);
+                            }
+                            return resolve(result);
+                        }
+                    );
+                });
+            }
+
+            let resCar = () => {
+                return new Promise((resolve, reject) => {
+                    db.query(
+                        "SELECT * FROM car WHERE license_plate=?",
+                        [plate], (err, result) => {
+                            console.log(idPerson);
+                            console.log(idParkingSpace);
+                            if (idParkingSpace != undefined)
+                                if  (result.length === 0){
+                                    // console.log(idParkingSpace);
+                                    // console.log(idPerson);
+                                    db.query(
+                                        "INSERT INTO car (id_person, id_parking_space, car_brand, license_plate) VALUES (?, ?, ?, ?)",
+                                        [idPerson, idParkingSpace, brand, name], (err, result) => {
+                                            console.log(err);
+                                            console.log(result);
+                                            // idCar = result.insertId;
+                                    });
+                                } else res.send( { message: 'Машина с веденным номером уже есть в базе данных!' });
+                            
+                            if(err){
+                                return reject(error);
+                            }
+                            return resolve(result);
+                        }
+                    );
+                });
+            }
+
+        async function sequentialQueries() {
+ 
+            try {
+                await resParkingSpace();
+                await resPerson();
+                await resCar();
+                
+                // here you can do something with the three results
+                
+            } catch(error){
+                console.log(error)
+            }
+        }
+
+        sequentialQueries();
+
     }
 });
 
