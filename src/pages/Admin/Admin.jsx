@@ -11,6 +11,9 @@ function Admin() {
     const [gatesAdd, setGatesAdd] = useState('');
     const [spaceAdd, setSpaceAdd] = useState('');
 
+    const [addStatus, setAddStatus] = useState('');
+
+
     const add = () => {
         Axios.post('http://localhost:3001/add', {
             plate: plateAdd, 
@@ -19,61 +22,64 @@ function Admin() {
             chair: chairAdd,
             gates: gatesAdd,
             space: spaceAdd
-        }).then((response) => {
-            console.log(response);
+        }).then((response) => {            
+            if (response.data.message)
+                setAddStatus(response.data.message);
         });
     };
 
     return (
         <div className="admin section container">
-            <h1 className="title">Вы вошли как администратор</h1>
+            <span className="admin__title title title--medium">Вы вошли как администратор</span>
             <form className="form">
-                <div className='admin__form'>
-                    <label className="admin__item form__item">
-                        <input className="input input--small input--default" placeholder="Номер машины" type="text" name="name"
+                <span className="admin__title title title--small">Добавление новой записи</span>
+                <div className='admin__forms'>
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Номер машины" type="text" name="plate"
                             onChange={(e) => {
                                 setPlateAdd(e.target.value);
                             }}
                         />
                     </label>
-                    <label className="admin__item form__item">
-                        <input className="input input--small input--default" placeholder="Марка машины" type="text" name="password"
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Марка машины" type="text" name="brand"
                             onChange={(e) => {
                                 setBrandAdd(e.target.value);
                             }}
                         />
                     </label>
-                    <label className="admin__item form__item">
-                        <input className="input input--small input--default" placeholder="ФИО" type="text" name="password"
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="ФИО" type="text" name="fio"
                             onChange={(e) => {
                                 setNameAdd(e.target.value);
                             }}
                         />
                     </label>
-                    <label className="admin__item form__item">
-                        <input className="input input--small input--default" placeholder="Кафедра" type="text" name="password"
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Кафедра" type="text" name="chair"
                             onChange={(e) => {
                                 setChairAdd(e.target.value);
                             }}
                         />
                     </label>
-                    <label className="admin__item form__item">
-                        <input className="input input--small input--default" placeholder="Ворота" type="text" name="password"
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Ворота" type="text" name="gates"
                             onChange={(e) => {
                                 setGatesAdd(e.target.value);
                             }}
                         />
                     </label>
-                    <label className="admin__item form__item">
-                        <input className="input input--small input--default" placeholder="Парковочное место" type="text" name="password"
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Парковочное место" type="text" name="space"
                             onChange={(e) => {
                                 setSpaceAdd(e.target.value);
                             }}
                         />
                     </label>
                 </div>
-                <div className="admin__button">
-                    <button type='button' className="button signin__button" onClick={add}>Войти</button>
+                <div className="admin__add-result">
+                    <button type='button' className="button signin__button" onClick={add}>Добавить запись</button>
+                    <span className="admin__status">{addStatus}</span>
                 </div>
             </form>
         </div>

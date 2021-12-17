@@ -44,75 +44,79 @@ db.connect(function (err) {
         return console.error("Ошибка: " + err.message);
     }
     else {
-        console.log("CONNECTED TO mySQL SERVER SUCCESSFULLY");
+        console.log("CONNECTED TO mySQL SERVER SUCCESSFULLY \n");
     }
 });
 
 app.post("/add", (req, res) => {
-    const plate = req.body.plate;
-    const brand = req.body.brand;
-    const name = req.body.name;
-    const chair = req.body.chair;
-    const gates = req.body.gates;
-    const space = req.body.space;
-    
-    let id_person;
+    // console.log(req.body.plate);
+    // console.log(req.body.brand);
+    // console.log(req.body.name);
+    // console.log(req.body.chair);
+    // console.log(req.body.space);
 
-    function setValue(someVar, value) {
-        someVar = value;
+
+    if (req.body.plate === '' && req.body.brand === '' && req.body.name === '' && req.body.chair === '' && req.body.space === '')
+        res.send( { message: 'Не все поля заполнены!' });
+    else {
+        const plate = req.body.plate;
+        const brand = req.body.brand;
+        const name = req.body.name;
+        const chair = req.body.chair;
+        const gates = req.body.gates;
+        const space = req.body.space;
+        
+        let idPerson, idParkingSpace, idCar;
+
+        db.query(
+            "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
+            [space], (err, result) => {
+
+                if (result.length === 0){
+                    db.query(
+                        "INSERT INTO parking_space (parking_space_number, is_free) VALUES (?, true)",
+                        [space], (err, result) => {
+                            idParkingSpace = result.insertId;
+                    });
+                } else res.send( { message: 'Данное парковочное место занято!' });
+            }
+        );
+    
+        db.query(
+            "SELECT id_person FROM person WHERE full_name=? AND chair=?",
+            [name, chair], (err, result) => {
+
+                if (result.length === 0){
+                    db.query(
+                        "INSERT INTO person (full_name, chair) VALUES (?, ?)",
+                        [name, chair], (err, result) => {
+                            idPerson = result.insertId;
+                    });
+                }
+                else idPerson = result[0].id_person;
+            }
+        );
+
+            db.query(
+                "SELECT * FROM car WHERE license_plate=?",
+                [plate], (err, result) => {
+                    console.log(idPerson);
+                    console.log(idParkingSpace);
+                    if (idParkingSpace != undefined)
+                        if  (result.length === 0){
+                            // console.log(idParkingSpace);
+                            // console.log(idPerson);
+                            db.query(
+                                "INSERT INTO car (id_person, id_parking_space, car_brand, license_plate) VALUES (?, ?, ?, ?)",
+                                [idPerson, idParkingSpace, brand, name], (err, result) => {
+                                    console.log(err);
+                                    console.log(result);
+                                    // idCar = result.insertId;
+                            });
+                        } else res.send( { message: 'Машина с веденным номером уже есть в базе данных!' });
+                }
+            );
     }
-
-
-    db.query(
-        "SELECT id_person FROM person WHERE full_name=? AND chair=?",
-        [name, chair], (err, result) => {
-            if (result.length === 0){
-                db.query(
-                    "INSERT INTO person (full_name, chair) VALUES (?, ?)",
-                    [name, chair], (err, result) => {
-                        id_person = result.insertId;
-                });
-            }
-            else id_person = result[0].id_person;
-        }
-    );
-    
-    db.query(
-        "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
-        [space], (err, result) => {
-            console.log(id_person);
-
-            if  (result.length === 0){
-                db.query(
-                    "INSERT INTO parking_space (parking_space_number, is_free) VALUES (?, true)",
-                    [space], (err, result) => {
-                        console.log(id_person);
-                });
-            }
-        }
-    );
-
-    // db.query(
-    //     "SELECT id_car FROM car WHERE license_plate=?",
-    //     [plate], (err, result) => {
-    //         console.log(result);
-    //         if  (result.length === 0){
-    //             db.query(
-    //                 "INSERT INTO car (id_car, id_person, id_parking_space, car_brand) VALUES (?, ?, ?, ?)",
-    //                 [name, chair], (err, result) => {
-    //                     console.log(err);
-    //             });
-    //         }
-    //     }
-    // );
-
-
-
-    // db.query(
-    //     "INSERT INTO car (id_person, car_brand, license_plate) VALUES (?, ?, ?)",
-    //     [name, chair], (err, result) => {
-    //         console.log(err);
-    // });
 });
 
 app.get('/login', (req, res) => {

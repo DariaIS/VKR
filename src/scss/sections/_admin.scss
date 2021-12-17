@@ -1,12 +1,28 @@
-.admin__form {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+.admin__title {
+    display: block;
 }
 
-.admin__button {
+.admin__forms {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.admin__add-result {
     text-align: center;
 }
 
-.admin__item {
+.admin__form-item {
     text-align: center;
+
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}
+
+.admin__status {
+    display: block;
+    text-align: center;
+    color: $color-danger;
+    font-size: 2rem;
 }

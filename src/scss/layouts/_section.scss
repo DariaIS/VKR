@@ -1,17 +1,44 @@
 .section {
 
-    @media (min-width: $screen-xl) {
+    @media (min-width: $screen-lg) {
         padding-top: 8rem;
         padding-bottom: 8rem;
     }
 }
 
 .title {
-    text-align: center;
     font-weight: 400;
     color: $black;
 
-    @media (min-width: $screen-xl) {
-        
+    &--small {
+
+        @media (min-width: $screen-lg) {
+            font-size: 4rem;
+        }
+
+        @media (max-width: ($screen-lg - 1)) {
+            font-size: 3rem;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+    }
+
+    &--medium {
+
+        text-align: center;
+
+        @media (min-width: $screen-lg) {
+            font-size: 5rem;
+        }
+
+        @media (max-width: ($screen-lg - 1)) {
+            font-size: 4rem;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 4rem;
+        }
     }
 }

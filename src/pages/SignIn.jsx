@@ -41,14 +41,14 @@ function SignIn() {
             </div>
             <div className="signin__forms">
                 <form className="signin__form form">
-                    <label className="form__item">
+                    <label className="signin__form-item form__item">
                         <input className="input input--small input--default" placeholder="Имя пользователя" type="text" name="name"
                             onChange={(e) => {
                                 setUsername(e.target.value);
                             }}
                         />
                     </label>
-                    <label className="form__item">
+                    <label className="signin__form-item form__item">
                         <input className="input input--small input--default" placeholder="Пароль" type="password" name="password"
                             onChange={(e) => {
                                 setPassword(e.target.value);
