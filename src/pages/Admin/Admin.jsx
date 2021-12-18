@@ -26,9 +26,15 @@ function Admin() {
             space: spaceAdd
         }).then((response) => {            
             if (response.data.message)
-                if (response.data.message === 'Запись успешна добавлена!')
+                if (response.data.message === 'Запись успешна добавлена!') {
                     setAddStatus(response.data.message);
-                else setAddWarningStatus(response.data.message);
+                    setAddWarningStatus('');
+                }
+                else  {
+                    setAddWarningStatus(response.data.message);
+                    setAddStatus('');
+
+                }
         });
     };
 

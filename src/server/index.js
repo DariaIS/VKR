@@ -56,7 +56,7 @@ app.post("/add", (req, res) => {
     // console.log(req.body.space);
 
 
-    if (req.body.plate === '' && req.body.brand === '' && req.body.name === '' && req.body.chair === '' && req.body.space === '')
+    if (req.body.plate === '' || req.body.brand === '' || req.body.name === '' || req.body.chair === '' || req.body.gates === '' || req.body.space === '')
         res.send( { message: 'Не все поля заполнены!' });
     else {
         const plate = req.body.plate;
@@ -66,39 +66,102 @@ app.post("/add", (req, res) => {
         const gates = req.body.gates;
         const space = req.body.space;
         
-        let idPerson, idParkingSpace, idCar;
+        let idPerson, idParkingSpace, idCar, idGates, currentParkingSpace;
+        let warning = false;
 
-        
+        let ifGates = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "SELECT id_gates FROM gates WHERE gates_name=?",
+                    [gates], (err, result) => {
+                        if (result.length === 0) {
+                            res.send( { message: 'Введенной вами проходной не существует!' }); 
+                            warning = true;
+                        }
+                        else idGates = result[0].id_gates;
 
-        let resParkingSpace = () => {
+                        if(err) {
+                            return reject(error);
+                        }
+                        return resolve(result);                                           
+                });
+            });
+        }
+
+        let ifCar = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "SELECT * FROM car WHERE license_plate=?",
+                    [plate], (err, result) => {
+                        if (result.length != 0) {
+                            res.send( { message: 'Машина с веденным номером уже есть в базе данных!' }); 
+                            warning = true;
+                        }
+                        
+                        if(err) {
+                            return reject(error);
+                        }
+                        return resolve(result);                                           
+                });
+            });
+        }
+
+        let ifParkingSpace = () => {
             return new Promise((resolve, reject) => {
                 db.query(
                     "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
                     [space], (err, result) => {
-
-                        if (result.length === 0)
+                        if (result.length === 0) {
                             res.send( { message: 'Введенное вами парковочное место не существует!' });
-                        else {
-                            let currentParkingSpace = result[0].id_person;
+                            warning = true;
+                        }
+                        else currentParkingSpace = result[0].id_parking_space;
+                        
+                        if(err) {
+                            return reject(error);
+                        }
+                        return resolve(result);                                           
+                });
+            });
+        }
 
-                            db.query(
-                                "SELECT * FROM gates WHERE gates_name=?",
-                                [gates], (err, result) => {
-                                    if (result.length === 0)
-                                        res.send( { message: 'Введенной вами проходной не существует!' });                                            
-                            });
+        let resParkingSpace = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "SELECT * FROM car WHERE id_parking_space=?",
+                    [currentParkingSpace], (err, result) => {
+                        
+                        if (result.length != 0) {
+                            res.send( { message: 'Данное парковочное место занято!' });                                            
+                            warning = true;
+                        }
+                        else idParkingSpace = currentParkingSpace;
+                        
+                        if(err) {
+                            return reject(error);
+                        }
+                        return resolve(result);       
+                });
 
-                            db.query(
-                                "SELECT * FROM parking_space WHERE id_parking_space=?",
-                                [currentParkingSpace], (err, result) => {
-                                    console.log(currentParkingSpace);
-                                    console.log(result.length != 0);
                                     
-                                    if (result.length != 0)
-                                        res.send( { message: 'Данное парковочное место занято!' });                                            
-                                    else idParkingSpace = currentParkingSpace;
+            });
+        }
+        
+        let resPerson = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "SELECT id_person FROM person WHERE full_name=? AND chair=?",
+                    [name, chair], (err, result) => {
+                    console.log(result);
+
+                        if (result.length === 0){
+                            db.query(
+                                "INSERT INTO person (full_name, chair) VALUES (?, ?)",
+                                [name, chair], (err, result) => {
+                                    idPerson = result.insertId;
                             });
                         }
+                        else idPerson = result[0].id_person;
 
                         if(err){
                             return reject(error);
@@ -108,69 +171,56 @@ app.post("/add", (req, res) => {
                 );
             });
         }
-        
-        let resPerson = () => {
-            return new Promise((resolve, reject) => {
-                if (idParkingSpace != undefined)
-                    db.query(
-                        "SELECT id_person FROM person WHERE full_name=? AND chair=?",
-                        [name, chair], (err, result) => {
-                        console.log(result);
-
-                            if (result.length === 0){
-                                db.query(
-                                    "INSERT INTO person (full_name, chair) VALUES (?, ?)",
-                                    [name, chair], (err, result) => {
-                                        idPerson = result.insertId;
-                                });
-                            }
-                            else idPerson = result[0].id_person;
-
-                            if(err){
-                                return reject(error);
-                            }
-                            return resolve(result);
-                        }
-                    );
-            });
-        }
 
         let resCar = () => {
             return new Promise((resolve, reject) => {
-                if (idParkingSpace != undefined)
-                    db.query(
-                        "SELECT * FROM car WHERE license_plate=?",
-                        [plate], (err, result) => {
-                            console.log(idPerson);
-                            console.log(idParkingSpace);
-                                if  (result.length === 0){
-                                    db.query(
-                                        "INSERT INTO car (id_person, id_parking_space, car_brand, license_plate, start_date, expiration_date) VALUES (?, ?, ?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 YEAR))",
-                                        [idPerson, idParkingSpace, brand, plate], (err, result) => {
-                                            console.log(err);
-                                            console.log(result);
-                                            res.send( { message: 'Запись успешна добавлена!' });
-                                    });
-                                } else res.send( { message: 'Машина с веденным номером уже есть в базе данных!' });
-                            
-                            if(err){
-                                return reject(error);
-                            }
-                            return resolve(result);
+
+                db.query(
+                    "INSERT INTO car (id_person, id_parking_space, car_brand, license_plate, start_date, expiration_date) VALUES (?, ?, ?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 YEAR))",
+                    [idPerson, idParkingSpace, brand, plate], (err, result) => {
+                        idCar = result.insertId;
+
+                        if(err){
+                            return reject(error);
                         }
-                    );
+                        return resolve(result);
+                });
+            });
+        }
+
+        let resGates = () => {
+            return new Promise((resolve, reject) => {
+
+                db.query(
+                    "INSERT INTO gates_allowed (id_car, id_gates) VALUES (?, ?)",
+                    [idCar, idGates], (err, result) => {
+                        res.send( { message: 'Запись успешна добавлена!' });
+
+                        if(err){
+                            return reject(error);
+                        }
+                        return resolve(result);
+                });
             });
         }
 
         async function sequentialQueries() {
  
             try {
-                await resParkingSpace();
-                await resPerson();
-                await resCar();
-                
-                // here you can do something with the three results
-                
+                await ifGates();
+                if (!warning)
+                    await ifCar();
+                if (!warning)
+                    await ifParkingSpace();
+                if (!warning)
+                    await resParkingSpace();
+                if (!warning)
+                    await resPerson();
+                if (!warning)
+                    await resCar();
+                if (!warning)
+                    await resGates();
+                                
             } catch(error){
                 console.log(error)
             }
