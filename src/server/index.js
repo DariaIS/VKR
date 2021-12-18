@@ -68,31 +68,50 @@ app.post("/add", (req, res) => {
         
         let idPerson, idParkingSpace, idCar;
 
-            resParkingSpace = () => {
-                return new Promise((resolve, reject) => {
-                    db.query(
-                        "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
-                        [space], (err, result) => {
-
-                            if (result.length === 0){
-                                db.query(
-                                    "INSERT INTO parking_space (parking_space_number, is_free) VALUES (?, true)",
-                                    [space], (err, result) => {
-                                        idParkingSpace = result.insertId;
-                                });
-                            } else res.send( { message: 'Данное парковочное место занято!' });
-
-                            if(err){
-                                return reject(error);
-                            }
-                            return resolve(result);
-                        }
-                    );
-                });
-            }
         
-            resPerson = () => {
-                return new Promise((resolve, reject) => {
+
+        let resParkingSpace = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "SELECT id_parking_space FROM parking_space WHERE parking_space_number=?",
+                    [space], (err, result) => {
+
+                        if (result.length === 0)
+                            res.send( { message: 'Введенное вами парковочное место не существует!' });
+                        else {
+                            let currentParkingSpace = result[0].id_person;
+
+                            db.query(
+                                "SELECT * FROM gates WHERE gates_name=?",
+                                [gates], (err, result) => {
+                                    if (result.length === 0)
+                                        res.send( { message: 'Введенной вами проходной не существует!' });                                            
+                            });
+
+                            db.query(
+                                "SELECT * FROM parking_space WHERE id_parking_space=?",
+                                [currentParkingSpace], (err, result) => {
+                                    console.log(currentParkingSpace);
+                                    console.log(result.length != 0);
+                                    
+                                    if (result.length != 0)
+                                        res.send( { message: 'Данное парковочное место занято!' });                                            
+                                    else idParkingSpace = currentParkingSpace;
+                            });
+                        }
+
+                        if(err){
+                            return reject(error);
+                        }
+                        return resolve(result);
+                    }
+                );
+            });
+        }
+        
+        let resPerson = () => {
+            return new Promise((resolve, reject) => {
+                if (idParkingSpace != undefined)
                     db.query(
                         "SELECT id_person FROM person WHERE full_name=? AND chair=?",
                         [name, chair], (err, result) => {
@@ -113,26 +132,24 @@ app.post("/add", (req, res) => {
                             return resolve(result);
                         }
                     );
-                });
-            }
+            });
+        }
 
-            let resCar = () => {
-                return new Promise((resolve, reject) => {
+        let resCar = () => {
+            return new Promise((resolve, reject) => {
+                if (idParkingSpace != undefined)
                     db.query(
                         "SELECT * FROM car WHERE license_plate=?",
                         [plate], (err, result) => {
                             console.log(idPerson);
                             console.log(idParkingSpace);
-                            if (idParkingSpace != undefined)
                                 if  (result.length === 0){
-                                    // console.log(idParkingSpace);
-                                    // console.log(idPerson);
                                     db.query(
-                                        "INSERT INTO car (id_person, id_parking_space, car_brand, license_plate) VALUES (?, ?, ?, ?)",
-                                        [idPerson, idParkingSpace, brand, name], (err, result) => {
+                                        "INSERT INTO car (id_person, id_parking_space, car_brand, license_plate, start_date, expiration_date) VALUES (?, ?, ?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 YEAR))",
+                                        [idPerson, idParkingSpace, brand, plate], (err, result) => {
                                             console.log(err);
                                             console.log(result);
-                                            // idCar = result.insertId;
+                                            res.send( { message: 'Запись успешна добавлена!' });
                                     });
                                 } else res.send( { message: 'Машина с веденным номером уже есть в базе данных!' });
                             
@@ -142,8 +159,8 @@ app.post("/add", (req, res) => {
                             return resolve(result);
                         }
                     );
-                });
-            }
+            });
+        }
 
         async function sequentialQueries() {
  

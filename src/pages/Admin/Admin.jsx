@@ -11,7 +11,9 @@ function Admin() {
     const [gatesAdd, setGatesAdd] = useState('');
     const [spaceAdd, setSpaceAdd] = useState('');
 
+
     const [addStatus, setAddStatus] = useState('');
+    const [addWarningStatus, setAddWarningStatus] = useState('');
 
 
     const add = () => {
@@ -24,7 +26,9 @@ function Admin() {
             space: spaceAdd
         }).then((response) => {            
             if (response.data.message)
-                setAddStatus(response.data.message);
+                if (response.data.message === 'Запись успешна добавлена!')
+                    setAddStatus(response.data.message);
+                else setAddWarningStatus(response.data.message);
         });
     };
 
@@ -63,7 +67,7 @@ function Admin() {
                         />
                     </label>
                     <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Ворота" type="text" name="gates"
+                        <input className="input input--medium input--default" placeholder="Номер проходной" type="text" name="gates"
                             onChange={(e) => {
                                 setGatesAdd(e.target.value);
                             }}
@@ -79,6 +83,7 @@ function Admin() {
                 </div>
                 <div className="admin__add-result">
                     <button type='button' className="button signin__button" onClick={add}>Добавить запись</button>
+                    <span className="admin__warning-status">{addWarningStatus}</span>
                     <span className="admin__status">{addStatus}</span>
                 </div>
             </form>
