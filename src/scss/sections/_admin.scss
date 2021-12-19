@@ -1,5 +1,8 @@
 .admin__title {
-    display: block;
+    
+    &:not(:last-child) {
+        margin-bottom: 4rem;
+    }
 }
 
 .admin__forms {
@@ -18,18 +21,4 @@
     &:not(:last-child) {
         margin-bottom: 3rem;
     }
-}
-
-.admin__status, .admin__warning-status {
-    display: block;
-    text-align: center;
-    font-size: 2rem;
-}
-
-.admin__status {
-    color: $color-success;
-}
-
-.admin__warning-status {
-    color: $color-danger;
 }

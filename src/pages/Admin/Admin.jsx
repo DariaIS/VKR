@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Axios from 'axios';
 
 function Admin() {
@@ -26,7 +25,7 @@ function Admin() {
             space: spaceAdd
         }).then((response) => {            
             if (response.data.message)
-                if (response.data.message === 'Запись успешна добавлена!') {
+                if (response.data.message === 'Запись успешно добавлена!') {
                     setAddStatus(response.data.message);
                     setAddWarningStatus('');
                 }
@@ -89,8 +88,8 @@ function Admin() {
                 </div>
                 <div className="admin__add-result">
                     <button type='button' className="button signin__button" onClick={add}>Добавить запись</button>
-                    <span className="admin__warning-status">{addWarningStatus}</span>
-                    <span className="admin__status">{addStatus}</span>
+                    <span className="warning-status">{addWarningStatus}</span>
+                    <span className="status">{addStatus}</span>
                 </div>
             </form>
         </div>

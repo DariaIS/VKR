@@ -9,6 +9,7 @@
 .title {
     font-weight: 400;
     color: $black;
+    display: block;
 
     &--small {
 
@@ -36,9 +37,19 @@
         @media (max-width: ($screen-lg - 1)) {
             font-size: 4rem;
         }
-
-        &:not(:last-child) {
-            margin-bottom: 4rem;
-        }
     }
+}
+
+.status, .warning-status {
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.status {
+    color: $color-success;
+}
+
+.warning-status {
+    color: $color-danger;
 }

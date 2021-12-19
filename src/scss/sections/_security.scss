@@ -1,0 +1,14 @@
+.security__car-result {
+    text-align: center;
+}
+
+.security__text {
+    display: block;
+    text-align: center;
+    font-weight: 400;
+    font-size: 3rem;
+
+    &:not(:last-child) {
+        margin-bottom: 10rem;
+    }
+}

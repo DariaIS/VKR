@@ -4,7 +4,7 @@ import Axios from 'axios';
 function Header() {
 
     const logOut = () => {
-        Axios.post('http://localhost:3001/logout').then((response) => {
+        Axios.get('http://localhost:3001/logout').then((response) => {
             console.log(response);
         });
     };

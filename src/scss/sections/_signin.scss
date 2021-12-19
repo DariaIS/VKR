@@ -51,12 +51,8 @@
 }
 
 .signin__button {
+    
     &:not(:last-child) {
         margin-bottom: 1rem;
     }
-}
-
-.signin__status {
-    color: $color-danger;
-    font-size: 2rem;
 }
