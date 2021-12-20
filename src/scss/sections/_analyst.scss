@@ -1,0 +1,44 @@
+.analyst__title {
+    
+    &:not(:last-child) {
+        margin-bottom: 5rem;
+    }
+}
+
+.analyst__table {
+    &:not(:last-child) {
+        margin-bottom: 4rem;
+    }
+}
+
+.analyst__table-title {
+    margin-bottom: 2rem;
+}
+
+
+.analyst__table-item {
+    border-collapse: collapse;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+}
+
+.analyst__thead {
+    background-color: $color-main;
+    color: white;
+}
+
+.analyst__tbody {
+    border: 1px solid $gray--lighten;
+
+    tr:nth-child(even) {
+        background-color: $gray--lighten;
+    }
+}
+
+.analyst__th, .analyst__td {
+    border: none;
+    padding: 30px 30px 30px 50px;
+    text-align: left;
+}
