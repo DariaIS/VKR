@@ -251,7 +251,6 @@ app.post("/add", (req, res) => {
         
         let ResPerson = () => {
             return new Promise((resolve, reject) => {
-                console.log(idPerson)
                 if (typeof idPerson === 'undefined')
                     db.query(
                         "INSERT INTO person (full_name, chair) VALUES (?, ?)",
@@ -487,6 +486,16 @@ app.get('/car', (req, res) => {
 
     }
 
+});
+
+app.get('/cartable', (req, res) => {
+    db.query("SELECT * FROM car INNER JOIN person ON person.id_person INNER JOIN parking_space ON parking_space.id_parking_space WHERE person.id_person=car.id_person AND parking_space.id_parking_space=car.id_parking_space", (err, result) => {
+        result.forEach(element => {
+            console.log(element.start_date)
+        });
+        res.send({ result });
+        console.log(err)
+    });
 });
 
 app.listen(3001, () => {

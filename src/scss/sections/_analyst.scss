@@ -6,6 +6,7 @@
 }
 
 .analyst__table {
+    
     &:not(:last-child) {
         margin-bottom: 4rem;
     }
@@ -38,7 +39,8 @@
 }
 
 .analyst__th, .analyst__td {
+    font-weight: 400;
     border: none;
-    padding: 30px 30px 30px 50px;
+    padding: 20px 20px 20px 30px;
     text-align: left;
 }
