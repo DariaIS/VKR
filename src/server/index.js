@@ -27,7 +27,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 60 * 60 * 24,
+            expires: 60 * 60 * 10, // 60 * 1000 - минута
         },
     })
 );
@@ -128,13 +128,15 @@ function translitRuEn(lit) {
 }
 
 app.post("/add", (req, res) => {
-    if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.name === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '')
+    if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.lastName === '' || req.body.name === '' || req.body.middleName === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '')
         res.send( { message: 'Не все поля заполнены!' });
     else {
         let plate = req.body.plate;
         const region = req.body.region;
         const brand = req.body.brand;
+        const lastName = req.body.lastName;
         const name = req.body.name;
+        const middleName = req.body.middleName;
         const chair = req.body.chair;
         const position = req.body.position;
         const gates = req.body.gates;
@@ -158,6 +160,7 @@ app.post("/add", (req, res) => {
                             warning = true;
                         }
                         else idGates = result[0].id_gates;
+                        console.log(result + " ворота?")
 
                         if(err) {
                             return reject(error);
@@ -185,9 +188,11 @@ app.post("/add", (req, res) => {
                     "SELECT * FROM car WHERE license_plate=? AND region=?",
                     [plate, region], (err, result) => {
                         if (result.length != 0) {
+                            console.log(err + "машина есть")
                             res.send( { message: 'Машина с веденным номером уже есть в базе данных!' }); 
                             warning = true;
                         }
+                        console.log(result + " машина?")
                         
                         if(err) {
                             return reject(error);
@@ -200,12 +205,13 @@ app.post("/add", (req, res) => {
         let IfPerson = () => {
             return new Promise((resolve, reject) => {
                 db.query(
-                    "SELECT id_person FROM person WHERE full_name=? AND chair=? AND position=?",
-                    [name, chair, position], (err, result) => {
+                    "SELECT id_person FROM person WHERE last_name=? AND name=? AND middle_name=? AND chair=? AND position=?",
+                    [lastName, name, middleName, chair, position], (err, result) => {
                         
                         if (result.length != 0) {
                             idPerson = result[0].id_person;
                         }
+                        console.log(result)
                         
                         if(err) {
                             return reject(error);
@@ -219,10 +225,11 @@ app.post("/add", (req, res) => {
             return new Promise((resolve, reject) => {
                 if (typeof idPerson === 'undefined')
                     db.query(
-                        "INSERT INTO person (full_name, chair, position) VALUES (?, ?, ?)",
-                        [name, chair, position], (err, result) => {
+                        "INSERT INTO person (last_name, name, middle_name, chair, position) VALUES (?, ?, ?, ?, ?)",
+                        [lastName, name, middleName, chair, position], (err, result) => {
                             idPerson = result.insertId;
-
+                            console.log(result + " человек добавлен")
+                            
                             if(err){
                                 return reject(error);
                             }
@@ -244,6 +251,7 @@ app.post("/add", (req, res) => {
                     [idPerson, brand, plate, region, interval], (err, result) => {
 
                         idCar = result.insertId;
+                        console.log(result + " машина добавлена")
 
                         if(err){
                             return reject(error);
@@ -260,6 +268,7 @@ app.post("/add", (req, res) => {
                     "INSERT INTO gates_allowed (id_car, id_gates) VALUES (?, ?)",
                     [idCar, idGates], (err, result) => {
                         res.send( { message: 'Запись успешно добавлена!' });
+                        console.log(result + " запись добавлена")
 
                         if(err){
                             return reject(error);

@@ -6,7 +6,9 @@ function Admin() {
     const [plateAdd, setPlateAdd] = useState('');
     const [regionAdd, setRegionAdd] = useState('');
     const [brandAdd, setBrandAdd] = useState('');
+    const [lastNameAdd, setLastNameAdd] = useState('');
     const [nameAdd, setNameAdd] = useState('');
+    const [middleNameAdd, setMiddleNameAdd] = useState('');
     const [chairAdd, setChairAdd] = useState('');
     const [positionAdd, setPositionAdd] = useState('');
     const [gatesAdd, setGatesAdd] = useState('');
@@ -21,7 +23,9 @@ function Admin() {
             plate: plateAdd, 
             region: regionAdd,
             brand: brandAdd,
+            lastName: lastNameAdd,
             name: nameAdd,
+            middleName: middleNameAdd,
             chair: chairAdd,
             gates: gatesAdd,
             position: positionAdd
@@ -47,6 +51,13 @@ function Admin() {
                 <span className="admin__title title title--small">Добавление новой записи</span>
                 <div className='admin__forms'>
                     <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Номер проходной" type="text" name="gates"
+                            onChange={(e) => {
+                                setGatesAdd(e.target.value);
+                            }}
+                        />
+                    </label>
+                    <label className="admin__form-item form__item">
                         <input className="input input--medium input--default" placeholder="Номер машины" type="text" name="plate"
                             onChange={(e) => {
                                 setPlateAdd(e.target.value);
@@ -68,9 +79,23 @@ function Admin() {
                         />
                     </label>
                     <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="ФИО" type="text" name="fio"
+                        <input className="input input--medium input--default" placeholder="Фамилия" type="text" name="lastName"
+                            onChange={(e) => {
+                                setLastNameAdd(e.target.value);
+                            }}
+                        />
+                    </label>
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Имя" type="text" name="name"
                             onChange={(e) => {
                                 setNameAdd(e.target.value);
+                            }}
+                        />
+                    </label>
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" placeholder="Отчество" type="text" name="middleName"
+                            onChange={(e) => {
+                                setMiddleNameAdd(e.target.value);
                             }}
                         />
                     </label>
@@ -78,13 +103,6 @@ function Admin() {
                         <input className="input input--medium input--default" placeholder="Кафедра" type="text" name="chair"
                             onChange={(e) => {
                                 setChairAdd(e.target.value);
-                            }}
-                        />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Номер проходной" type="text" name="gates"
-                            onChange={(e) => {
-                                setGatesAdd(e.target.value);
                             }}
                         />
                     </label>
