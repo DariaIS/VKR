@@ -40,16 +40,16 @@
     }
 }
 
-.status, .warning-status {
+.status {
     display: block;
     text-align: center;
     font-size: 2rem;
-}
 
-.status {
-    color: $color-success;
-}
+    &--success {
+        color: $color-success;
+    }
 
-.warning-status {
-    color: $color-danger;
+    &--warning {
+        color: $color-danger;
+    }
 }

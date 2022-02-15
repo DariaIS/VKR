@@ -12,3 +12,10 @@
         margin-bottom: 10rem;
     }
 }
+
+.security__button {
+    
+    &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}

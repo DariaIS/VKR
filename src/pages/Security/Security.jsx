@@ -26,9 +26,10 @@ function Security() {
             <span className="security__text">Пропускная 7-ого корпуса</span>
 
             <div className="security__car-result">
-                <button type='button' className="button signin__button" onClick={car}>Машина подъехала</button>
-                <span className="warning-status">{carWarningStatus}</span>
-                <span className="status">{carStatus}</span>
+                <button type='button' className="button button--blue security__button" onClick={car}>Автомобиль въезжает</button>
+                <button type='button' className="button button--white security__button" onClick={car}>Автомобиль выезжает</button>
+                <span className="status status--warning">{carWarningStatus}</span>
+                <span className="status status--success">{carStatus}</span>
             </div>
         </div>
     );

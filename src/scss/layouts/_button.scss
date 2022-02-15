@@ -1,31 +1,46 @@
 @import '../variables';
 
 .button {
-  text-align: center;
-  border: 1px solid $color-main;
-  padding: 1.6rem 1.5rem;
-  border-radius: 10px;
-  background-color: $color-main;
-  color: $white;
-  font-family: $font-family;
-  transition: 0.3s;
+    text-align: center;
+    border: 1px solid $color-main;
+    padding: 1.6rem 1.5rem;
+    border-radius: 10px;
+    font-family: $font-family;
+    transition: 0.3s;
 
-  @media (min-width: $screen-lg) {
-      font-size: 20px;
-  }
+    @media (min-width: $screen-lg) {
+        font-size: 20px;
+    }
 
-  @media (max-width: ($screen-lg - 1)) {
-      font-size: 12px;
-  }
+    @media (max-width: ($screen-lg - 1)) {
+        font-size: 12px;
+    }
 
-  &:hover {
-      background-color: $white;
-      color: $color-main;
-  }
+    &:focus {
+        outline: none;
+    }
 
-  &:focus {
-      border-color: $color-main;
-      outline: none;
-  }
+
+
+    &--blue {
+        background-color: $color-main;
+        color: $white;
+
+        &:hover {
+            background-color: $white;
+            color: $color-main;
+        }
+    }
+
+    
+    &--white {
+        background-color: $white;
+        color: $color-main;
+
+        &:hover {
+            background-color: $color-main;
+            color: $white;
+        }
+    }
 
 }

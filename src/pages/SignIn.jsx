@@ -55,8 +55,8 @@ function SignIn() {
                             }}
                         />
                     </label>
-                    <button type='button' className="button signin__button" onClick={login}>Войти</button>
-                    <span className="warning-status">{loginStatus}</span>
+                    <button type='button' className="button button--blue signin__button" onClick={login}>Войти</button>
+                    <span className="status status--warning">{loginStatus}</span>
                 </form>
             </div>
         </div>
