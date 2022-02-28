@@ -50,69 +50,90 @@ function Admin() {
             <form className="form">
                 <span className="admin__title title title--small">Добавление новой записи</span>
                 <div className='admin__forms'>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Номер проходной" type="text" name="gates"
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="gates" required
                             onChange={(e) => {
                                 setGatesAdd(e.target.value);
                             }}
                         />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Номер машины" type="text" name="plate"
+                        <label className="input__label">Номер проходной</label>
+                    </div>
+
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="plate" required
                             onChange={(e) => {
                                 setPlateAdd(e.target.value);
                             }}
                         />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Регион" type="text" name="region"
+                        <label className="input__label">Номер машины</label>
+                    </div>
+
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="region" required
                             onChange={(e) => {
                                 setRegionAdd(e.target.value);
                             }}
                         />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Марка машины" type="text" name="brand"
+                        <label className="input__label">Регион</label>
+                    </div>
+
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="brand" required
                             onChange={(e) => {
                                 setBrandAdd(e.target.value);
                             }}
                         />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Фамилия" type="text" name="lastName"
+                        <label className="input__label">Марка машины</label>
+                    </div>
+
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="lastName" required
                             onChange={(e) => {
                                 setLastNameAdd(e.target.value);
                             }}
                         />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Имя" type="text" name="name"
+                        <label className="input__label">Имя</label>
+                    </div>
+
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="name" required
                             onChange={(e) => {
                                 setNameAdd(e.target.value);
                             }}
                         />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Отчество" type="text" name="middleName"
+                        <label className="input__label">Имя</label>
+                    </div>
+
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="middleName" required
                             onChange={(e) => {
                                 setMiddleNameAdd(e.target.value);
                             }}
                         />
-                    </label>
-                    <label className="admin__form-item form__item">
-                        <input className="input input--medium input--default" placeholder="Кафедра" type="text" name="chair"
+                        <label className="input__label">Отчество</label>
+                    </div>
+
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="chair" required
                             onChange={(e) => {
                                 setChairAdd(e.target.value);
                             }}
                         />
-                    </label>
+                        <label className="input__label">Кафедра</label>
+                    </div>
+
                     <div className="admin__radio"                             
                         onChange={(e) => {
                             setPositionAdd(e.target.value);
                         }}>
-
-                        <input type="radio" value="student" name="position" /> Студент
-                        <input type="radio" value="academic" name="position" /> Преподаватель, сотрудник администрации и др.
+                        <div>
+                            <input type="radio" value="student" name="position" />
+                            <label>Студент</label>
+                        </div>
+                        <div>
+                            <input type="radio" value="academic" name="position" />
+                            <label>Преподаватель, сотрудник и др.</label>
+                        </div>
                     </div>
                 </div>
                 <div className="admin__add-result">

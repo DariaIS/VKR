@@ -27,7 +27,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 60 * 60 * 10, // 60 * 1000 - минута
+            expires: 60 * 1000 * 10, // 60 * 1000 - минута
         },
     })
 );
@@ -128,8 +128,13 @@ function translitRuEn(lit) {
 }
 
 app.post("/add", (req, res) => {
-    if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.lastName === '' || req.body.name === '' || req.body.middleName === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '')
+    if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.lastName === '' || req.body.name === '' || req.body.middleName === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '') {
         res.send( { message: 'Не все поля заполнены!' });
+        console.log(Number(req.body.region))
+    }
+    else if (Number(req.body.region) || req.body.region === 0) {
+        res.send( { message: 'Введен неверный регион!' });
+    }
     else {
         let plate = req.body.plate;
         const region = req.body.region;
@@ -145,22 +150,27 @@ app.post("/add", (req, res) => {
         let warning = false;
         let interval;
 
+        console.log("\n");
         if (position === "student")
             interval = "1";
         else interval = "5";
 
 
-        let IfGates = () => {
+        let CheckGates = () => {
             return new Promise((resolve, reject) => {
                 db.query(
                     "SELECT id_gates FROM gates WHERE gates_name=?",
                     [gates], (err, result) => {
                         if (result.length === 0) {
+                            console.log(result.length + " такой проходной нет")
                             res.send( { message: 'Введенной вами проходной не существует!' }); 
                             warning = true;
                         }
-                        else idGates = result[0].id_gates;
-                        console.log(result + " ворота?")
+                        else  {
+                            idGates = result[0].id_gates;
+                            console.log(result.length + " проходная есть");
+                        }
+                        
 
                         if(err) {
                             return reject(error);
@@ -182,17 +192,17 @@ app.post("/add", (req, res) => {
             });
         }
 
-        let IfCar = () => {
+        let CheckCar = () => {
             return new Promise((resolve, reject) => {
                 db.query(
                     "SELECT * FROM car WHERE license_plate=? AND region=?",
                     [plate, region], (err, result) => {
                         if (result.length != 0) {
-                            console.log(err + "машина есть")
+                            console.log(result.length + " машина уже есть")
                             res.send( { message: 'Машина с веденным номером уже есть в базе данных!' }); 
                             warning = true;
                         }
-                        console.log(result + " машина?")
+                        else console.log(result.length + " такой машины нет");
                         
                         if(err) {
                             return reject(error);
@@ -202,7 +212,7 @@ app.post("/add", (req, res) => {
             });
         }
 
-        let IfPerson = () => {
+        let CheckPerson = () => {
             return new Promise((resolve, reject) => {
                 db.query(
                     "SELECT id_person FROM person WHERE last_name=? AND name=? AND middle_name=? AND chair=? AND position=?",
@@ -210,8 +220,9 @@ app.post("/add", (req, res) => {
                         
                         if (result.length != 0) {
                             idPerson = result[0].id_person;
+                            console.log(idPerson + " такой человек есть");
+                            console.log(warning);
                         }
-                        console.log(result)
                         
                         if(err) {
                             return reject(error);
@@ -221,14 +232,14 @@ app.post("/add", (req, res) => {
             });
         }
         
-        let ResPerson = () => {
+        let AddPerson = () => {
             return new Promise((resolve, reject) => {
                 if (typeof idPerson === 'undefined')
                     db.query(
                         "INSERT INTO person (last_name, name, middle_name, chair, position) VALUES (?, ?, ?, ?, ?)",
                         [lastName, name, middleName, chair, position], (err, result) => {
                             idPerson = result.insertId;
-                            console.log(result + " человек добавлен")
+                            console.log(idPerson + " человек добавлен")
                             
                             if(err){
                                 return reject(error);
@@ -238,7 +249,7 @@ app.post("/add", (req, res) => {
             });
         }
 
-        let ResCar = () => {
+        let AddCar = () => {
             return new Promise((resolve, reject) => {
 
                 console.log(idPerson);
@@ -251,7 +262,7 @@ app.post("/add", (req, res) => {
                     [idPerson, brand, plate, region, interval], (err, result) => {
 
                         idCar = result.insertId;
-                        console.log(result + " машина добавлена")
+                        console.log(idCar + " машина добавлена")
 
                         if(err){
                             return reject(error);
@@ -261,7 +272,7 @@ app.post("/add", (req, res) => {
             });
         }
 
-        let ResGates = () => {
+        let AddGates = () => {
             return new Promise((resolve, reject) => {
 
                 db.query(
@@ -278,30 +289,29 @@ app.post("/add", (req, res) => {
             });
         }
 
-        async function Checking() {
+        async function Adding() {
  
             try {
-                await IfGates();
+                await CheckGates();
                 if (!warning)
                     await TranslitPlate();
                 if (!warning)
-                    await IfCar();
+                    await CheckCar();
                 if (!warning)
-                    await IfPerson();
+                    await CheckPerson();
                 if (!warning)
-                    await ResPerson();
+                    await AddPerson();
                 if (!warning)
-                    await ResCar();
+                    await AddCar();
                 if (!warning)
-                    await ResGates();
+                    await AddGates();
                                 
             } catch(error){
                 // console.log(error)
             }
         }
 
-        Checking();
-
+        Adding();
     }
 });
 

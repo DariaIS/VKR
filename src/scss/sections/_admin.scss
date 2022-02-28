@@ -6,9 +6,9 @@
 }
 
 .admin__forms {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
 }
 
 .admin__add-result {
@@ -21,4 +21,9 @@
     &:not(:last-child) {
         margin-bottom: 3rem;
     }
+}
+
+.admin__radio {
+    display: flex;
+    flex-direction: column;
 }

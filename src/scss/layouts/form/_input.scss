@@ -3,7 +3,7 @@
     border: none;
     font-family: inherit;
     transition: 0.3s;
-    padding: 1.6rem 1.5rem;
+    padding: 1.8rem 1.5rem;
     border-radius: 10px;
 
     &--small {
@@ -41,8 +41,23 @@
             outline: none;
         }
 
+        &:focus ~ .input__label {
+            color: $color-main;
+        }
+
         &::placeholder {
             color: $gray;
         }
     }
+}
+
+.input__label {
+    position: absolute;
+    left: 15px;
+    top: -12px;
+    background-color: $white;
+    padding: 0px 5px;
+    font-size: 18px;
+    color: $gray;
+    transition: 0.3s;
 }
