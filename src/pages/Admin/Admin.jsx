@@ -18,7 +18,7 @@ function Admin() {
     const [addWarningStatus, setAddWarningStatus] = useState('');
 
 
-    const add = () => {
+    const add = (e) => {
         Axios.post('http://localhost:3001/add', {
             plate: plateAdd, 
             region: regionAdd,
@@ -42,6 +42,7 @@ function Admin() {
 
                 }
         });
+        e.preventDefault();
     };
 
     return (
@@ -50,17 +51,9 @@ function Admin() {
             <form className="form">
                 <span className="admin__title title title--small">Добавление новой записи</span>
                 <div className='admin__forms'>
-                    <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="gates" required
-                            onChange={(e) => {
-                                setGatesAdd(e.target.value);
-                            }}
-                        />
-                        <label className="input__label">Номер проходной</label>
-                    </div>
 
                     <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="plate" required
+                        <input className="input input--medium input--default" type="text" name="plate"
                             onChange={(e) => {
                                 setPlateAdd(e.target.value);
                             }}
@@ -69,7 +62,7 @@ function Admin() {
                     </div>
 
                     <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="region" required
+                        <input className="input input--medium input--default" type="text" name="region"
                             onChange={(e) => {
                                 setRegionAdd(e.target.value);
                             }}
@@ -78,7 +71,7 @@ function Admin() {
                     </div>
 
                     <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="brand" required
+                        <input className="input input--medium input--default" type="text" name="brand"
                             onChange={(e) => {
                                 setBrandAdd(e.target.value);
                             }}
@@ -87,16 +80,16 @@ function Admin() {
                     </div>
 
                     <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="lastName" required
+                        <input className="input input--medium input--default" type="text" name="lastName"
                             onChange={(e) => {
                                 setLastNameAdd(e.target.value);
                             }}
                         />
-                        <label className="input__label">Имя</label>
+                        <label className="input__label">Фамилия</label>
                     </div>
 
                     <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="name" required
+                        <input className="input input--medium input--default" type="text" name="name"
                             onChange={(e) => {
                                 setNameAdd(e.target.value);
                             }}
@@ -105,7 +98,7 @@ function Admin() {
                     </div>
 
                     <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="middleName" required
+                        <input className="input input--medium input--default" type="text" name="middleName"
                             onChange={(e) => {
                                 setMiddleNameAdd(e.target.value);
                             }}
@@ -114,12 +107,20 @@ function Admin() {
                     </div>
 
                     <div className="admin__form-item form__item">
-                        <input className="input input--medium input--default" type="text" name="chair" required
+                        <input className="input input--medium input--default" type="text" name="chair"
                             onChange={(e) => {
                                 setChairAdd(e.target.value);
                             }}
                         />
                         <label className="input__label">Кафедра</label>
+                    </div>
+                    <div className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="gates"
+                            onChange={(e) => {
+                                setGatesAdd(e.target.value);
+                            }}
+                        />
+                        <label className="input__label">Номер проходной</label>
                     </div>
 
                     <div className="admin__radio"                             

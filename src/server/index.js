@@ -128,12 +128,12 @@ function translitRuEn(lit) {
 }
 
 app.post("/add", (req, res) => {
-    if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.lastName === '' || req.body.name === '' || req.body.middleName === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '') {
+    if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.lastName === '' || req.body.name === '' || req.body.middleName === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '')
         res.send( { message: 'Не все поля заполнены!' });
-        console.log(Number(req.body.region))
-    }
-    else if (Number(req.body.region) || req.body.region === 0) {
+    else if (!Number.isInteger(parseInt(req.body.region, 10)) || req.body.region === "0") {
         res.send( { message: 'Введен неверный регион!' });
+        console.log(Number.isInteger(parseInt(req.body.region, 10)));
+        console.log(req.body.region);
     }
     else {
         let plate = req.body.plate;
@@ -234,24 +234,27 @@ app.post("/add", (req, res) => {
         
         let AddPerson = () => {
             return new Promise((resolve, reject) => {
-                if (typeof idPerson === 'undefined')
-                    db.query(
-                        "INSERT INTO person (last_name, name, middle_name, chair, position) VALUES (?, ?, ?, ?, ?)",
-                        [lastName, name, middleName, chair, position], (err, result) => {
-                            idPerson = result.insertId;
-                            console.log(idPerson + " человек добавлен")
-                            
-                            if(err){
-                                return reject(error);
-                            }
-                            return resolve(result);
-                    });
+                console.log("AddPerson");
+                db.query(
+                    "INSERT INTO person (last_name, name, middle_name, chair, position) VALUES (?, ?, ?, ?, ?)",
+                    [lastName, name, middleName, chair, position], (err, result) => {
+                        idPerson = result.insertId;
+                        console.log(idPerson + " человек добавлен")
+                        
+                        if(err){
+                            return reject(error);
+                        }
+                        return resolve(result);
+                });
+                console.log(warning);
+                console.log(idPerson);
             });
         }
 
         let AddCar = () => {
             return new Promise((resolve, reject) => {
 
+                console.log("AddCar");
                 console.log(idPerson);
                 console.log(brand);
                 console.log(plate);
@@ -274,7 +277,8 @@ app.post("/add", (req, res) => {
 
         let AddGates = () => {
             return new Promise((resolve, reject) => {
-
+                
+                console.log("AddGates");
                 db.query(
                     "INSERT INTO gates_allowed (id_car, id_gates) VALUES (?, ?)",
                     [idCar, idGates], (err, result) => {
@@ -299,7 +303,7 @@ app.post("/add", (req, res) => {
                     await CheckCar();
                 if (!warning)
                     await CheckPerson();
-                if (!warning)
+                if (typeof idPerson === 'undefined' && !warning)
                     await AddPerson();
                 if (!warning)
                     await AddCar();
