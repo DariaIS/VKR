@@ -1,12 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import Axios from 'axios';
 
 function Analyst() {
 
     const [carTable, setCarTable] = useState('');
+    const [dateTable, setDateTable] = useState('');
+
+    const [pickedDate, setPickedDate] = useState(new Date());
+    let dateThead = false;
+
+    const date = (newDate) => {
+        setPickedDate(newDate);
+        newDate = newDate.getFullYear() + "-" +  ("0"+(newDate.getMonth()+1)).slice(-2) + "-" + ("0" + newDate.getDate()).slice(-2);
+        console.log(newDate);
+
+        Axios.post('http://localhost:3001/dateTable', {
+            date: newDate, 
+        }).then((response) => {
+            setDateTable(response.data.result);
+        });
+    };
 
     useEffect(() => {
-        Axios.get('http://localhost:3001/cartable').then((response) => {
+        Axios.get('http://localhost:3001/carTable').then((response) => {
             // console.log(response.data.result);
             setCarTable(response.data.result);
         });
@@ -15,6 +33,40 @@ function Analyst() {
     return (
         <div className="analyst section container">
             <span className="analyst__title title title--medium">Вы вошли как аналитик</span>
+            <div className="analyst__table">
+            <span className="analyst__table-title title title--small">Въезды и выезды на основе выбранной даты</span>
+                <Calendar onClickDay={date} value={pickedDate} minDetail="year"/>
+                {
+                    dateTable.length !== 0 && 
+                    <table className="analyst__table-item">
+                        <thead className="analyst__thead">
+                            <tr className="analyst__tr">
+                                <th className="analyst__th">Дата</th>
+                                <th className="analyst__th">Номер автомобиля</th>
+                                <th className="analyst__th">Регион</th>
+                                <th className="analyst__th">Время въезда</th>
+                                <th className="analyst__th">Время выезда</th>
+                            </tr>
+                        </thead>
+                        <tbody className="analyst__tbody">
+                            {
+                                Object.values(dateTable).map(val => {
+                                    return (
+                                        <tr className="analyst__tr" key={val.id_car}>
+                                            <td className="analyst__td">{val.date}</td>
+                                            <td className="analyst__td">{val.license_plate}</td>
+                                            <td className="analyst__td">{val.region}</td>
+                                            <td className="analyst__td">{val.arrival_time}</td>
+                                            <td className="analyst__td">{val.departure_time}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                }
+                
+            </div>
             <div className="analyst__table">
                 <span className="analyst__table-title title title--small">Все машины, присутствующие в базе данных</span>
                 <table className="analyst__table-item">
