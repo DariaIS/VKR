@@ -22,8 +22,9 @@ function Analyst() {
                         <tr className="analyst__tr">
                             <th className="analyst__th">Номер машины</th>
                             <th className="analyst__th">Марка машины</th>
-                            <th className="analyst__th">ФИО</th>
-                            <th className="analyst__th">Парковочное место</th>
+                            <th className="analyst__th">Фамилия</th>
+                            <th className="analyst__th">Имя</th>
+                            <th className="analyst__th">Отчество</th>
                             <th className="analyst__th">Дата предоставления доступа</th>
                             <th className="analyst__th">Дата истечения прав доступа</th>
                         </tr>
@@ -35,8 +36,9 @@ function Analyst() {
                                     <tr className="analyst__tr" key={val.id_car}>
                                         <td className="analyst__td">{val.license_plate}</td>
                                         <td className="analyst__td">{val.car_brand}</td>
-                                        <td className="analyst__td">{val.full_name}</td>
-                                        <td className="analyst__td">{val.parking_space_number}</td>
+                                        <td className="analyst__td">{val.last_name}</td>
+                                        <td className="analyst__td">{val.name}</td>
+                                        <td className="analyst__td">{val.middle_name}</td>
                                         <td className="analyst__td">{val.start_date.toString().split('T')[0]}</td>
                                         <td className="analyst__td">{val.expiration_date.toString().split('T')[0]}</td>
                                     </tr>

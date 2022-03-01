@@ -60,7 +60,7 @@ app.post('/login', (req, res) => {
     const password = req.body.password;
 
     db.query(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
+        "SELECT * FROM user WHERE user_name = ? AND password = ?",
         [username, password],
         (err, result) => {
             if (err)
@@ -373,12 +373,12 @@ app.get('/car', (req, res) => {
             return new Promise((resolve, reject) => {
 
                 db.query(
-                    "SELECT id_day FROM day WHERE day=CURDATE()",
+                    "SELECT id_date FROM date WHERE date=CURDATE()",
                     (err, result) => {
 
                         if (result.length === 0){
                             db.query(
-                                "INSERT INTO day (day) VALUES (CURDATE())",
+                                "INSERT INTO date (date) VALUES (CURDATE())",
                                 (err, result) => {
                                     idDay = result.insertId;
                                     console.log(idDay)
@@ -402,12 +402,12 @@ app.get('/car', (req, res) => {
             return new Promise((resolve, reject) => {
 
                 db.query(
-                    "SELECT * FROM arriving_day WHERE id_day=? AND id_car=?",
+                    "SELECT * FROM arriving_date WHERE id_date=? AND id_car=?",
                     [idDay, idCar], (err, result) => {
 
                         if (result.length === 0) {
                             db.query(
-                                "INSERT INTO arriving_day (id_day, id_car) VALUES (?, ?)",
+                                "INSERT INTO arriving_date (id_date, id_car) VALUES (?, ?)",
                                 [idDay, idCar]);
                         }
 
@@ -424,7 +424,7 @@ app.get('/car', (req, res) => {
 
                 if (carCheck[1] === '1')
                     db.query(
-                        "UPDATE arriving_day SET arrival_time=CURTIME() WHERE id_day=? AND id_car=?",
+                        "UPDATE arriving_date SET arrival_time=CURTIME() WHERE id_date=? AND id_car=?",
                         [idDay, idCar], (err, result) => {
 
                             if(err){
@@ -434,7 +434,7 @@ app.get('/car', (req, res) => {
                     });
                 else 
                     db.query(
-                        "UPDATE arriving_day SET departure_time=CURTIME() WHERE id_day=? AND id_car=?",
+                        "UPDATE arriving_date SET departure_time=CURTIME() WHERE id_date=? AND id_car=?",
                         [idDay, idCar], (err, result) => {
 
                             if(err){
@@ -473,7 +473,7 @@ app.get('/car', (req, res) => {
 });
 
 app.get('/cartable', (req, res) => {
-    db.query("SELECT * FROM car INNER JOIN person ON person.id_person INNER JOIN parking_space ON parking_space.id_parking_space WHERE person.id_person=car.id_person AND parking_space.id_parking_space=car.id_parking_space", (err, result) => {
+    db.query("SELECT * FROM car INNER JOIN person ON person.id_person WHERE person.id_person=car.id_person", (err, result) => {
         result.forEach(element => {
             console.log(element.start_date)
         });
