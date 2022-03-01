@@ -472,11 +472,27 @@ app.get('/car', (req, res) => {
 
 });
 
-app.get('/cartable', (req, res) => {
+
+app.post('/dateTable', (req, res) => {
+    const date = req.body.date;
+
+    db.query(
+        "SELECT * FROM arriving_date INNER JOIN date ON date.id_date INNER JOIN car ON car.id_car WHERE arriving_date.id_date=date.id_date AND arriving_date.id_car=car.id_car AND date.date=?",
+        [date],
+        (err, result) => {
+            console.log(result)
+            if (err)
+                res.send({ err: err });
+            res.send({ result });
+        }
+    );
+});
+
+app.get('/carTable', (req, res) => {
     db.query("SELECT * FROM car INNER JOIN person ON person.id_person WHERE person.id_person=car.id_person", (err, result) => {
-        result.forEach(element => {
-            console.log(element.start_date)
-        });
+        // result.forEach(element => {
+        //     console.log(element.start_date)
+        // });
         res.send({ result });
         console.log(err)
     });
