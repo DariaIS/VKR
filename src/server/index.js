@@ -475,6 +475,7 @@ app.get('/car', (req, res) => {
 
 app.post('/dateTable', (req, res) => {
     const date = req.body.date;
+    console.log(date)
 
     db.query(
         "SELECT * FROM arriving_date INNER JOIN date ON date.id_date INNER JOIN car ON car.id_car WHERE arriving_date.id_date=date.id_date AND arriving_date.id_car=car.id_car AND date.date=?",
@@ -494,7 +495,7 @@ app.get('/carTable', (req, res) => {
         //     console.log(element.start_date)
         // });
         res.send({ result });
-        console.log(err)
+        // console.log(err)
     });
 });
 

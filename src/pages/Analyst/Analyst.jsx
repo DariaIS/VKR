@@ -9,7 +9,6 @@ function Analyst() {
     const [dateTable, setDateTable] = useState('');
 
     const [pickedDate, setPickedDate] = useState(new Date());
-    let dateThead = false;
 
     const date = (newDate) => {
         setPickedDate(newDate);
@@ -34,11 +33,13 @@ function Analyst() {
         <div className="analyst section container">
             <span className="analyst__title title title--medium">Вы вошли как аналитик</span>
             <div className="analyst__table">
-            <span className="analyst__table-title title title--small">Въезды и выезды на основе выбранной даты</span>
+            <span className="analyst__table-title title title--small">Выберите дату для формирования отчета</span>
                 <Calendar onClickDay={date} value={pickedDate} minDetail="year"/>
                 {
                     dateTable.length !== 0 && 
-                    <table className="analyst__table-item">
+                    <div>
+                        <span className="analyst__table-title title title--small">Отчет о въездах и выездах на {pickedDate.toLocaleDateString()}</span>
+                        <table className="analyst__table-item">
                         <thead className="analyst__thead">
                             <tr className="analyst__tr">
                                 <th className="analyst__th">Дата</th>
@@ -53,7 +54,7 @@ function Analyst() {
                                 Object.values(dateTable).map(val => {
                                     return (
                                         <tr className="analyst__tr" key={val.id_car}>
-                                            <td className="analyst__td">{val.date}</td>
+                                            <td className="analyst__td">{new Date(val.date).toLocaleDateString()}</td>
                                             <td className="analyst__td">{val.license_plate}</td>
                                             <td className="analyst__td">{val.region}</td>
                                             <td className="analyst__td">{val.arrival_time}</td>
@@ -64,6 +65,8 @@ function Analyst() {
                             }
                         </tbody>
                     </table>
+                </div>
+                    
                 }
                 
             </div>
@@ -91,8 +94,8 @@ function Analyst() {
                                         <td className="analyst__td">{val.last_name}</td>
                                         <td className="analyst__td">{val.name}</td>
                                         <td className="analyst__td">{val.middle_name}</td>
-                                        <td className="analyst__td">{val.start_date.toString().split('T')[0]}</td>
-                                        <td className="analyst__td">{val.expiration_date.toString().split('T')[0]}</td>
+                                        <td className="analyst__td">{new Date(val.start_date).toLocaleDateString()}</td>
+                                        <td className="analyst__td">{new Date(val.expiration_date).toLocaleDateString()}</td>
                                     </tr>
                                 )
                             })
