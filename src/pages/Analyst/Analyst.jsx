@@ -42,9 +42,9 @@ function Analyst() {
                         <table className="analyst__table-item">
                         <thead className="analyst__thead">
                             <tr className="analyst__tr">
-                                <th className="analyst__th">Дата</th>
                                 <th className="analyst__th">Номер автомобиля</th>
                                 <th className="analyst__th">Регион</th>
+                                <th className="analyst__th">Марка автомобиля</th>
                                 <th className="analyst__th">Время въезда</th>
                                 <th className="analyst__th">Время выезда</th>
                             </tr>
@@ -54,9 +54,9 @@ function Analyst() {
                                 Object.values(dateTable).map(val => {
                                     return (
                                         <tr className="analyst__tr" key={val.id_car}>
-                                            <td className="analyst__td">{new Date(val.date).toLocaleDateString()}</td>
                                             <td className="analyst__td">{val.license_plate}</td>
                                             <td className="analyst__td">{val.region}</td>
+                                            <td className="analyst__td">{val.car_brand}</td>
                                             <td className="analyst__td">{val.arrival_time}</td>
                                             <td className="analyst__td">{val.departure_time}</td>
                                         </tr>
