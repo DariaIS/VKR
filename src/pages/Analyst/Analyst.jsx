@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
 import ReactExport from "react-export-excel";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import Axios from 'axios';
 
 function Analyst() {
@@ -29,6 +29,43 @@ function Analyst() {
         });
     };
 
+    function exportPDF(filename) {
+        const unit = "pt";
+        const size = "A4"; // Use A1, A2, A3 or A4
+        const orientation = "portrait"; // portrait or landscape
+    
+        const marginLeft = 40;
+        const doc = new jsPDF(orientation, unit, size);
+    
+        doc.setFontSize(15);
+    
+        const title = "Отчет" + filename;
+        const headers = [["License plate", "Region", "Car brand", "Arrival_time", "Departure time"]];
+    
+        const data = dateTable.map(val=> [val.license_plate, val.region, val.car_brand, val.arrival_time, val.departure_time]);
+    
+        let content = {
+          startY: 50,
+          head: headers,
+          body: data
+        };
+        // let elementToPrint = document.getElementById('dateTable');
+        // console.log(elementToPrint)
+        
+        // doc.html(elementToPrint, {
+        //     html2canvas: {
+        //         scale: 0.45
+        //     },
+        //     callback: function (doc) {
+        //         // doc.save();
+        //         doc.save("Отчет " + filename + ".pdf");
+        //     }
+        // });
+        doc.setFont('Roboto');
+        doc.autoTable(content);
+        doc.save("Отчет " + filename + ".pdf");
+    }
+
     useEffect(() => {
         Axios.get('http://localhost:3001/carTable').then((response) => {
             // console.log(response.data.result);
@@ -46,7 +83,7 @@ function Analyst() {
                     dateTable.length !== 0 && 
                     <div>
                         <span className="analyst__table-title title title--small">Отчет о въездах и выездах на {pickedDate.toLocaleDateString()}</span>
-                        <table className="analyst__table-item">
+                        <table id="dateTable" className="analyst__table-item">
                             <thead className="analyst__thead">
                                 <tr className="analyst__tr">
                                     <th className="analyst__th">Номер автомобиля</th>
@@ -74,7 +111,7 @@ function Analyst() {
                         </table>
                         {console.log(dateTable)}
                         {
-                            <ExcelFile filename={"Отчет " + pickedDate.toLocaleDateString()} element={<button type='button' className="button button--blue signin__button signin__button--center">Экспорт в Excel</button>}>
+                            <ExcelFile filename={"Отчет " + pickedDate.toLocaleDateString()} element={<button type='button' className="button button--blue signin__button">Экспорт Excel</button>}>
                                 <ExcelSheet data={dateTable} name={"Отчет " + pickedDate.toLocaleDateString()}>
                                     <ExcelColumn label="Номер автомобиля" value="license_plate"/>
                                     <ExcelColumn label="Регион" value="region"/>
@@ -84,6 +121,7 @@ function Analyst() {
                                 </ExcelSheet>
                             </ExcelFile>
                         }
+                        {<button className="button button--blue signin__button" onClick={() => exportPDF(pickedDate.toLocaleDateString())}>Экспорт PDF</button>}
                     </div>
                     
                 }
