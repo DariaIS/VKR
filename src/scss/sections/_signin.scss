@@ -55,4 +55,9 @@
     &:not(:last-child) {
         margin-bottom: 1rem;
     }
+
+    &--center {
+        display: block;
+        margin: auto;
+    }
 }
