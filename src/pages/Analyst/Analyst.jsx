@@ -6,6 +6,11 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Axios from 'axios';
 
+// import Roboto from '../../fonts/Roboto-Regular.ttf';
+import '../../fonts/Roboto-Regular.js';
+
+
+
 function Analyst() {
 
     const [carTable, setCarTable] = useState('');
@@ -29,26 +34,17 @@ function Analyst() {
         });
     };
 
-    function exportPDF(filename) {
+    function exportPDF(tableDate) {
         const unit = "pt";
         const size = "A4"; // Use A1, A2, A3 or A4
         const orientation = "portrait"; // portrait or landscape
     
-        const marginLeft = 40;
         const doc = new jsPDF(orientation, unit, size);
-    
-        doc.setFontSize(15);
-    
-        const title = "Отчет" + filename;
-        const headers = [["License plate", "Region", "Car brand", "Arrival_time", "Departure time"]];
+        
+        const headers = [['Номер автомобиля', "Регион", "Марка автомобиля", "Время въезда", "Время выезда"]];
     
         const data = dateTable.map(val=> [val.license_plate, val.region, val.car_brand, val.arrival_time, val.departure_time]);
     
-        let content = {
-          startY: 50,
-          head: headers,
-          body: data
-        };
         // let elementToPrint = document.getElementById('dateTable');
         // console.log(elementToPrint)
         
@@ -61,9 +57,31 @@ function Analyst() {
         //         doc.save("Отчет " + filename + ".pdf");
         //     }
         // });
-        doc.setFont('Roboto');
-        doc.autoTable(content);
-        doc.save("Отчет " + filename + ".pdf");
+        // console.log(doc.addFileToVFS('Roboto-Regular.ttf', font));
+
+        doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')
+        doc.setFont('Roboto-Regular');
+        doc.setFontSize(16);
+        doc.text('Отчет ' + tableDate, 40, 50)
+
+        let content = {
+            startY: 70,
+            head: headers,
+            body: data,
+            theme: 'plain',
+            headStyles: {
+                fillColor: '#CBCCD2',
+            },
+            styles: { 
+                font: 'Roboto-Regular',
+                fontSize: 12,
+                lineWidth: 1
+            }
+        };
+
+        
+        doc.autoTable(content)
+        doc.save('Отчет ' + tableDate + '.pdf');
     }
 
     useEffect(() => {
@@ -83,7 +101,7 @@ function Analyst() {
                     dateTable.length !== 0 && 
                     <div>
                         <span className="analyst__table-title title title--small">Отчет о въездах и выездах на {pickedDate.toLocaleDateString()}</span>
-                        <table id="dateTable" className="analyst__table-item">
+                        <table className="analyst__table-item">
                             <thead className="analyst__thead">
                                 <tr className="analyst__tr">
                                     <th className="analyst__th">Номер автомобиля</th>
@@ -109,19 +127,21 @@ function Analyst() {
                                 }
                             </tbody>
                         </table>
-                        {console.log(dateTable)}
-                        {
-                            <ExcelFile filename={"Отчет " + pickedDate.toLocaleDateString()} element={<button type='button' className="button button--blue signin__button">Экспорт Excel</button>}>
-                                <ExcelSheet data={dateTable} name={"Отчет " + pickedDate.toLocaleDateString()}>
-                                    <ExcelColumn label="Номер автомобиля" value="license_plate"/>
-                                    <ExcelColumn label="Регион" value="region"/>
-                                    <ExcelColumn label="Марка автомобиля" value="car_brand"/>
-                                    <ExcelColumn label="Время въезда" value="arrival_time"/>
-                                    <ExcelColumn label="Время выезда" value="departure_time"/>
-                                </ExcelSheet>
-                            </ExcelFile>
-                        }
-                        {<button className="button button--blue signin__button" onClick={() => exportPDF(pickedDate.toLocaleDateString())}>Экспорт PDF</button>}
+                        <div className="analyst__export-buttons">
+                            {console.log(dateTable)}
+                            {
+                                <ExcelFile filename={"Отчет " + pickedDate.toLocaleDateString()} element={<button type='button' className="button button--white signin__button">Экспорт Excel</button>}>
+                                    <ExcelSheet data={dateTable} name={"Отчет " + pickedDate.toLocaleDateString()}>
+                                        <ExcelColumn label="Номер автомобиля" value="license_plate"/>
+                                        <ExcelColumn label="Регион" value="region"/>
+                                        <ExcelColumn label="Марка автомобиля" value="car_brand"/>
+                                        <ExcelColumn label="Время въезда" value="arrival_time"/>
+                                        <ExcelColumn label="Время выезда" value="departure_time"/>
+                                    </ExcelSheet>
+                                </ExcelFile>
+                            }
+                            {<button className="button button--blue signin__button" onClick={() => exportPDF(pickedDate.toLocaleDateString())}>Экспорт PDF</button>}
+                        </div>
                     </div>
                     
                 }

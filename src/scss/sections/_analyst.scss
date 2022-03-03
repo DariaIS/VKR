@@ -23,6 +23,10 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     overflow: hidden;
+
+    &:not(:last-child) {
+        margin-bottom: 5rem;
+    }
 }
 
 .analyst__thead {
@@ -44,3 +48,16 @@
     padding: 20px 20px 20px 30px;
     text-align: left;
 }
+
+.analyst__export-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.analyst__export-buttons > span {
+    display: block;
+
+    &:not(:last-child) {
+        margin-right: 40px;
+    }
+  }
