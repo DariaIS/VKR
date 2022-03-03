@@ -127,7 +127,7 @@ function translitRuEn(lit) {
     return result;
 }
 
-app.post("/add", (req, res) => {
+app.post("/addCar", (req, res) => {
     if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.lastName === '' || req.body.name === '' || req.body.middleName === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '')
         res.send( { message: 'Не все поля заполнены!' });
     else if (!Number.isInteger(parseInt(req.body.region, 10)) || req.body.region === "0") {
@@ -293,7 +293,7 @@ app.post("/add", (req, res) => {
             });
         }
 
-        async function Adding() {
+        async function CarAdding() {
  
             try {
                 await CheckGates();
@@ -311,11 +311,79 @@ app.post("/add", (req, res) => {
                     await AddGates();
                                 
             } catch(error){
-                // console.log(error)
+                console.log(error)
             }
         }
 
-        Adding();
+        CarAdding();
+    }
+});
+
+app.post("/addUser", (req, res) => {
+    if (req.body.userName === '' || req.body.password === '' || req.body.role === '')
+        res.send( { message: 'Не все поля заполнены!' });
+    else {
+        const userName = req.body.userName;
+        const password = req.body.password;
+        const role = req.body.role;
+        
+        let warning = false;
+
+        console.log("\n");
+
+        let CheckUser = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "SELECT id_user FROM user WHERE user_name=?",
+                    [userName], (err, result) => {
+                        if (result.length === 0) {
+                            console.log(result.length + " такого пользователя нет")
+                        }
+                        else  {
+                            console.log(result.length + " такой пользователь есть");
+                            res.send( { message: 'Введенное имя пользователя недоступно!' }); 
+                            warning = true;
+                        }
+                        
+                        if(err) {
+                            return reject(error);
+                        }
+                        return resolve(result);                                           
+                });
+            });
+        }
+
+        let AddUser = () => {
+            return new Promise((resolve, reject) => {
+                
+                console.log("AddUser");
+                db.query(
+                    "INSERT INTO user (user_name, password, role) VALUES (?, ?, ?)",
+                    [userName, password, role], (err, result) => {
+                        res.send( { message: 'Пользователь успешно добавлен!' });
+                        console.log(result + " пользователь добавлен")
+
+                        if(err){
+                            return reject(error);
+                        }
+                        return resolve(result);
+                });
+            });
+        }
+
+        async function UserAdding() {
+ 
+            try {
+                await CheckUser();
+                if (!warning)
+                    await AddUser();
+                                
+            } catch(error){
+                console.log(error)
+            }
+        }
+
+        UserAdding();
     }
 });
 

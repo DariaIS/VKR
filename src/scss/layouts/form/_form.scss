@@ -1,4 +1,11 @@
+.form {
+
+    &:not(:last-child) {
+        margin-bottom: 10rem;
+    }
+}
+
 .form__item {
-    display: block;
+    display: inline-block;
     position: relative;
 }
