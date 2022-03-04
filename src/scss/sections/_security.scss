@@ -1,5 +1,17 @@
+.security__checking {
+    display: flex;
+    align-items: center;
+}
+
 .security__car-result {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    width: 50%;
+
+    &:not(:last-child) {
+        margin-right: 5rem;
+    }
 }
 
 .security__text {
@@ -9,7 +21,7 @@
     font-size: 3rem;
 
     &:not(:last-child) {
-        margin-bottom: 10rem;
+        margin-bottom: 15rem;
     }
 }
 
@@ -18,4 +30,16 @@
     &:not(:last-child) {
         margin-bottom: 1rem;
     }
+}
+
+.security__log {
+    padding: 3rem;
+    overflow-y: scroll;
+    width: 50%;
+    height: 650px;
+    border-radius: 10px;
+    background-color: $color-main;
+    color: $white;
+    font-size: 1.4rem;
+    font-weight: bold;
 }

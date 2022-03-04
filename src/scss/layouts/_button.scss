@@ -6,6 +6,8 @@
     padding: 1.6rem 1.5rem;
     border-radius: 10px;
     font-family: $font-family;
+    opacity: 0.7;
+    // background-image: linear-gradient(rgba(0, 0, 0, 0) 0 0);
     transition: 0.3s;
 
     @media (min-width: $screen-lg) {
@@ -20,26 +22,23 @@
         outline: none;
     }
 
-
-
     &--blue {
         background-color: $color-main;
         color: $white;
-
+        
         &:hover {
-            background-color: $white;
-            color: $color-main;
+            // background-color: $color-secondary;
+            opacity: 1;
         }
     }
-
     
     &--white {
         background-color: $white;
         color: $color-main;
 
         &:hover {
-            background-color: $color-main;
-            color: $white;
+            background-color: $gray--lighten;
+            opacity: 1;
         }
     }
 

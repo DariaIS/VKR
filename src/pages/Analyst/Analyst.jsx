@@ -142,11 +142,10 @@ function Analyst() {
                             }
                             {<button className="button button--blue signin__button" onClick={() => exportPDF(pickedDate.toLocaleDateString())}>Экспорт PDF</button>}
                         </div>
-                    </div>
-                    
+                    </div>  
                 }
-                
             </div>
+            
             <div className="analyst__table">
                 <span className="analyst__table-title title title--small">Все машины, присутствующие в базе данных</span>
                 <table className="analyst__table-item">

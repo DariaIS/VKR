@@ -201,7 +201,7 @@ function Admin() {
                             <label>
                                 <input type="radio" value="security" name="role"/>
                                 Сотрудник охраны
-                                </label>
+                            </label>
                             <label>
                                 <input type="radio" value="analyst" name="role"/>
                                 Аналитик

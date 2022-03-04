@@ -29,7 +29,8 @@ app.use(
         cookie: {
             expires: 60 * 1000 * 10, // 60 * 1000 - минута
         },
-    })
+    }
+    )
 );
 
 const db = mysql.createConnection({
@@ -387,25 +388,40 @@ app.post("/addUser", (req, res) => {
     }
 });
 
-app.get('/car', (req, res) => {
-    let carCheck = fs.readFileSync("car.txt", "utf8").toString().split("\n");
+app.post('/inOutCar', (req, res) => {
+    const direction = req.body.direction;
 
-    if (carCheck.length === 1)
-        res.send( { message: 'Номер машины не распознан!' });
+
+
+    let log = [];
+    let plate = fs.readFileSync("car.txt", "utf8").toString().split("\n").toString();
+
+
+    if (req.session.log)
+        log = req.session.log;
+
+    if (plate.length < 6) {
+        log.push('Номер автомобиля не распознан');
+        req.session.log = log;
+        res.send({ log: log, message: 'Номер машины не распознан!' });
+    }
     else {
-        carCheck[0] = translitRuEn(carCheck[0].trim());
         let warning = false;
         let idCar, idDay;
         let idGates = '1';
+        
+        plate = translitRuEn(plate.trim());
 
-        let IfCarCheck = () => {
+        let CheckCarInOut = () => {
             return new Promise((resolve, reject) => {
 
                 db.query(
                     "SELECT id_car FROM car WHERE license_plate=?",
-                    [carCheck[0]], (err, result) => {
+                    [plate], (err, result) => {
                         if (result.length === 0) {
-                            res.send( { message: 'Машины с данным номером нет в базе данных!' }); 
+                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate + ' отсутствует в базе данных');
+                            req.session.log = log;
+                            res.send({ log: log, message: 'Машины с данным номером нет в базе данных!' }); 
                             warning = true;
                         }
                         else idCar = result[0].id_car;
@@ -418,14 +434,16 @@ app.get('/car', (req, res) => {
             });
         }
 
-        let IfThisGates = () => {
+        let CheckRightGates = () => {
             return new Promise((resolve, reject) => {
 
                 db.query(
                     "SELECT * FROM gates_allowed WHERE id_car=? AND id_gates=?",
                     [idCar, idGates], (err, result) => {
                         if (result.length === 0) {
-                            res.send( { message: 'У машины с данным номером нет доступа к этой проходной!' }); 
+                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate + ' не имеет доступа к данной проходной');
+                            req.session.log = log;
+                            res.send({ log: log, message: 'У машины с данным номером нет доступа к этой проходной!' }); 
                             warning = true;
                         }
 
@@ -437,7 +455,7 @@ app.get('/car', (req, res) => {
             });
         }
 
-        let ResDay = () => {
+        let AddDate = () => {
             return new Promise((resolve, reject) => {
 
                 db.query(
@@ -466,7 +484,7 @@ app.get('/car', (req, res) => {
             });
         }
 
-        let IfArrivingDay = () => {
+        let CheckAddArrDate = () => {
             return new Promise((resolve, reject) => {
 
                 db.query(
@@ -487,10 +505,10 @@ app.get('/car', (req, res) => {
             });
         }
 
-        let ResCarCheck = () => {
+        let AddCarInOut = () => {
             return new Promise((resolve, reject) => {
 
-                if (carCheck[1] === '1')
+                if (direction === 'in') {                    
                     db.query(
                         "UPDATE arriving_date SET arrival_time=CURTIME() WHERE id_date=? AND id_car=?",
                         [idDay, idCar], (err, result) => {
@@ -500,7 +518,11 @@ app.get('/car', (req, res) => {
                             }
                             return resolve(result);
                     });
-                else 
+                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate + ' въехал');
+                    req.session.log = log;         
+                    res.send({ log: log, message: 'Машина может быть пропущена!' });   
+                }
+                else {
                     db.query(
                         "UPDATE arriving_date SET departure_time=CURTIME() WHERE id_date=? AND id_car=?",
                         [idDay, idCar], (err, result) => {
@@ -509,37 +531,38 @@ app.get('/car', (req, res) => {
                                 return reject(error);
                             }
                             return resolve(result);
-                    });
-
-                res.send( { message: 'Машина может быть пропущена!' });   
+                    })
+                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate + ' выехал');
+                }
             });
         }
 
         
-        async function Checking() {
+        async function CarInOut() {
  
             try {
-                await IfCarCheck();
+                await CheckCarInOut();
                 if (!warning)
-                    await IfThisGates();
+                    await CheckRightGates();
                 if (!warning)
-                    await ResDay();
+                    await AddDate();
                 if (!warning)
-                    await IfArrivingDay();
+                    await CheckAddArrDate();
                 if (!warning)
-                    await ResCarCheck();
-                                
+                    await AddCarInOut();
             } catch(error){
                 console.log(error)
             }
         }
 
-        Checking();
-
+        CarInOut();
     }
-
 });
 
+app.get('/InOutLog', (req, res) => {
+    if (req.session.log)
+        res.send({ log: req.session.log });
+});
 
 app.post('/dateTable', (req, res) => {
     const date = req.body.date;
