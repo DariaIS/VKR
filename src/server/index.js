@@ -391,17 +391,17 @@ app.post("/addUser", (req, res) => {
 app.post('/inOutCar', (req, res) => {
     const direction = req.body.direction;
 
-
-
     let log = [];
-    let plate = fs.readFileSync("car.txt", "utf8").toString().split("\n").toString();
+    let plate = fs.readFileSync("car.txt", "utf8").toString().split("\n");
+
+    console.log(plate);
 
 
     if (req.session.log)
         log = req.session.log;
 
-    if (plate.length < 6) {
-        log.push('Номер автомобиля не распознан');
+    if (plate[0].length < 6) {
+        log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Номер автомобиля не распознан');
         req.session.log = log;
         res.send({ log: log, message: 'Номер машины не распознан!' });
     }
@@ -410,16 +410,16 @@ app.post('/inOutCar', (req, res) => {
         let idCar, idDay;
         let idGates = '1';
         
-        plate = translitRuEn(plate.trim());
+        plate[0] = translitRuEn(plate[0].trim());
 
         let CheckCarInOut = () => {
             return new Promise((resolve, reject) => {
 
                 db.query(
                     "SELECT id_car FROM car WHERE license_plate=?",
-                    [plate], (err, result) => {
+                    [plate[0]], (err, result) => {
                         if (result.length === 0) {
-                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate + ' отсутствует в базе данных');
+                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate[0] + ' отсутствует в базе данных');
                             req.session.log = log;
                             res.send({ log: log, message: 'Машины с данным номером нет в базе данных!' }); 
                             warning = true;
@@ -441,7 +441,7 @@ app.post('/inOutCar', (req, res) => {
                     "SELECT * FROM gates_allowed WHERE id_car=? AND id_gates=?",
                     [idCar, idGates], (err, result) => {
                         if (result.length === 0) {
-                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate + ' не имеет доступа к данной проходной');
+                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate[0] + ' не имеет доступа к данной проходной');
                             req.session.log = log;
                             res.send({ log: log, message: 'У машины с данным номером нет доступа к этой проходной!' }); 
                             warning = true;
@@ -518,7 +518,7 @@ app.post('/inOutCar', (req, res) => {
                             }
                             return resolve(result);
                     });
-                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate + ' въехал');
+                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate[0] + ' въехал');
                     req.session.log = log;         
                     res.send({ log: log, message: 'Машина может быть пропущена!' });   
                 }
@@ -532,7 +532,7 @@ app.post('/inOutCar', (req, res) => {
                             }
                             return resolve(result);
                     })
-                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate + ' выехал');
+                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate[0] + ' выехал');
                 }
             });
         }

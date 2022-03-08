@@ -8,17 +8,19 @@ function Security() {
 
     const [CarDirection, setCarDirection] = useState('');
     const [inOutLog, setInOutLog] = useState('');
-    const [logScroll, setLogScroll] = useState('');
+    const [logScroll, setLogScroll] = useState(null);
 
     useEffect(() => {
         Axios.get('http://localhost:3001/inOutLog').then((response) => {
             // console.log(response.data.result);
             setInOutLog(response.data.log);
-            let logBlock = document.getElementsByClassName('security__log')[0];
-            logBlock.scrollTop = logBlock.scrollHeight
-            setLogScroll(logBlock);
+            
             // logScroll.scrollTop = logScroll.scrollHeight;
         });
+
+        let logBlock = document.getElementsByClassName('security__log')[0];
+        logBlock.scrollTop = logBlock.scrollHeight
+        setLogScroll(logBlock);
     }, []);
 
     const inOutCar = () => {
