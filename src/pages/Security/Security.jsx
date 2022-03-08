@@ -8,7 +8,7 @@ function Security() {
 
     const [CarDirection, setCarDirection] = useState('');
     const [inOutLog, setInOutLog] = useState('');
-    const [logScroll, setLogScroll] = useState(null);
+    const [logScroll, setLogScroll] = useState('');
 
     useEffect(() => {
         Axios.get('http://localhost:3001/inOutLog').then((response) => {

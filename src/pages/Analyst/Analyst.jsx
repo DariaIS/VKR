@@ -15,6 +15,8 @@ function Analyst() {
 
     const [carTable, setCarTable] = useState('');
     const [dateTable, setDateTable] = useState('');
+    const [sortedField, setSortedField] = useState('');
+
 
     const [pickedDate, setPickedDate] = useState(new Date());
 
@@ -44,20 +46,6 @@ function Analyst() {
         const headers = [['Номер автомобиля', "Регион", "Марка автомобиля", "Время въезда", "Время выезда"]];
     
         const data = dateTable.map(val=> [val.license_plate, val.region, val.car_brand, val.arrival_time, val.departure_time]);
-    
-        // let elementToPrint = document.getElementById('dateTable');
-        // console.log(elementToPrint)
-        
-        // doc.html(elementToPrint, {
-        //     html2canvas: {
-        //         scale: 0.45
-        //     },
-        //     callback: function (doc) {
-        //         // doc.save();
-        //         doc.save("Отчет " + filename + ".pdf");
-        //     }
-        // });
-        // console.log(doc.addFileToVFS('Roboto-Regular.ttf', font));
 
         doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')
         doc.setFont('Roboto-Regular');
@@ -104,11 +92,21 @@ function Analyst() {
                         <table className="analyst__table-item">
                             <thead className="analyst__thead">
                                 <tr className="analyst__tr">
-                                    <th className="analyst__th">Номер автомобиля</th>
-                                    <th className="analyst__th">Регион</th>
-                                    <th className="analyst__th">Марка автомобиля</th>
-                                    <th className="analyst__th">Время въезда</th>
-                                    <th className="analyst__th">Время выезда</th>
+                                    <th className="analyst__th">
+                                        Номер автомобиля
+                                    </th>
+                                    <th className="analyst__th">
+                                        Регион
+                                    </th>
+                                    <th className="analyst__th">
+                                        Марка автомобиля
+                                    </th>
+                                    <th className="analyst__th">
+                                        Время въезда
+                                    </th>
+                                    <th className="analyst__th">
+                                        Время выезда
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody className="analyst__tbody">

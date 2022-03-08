@@ -393,14 +393,11 @@ app.post('/inOutCar', (req, res) => {
 
     let log = [];
     let plate = fs.readFileSync("car.txt", "utf8").toString().split("\n");
-
-    console.log(plate);
-
-
+    
     if (req.session.log)
         log = req.session.log;
 
-    if (plate[0].length < 6) {
+    if (plate[0].trim().length < 6) {
         log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Номер автомобиля не распознан');
         req.session.log = log;
         res.send({ log: log, message: 'Номер машины не распознан!' });
