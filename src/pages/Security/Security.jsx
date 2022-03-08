@@ -8,14 +8,18 @@ function Security() {
 
     const [CarDirection, setCarDirection] = useState('');
     const [inOutLog, setInOutLog] = useState('');
+    const [logScroll, setLogScroll] = useState('');
 
     useEffect(() => {
         Axios.get('http://localhost:3001/inOutLog').then((response) => {
             // console.log(response.data.result);
             setInOutLog(response.data.log);
+            let logBlock = document.getElementsByClassName('security__log')[0];
+            logBlock.scrollTop = logBlock.scrollHeight
+            setLogScroll(logBlock);
+            // logScroll.scrollTop = logScroll.scrollHeight;
         });
     }, []);
-
 
     const inOutCar = () => {
         console.log(CarDirection)
@@ -32,6 +36,7 @@ function Security() {
                     setCarWarningStatus(response.data.message);
                     setCarStatus('');
                 }
+            logScroll.scrollTop = logScroll.scrollHeight;
         });
     }
 
@@ -57,18 +62,14 @@ function Security() {
                     <span className="status status--warning">{carWarningStatus}</span>
                     <span className="status status--success">{carStatus}</span>
                 </div>
-                <div className="security__log"> 
-                {console.log(typeof inOutLog)}
-                {console.log(inOutLog)}
+                <div className="security__log">
                     {
                         Object.values(inOutLog).map(val => {
-                            {console.log(inOutLog.indexOf(val))}
                             return (
                                 <p key={Math.random()}>{val}</p>
                             )
                         })
                     }
-                    {/* {inOutLog} */}
                 </div>
             </div>
         </div>

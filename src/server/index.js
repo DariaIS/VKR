@@ -27,7 +27,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         cookie: {
-            expires: 60 * 1000 * 10, // 60 * 1000 - минута
+            expires: 60 * 1000 * 60, // 60 * 1000 - минута
         },
     }
     )

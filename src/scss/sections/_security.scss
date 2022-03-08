@@ -34,7 +34,7 @@
 
 .security__log {
     padding: 3rem;
-    overflow-y: scroll;
+    overflow: auto;
     width: 50%;
     height: 650px;
     border-radius: 10px;
