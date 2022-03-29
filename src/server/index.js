@@ -78,6 +78,7 @@ app.post('/login', (req, res) => {
                     req.session.user = result;
                     res.send(result);
                 }
+                res.send( { message: 'Неверный логин или пароль!' });
             } else
                 res.send( { message: 'Неверный логин или пароль!' });
         }
