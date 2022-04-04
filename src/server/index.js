@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const fs = require('fs');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 10;
 
 const app = express();
 
@@ -60,18 +63,24 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
     const username = req.body.username;
+
     const password = req.body.password;
 
     db.query(
-        "SELECT * FROM user WHERE user_name = ? AND password = ?",
-        [username, password],
-        (err, result) => {
+        "SELECT * FROM user WHERE user_name = ?",
+        [username],
+        async (err, result) => {
             if (err)
                 res.send({ err: err });
 
             if (result.length > 0) {
-                req.session.user = result;
-                res.send(result);
+                const comparison = await bcrypt.compare(password, result[0].password);
+                console.log(comparison);
+                if(comparison) {
+                    req.session.user = result;
+                    res.send(result);
+                }
+                res.send( { message: 'Неверный логин или пароль!' });
             } else
                 res.send( { message: 'Неверный логин или пароль!' });
         }
@@ -322,17 +331,19 @@ app.post("/addCar", (req, res) => {
     }
 });
 
-app.post("/addUser", (req, res) => {
+app.post("/addUser", async (req, res) => {
     if (req.body.userName === '' || req.body.password === '' || req.body.role === '')
         res.send( { message: 'Не все поля заполнены!' });
     else {
+        const encryptedPassword = await bcrypt.hash(req.body.password, saltRounds)
         const userName = req.body.userName;
-        const password = req.body.password;
+        const password = encryptedPassword;
         const role = req.body.role;
         
         let warning = false;
 
         console.log("\n");
+        console.log(password);
 
         let CheckUser = () => {
             return new Promise((resolve, reject) => {
@@ -367,7 +378,7 @@ app.post("/addUser", (req, res) => {
                         console.log(result + " пользователь добавлен")
 
                         if(err){
-                            return reject(error);
+                            return reject(err);
                         }
                         return resolve(result);
                 });
