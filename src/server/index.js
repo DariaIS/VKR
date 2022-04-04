@@ -17,6 +17,8 @@ app.use(
     })
 );
 
+module.exports = app;
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 

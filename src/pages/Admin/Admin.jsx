@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
+import sda from '../../js/fileManager/getfileList'
 
 function Admin() {
 
@@ -24,6 +25,24 @@ function Admin() {
     const [addUserStatus, setAddUserStatus] = useState('');
     const [addUserWarningStatus, setAddUserWarningStatus] = useState('');
 
+    useEffect(() => {
+        const getfileList = document.createElement('getfileList');
+        const uplouder = document.createElement('uplouder');
+      
+        getfileList.src = '../../js/fileManager/getfileList';
+        getfileList.async = true;
+        
+        uplouder.src = "../../js/fileManager/uplouder";
+        uplouder.async = true;
+      
+        document.body.appendChild(getfileList);
+        document.body.appendChild(uplouder);
+      
+        return () => {
+          document.body.removeChild(getfileList);
+          document.body.removeChild(uplouder);
+        }
+      }, []);
 
     const addCar = (e) => {
         Axios.post('http://localhost:3001/addCar', {
@@ -213,6 +232,71 @@ function Admin() {
                     <span className="status status--warning">{addUserWarningStatus}</span>
                     <span className="status status--success">{addUserStatus}</span>
                 </div>
+            </div>
+
+            <div>
+                <div class="tab">
+                    <button className="tablinks" onclick="openTab(event, 'fileuploader'); getListOfFiles('file', 'fileholder', 'loadinggif'); document.getElementById('viewoptions').style.display = 'none';">file</button>
+                    <button className="tablinks" onclick="openTab(event, 'fontuploader'); getListOfFiles('font', 'fileholder', 'loadinggif'); document.getElementById('viewoptions').style.display = 'none';">font</button>
+                    <button className="tablinks" onclick="openTab(event, 'htmluploader'); getListOfFiles('html', 'fileholder', 'loadinggif'); document.getElementById('viewoptions').style.display = 'none';">html</button>
+                    <button className="tablinks" onclick="openTab(event, 'imageuploader'); getListOfFiles('image', 'fileholder', 'loadinggif'); document.getElementById('viewoptions').style.display = 'block';">image</button>
+                    <button className="tablinks" onclick="openTab(event, 'pdfuploader'); getListOfFiles('pdf', 'fileholder', 'loadinggif'); document.getElementById('viewoptions').style.display = 'none';">pdf</button>
+                    <button className="tablinks" onclick="openTab(event, 'videouploader'); getListOfFiles('video', 'fileholder', 'loadinggif'); document.getElementById('viewoptions').style.display = 'none';">video</button>
+
+                    <div id="viewoptions">
+                        <form>
+                            View options:
+                            <input type="radio" name="viewoption" value="details" onclick="replaceClassName('tile', 'details')" checked/>Details
+                            <input type="radio" name="viewoption" value="tile" onclick="replaceClassName('details', 'tile')"/>Tile
+                        </form>
+                    </div>
+                </div>
+
+                <div id="progressBar"></div>
+
+                <div id="fontuploader" class="tabcontent">
+                    <p><b>font</b></p>
+                    <form id="form_fontUpload" method="POST" action="/?type=font" enctype="multipart/form-data">
+                        <input type="file" name="file" accept=".ttf, .otf" required/>
+                        <input type="button" onclick="uploadToServer(document.getElementById('form_fontUpload'), document.getElementById('progressBar'))" value="Upload"/>
+                    </form>
+                </div>
+
+                <div id="htmluploader" class="tabcontent">
+                    <p><b>html</b></p>
+                    <form id="form_htmlUpload" method="POST" action="/?type=html" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="text/html, text/htm" required/>
+                        <input type="button" onclick="uploadToServer(document.getElementById('form_htmlUpload'), document.getElementById('progressBar'))" value="Upload"/>
+                    </form>
+                </div>
+
+                <div id="imageuploader" class="tabcontent">
+                    <p><b>image</b></p>
+                    <form id="form_imageUpload" method="POST" action="/?type=image" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="image/*" required/>
+                        <input type="button" onclick="uploadToServer(document.getElementById('form_imageUpload'), document.getElementById('progressBar'))" value="Upload"/>
+                    </form>
+                </div>
+
+                <div id="pdfuploader" class="tabcontent">
+                    <p><b>pdf</b></p>
+                    <form id="form_pdfUpload" method="POST" action="/?type=pdf" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="application/pdf" required/>
+                        <input type="button" onclick="uploadToServer(document.getElementById('form_pdfUpload'), document.getElementById('progressBar'))" value="Upload"/>
+                    </form>
+                </div>
+
+                <div id="videouploader" class="tabcontent">
+                    <p><b>video</b></p>
+                    <form id="form_videoUpload" method="POST" action="/?type=video" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="video/*" required/>
+                        <input type="button" onclick="uploadToServer(document.getElementById('form_videoUpload'), document.getElementById('progressBar'))" value="Upload"/>
+                    </form>
+                </div>
+
+                <div><img id="loadinggif" src="/img/200.gif" alt="Loading Files..."/></div>
+
+                <div class="fileholder" id="fileholder"></div>
             </div>
         </div>
     );
