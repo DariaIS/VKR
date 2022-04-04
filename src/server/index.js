@@ -7,6 +7,7 @@ const session = require('express-session');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 
+
 const saltRounds = 10;
 
 const app = express();
@@ -18,10 +19,8 @@ app.use(
         methods: ['GET', "POST"],
         credentials: true,
     })
-);
-
-module.exports = app;
-
+    );
+    
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -34,10 +33,9 @@ app.use(
         cookie: {
             expires: 60 * 1000 * 60, // 60 * 1000 - минута
         },
-    }
-    )
+    })
 );
-
+    
 const db = mysql.createConnection({
     host: "127.0.0.1",
     port: '3306',
@@ -54,6 +52,8 @@ db.connect(function (err) {
     }
 });
 
+require('./routes')(app);
+        
 app.get('/login', (req, res) => {
     if (req.session.user) {
         res.send({ loggedIn: true, user: req.session.user });

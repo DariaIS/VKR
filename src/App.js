@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SignIn, Role } from './pages';
+import { SignIn, Role, FileManager } from './pages';
 import { Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -10,6 +10,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<SignIn/>} exact />
                 <Route path="/home" element={<Role/>} exact />
+                <Route path="/fileManager" element={<FileManager/>} exact />
             </Routes>
             </div>
     </div>
