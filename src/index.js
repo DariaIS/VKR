@@ -6,8 +6,6 @@ import './scss/style.scss';
 
 import App from './App';
 
-// import reportWebVitals from './reportWebVitals';
-
 ReactDOM.render(
     <Router>
         <React.StrictMode>
@@ -16,5 +14,3 @@ ReactDOM.render(
     </Router>,
     document.getElementById('root')
 );
-
-// reportWebVitals();
