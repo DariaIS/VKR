@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
-function SignIn() {
+export const SignIn = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -62,5 +62,3 @@ function SignIn() {
         </div>
     );
 }
-
-export default SignIn;

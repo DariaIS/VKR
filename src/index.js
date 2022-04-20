@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import './scss/style.scss';
 
-import App from './App';
+import { App } from './App';
 
 // import reportWebVitals from './reportWebVitals';
 

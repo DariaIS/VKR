@@ -3,9 +3,8 @@ import Axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 import { Admin, Analyst, Security } from "./index";
-import { Header, Footer } from '../components/index';
 
-function Role() {
+export const Home = () => {
 
     const [role, setRole] = useState('');
 
@@ -25,13 +24,9 @@ function Role() {
 
     return (
         <div>
-            <Header/>
             {role === 'admin' && <Admin/>}
             {role === 'security' && <Security/>}
             {role === 'analyst' && <Analyst/>}
-            <Footer/>
         </div>
     );
 }
-
-export default Role;

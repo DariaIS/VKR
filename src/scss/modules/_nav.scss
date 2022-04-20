@@ -73,13 +73,27 @@
 
     @media (min-width: $screen-lg) {
 
-        color: $color-main;
         display: block;
         padding: 2.6rem;
+        transition: 0.2s;
 
-        &:hover {
-            background-color: $color-main;
+        &--white {
+            color: $color-main;
+
+            &:hover {
+                background-color: $color-main;
+                color: $white;
+            }
+        }
+
+        &--blue {
             color: $white;
+            background-color: $color-main;
+            opacity: 0.7;
+
+            &:hover {
+                opacity: 1;
+            }
         }
     }
 }
