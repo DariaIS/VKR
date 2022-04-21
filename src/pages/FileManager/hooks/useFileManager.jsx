@@ -7,10 +7,10 @@ export const useFileManager = () => {
         files: []
     });
 
-    // const [modalData, setModalData] = useState({
-    //     file: '',
-    //     modalType: ''
-    // });
+    const [modalData, setModalData] = useState({
+        file: '',
+        modalType: ''
+    });
 
     const clickDirectory = event => {
         event.preventDefault();
@@ -42,33 +42,34 @@ export const useFileManager = () => {
         )
     }
 
-    // const clickRemove = (event) => {
-    //     event.preventDefault();
-    //     console.log('http://localhost:3001/removefile?path=' + event.target.attributes.href.value);
-    //     fetch('http://localhost:3001/removefile?path=' + event.target.attributes.href.value)
-    //     .then(res => res.json())
-    //     .then(
-    //         (result) => {
-    //             console.log(result);
-    //             window.location.reload();
-    //         },
-    //         (error) => {
-    //             console.log(error);
-    //         }
-    //     )
-    // }
+    const clickRemove = (event) => {
+        event.preventDefault();
+        console.log('http://localhost:3001/removefile?path=' + event.target.attributes.href.value);
+        fetch('http://localhost:3001/removefile?path=' + event.target.attributes.href.value)
+        .then(res => res.json())
+        .then(
+            (result) => {
+                console.log(result);
+                window.location.reload();
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
+    }
 
-    // const openModal = ({ actionData }) => {
-    //     setModalData(actionData);
-    // }
+    const openModal = ({ actionData }) => {
+        console.log(actionData);
+        setModalData(actionData);
+    }
 
     return {
         parent,
         filesData,
-        // modalData,
+        modalData,
         effectDirectory,
         clickDirectory,
-        // clickRemove,
-        // openModal
+        clickRemove,
+        openModal
     };
 };

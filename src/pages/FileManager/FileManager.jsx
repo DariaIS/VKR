@@ -67,19 +67,19 @@ export const FileManager = () => {
                         }
                         <td className="analyst__td">{item.birthTime.replace('T',' ').replace('Z',' ')}</td>
                         <td className="analyst__td">
-                            {/* <a href={filesData.path + '/' + item.name} onClick={clickRemove}>
+                            <a href={filesData.path + '/' + item.name} onClick={clickRemove}>
                                 <RemoveIcon height={28} width={28} pointerEvents='none'/>
                             </a>
 
-                            <a href={filesData.path + '/' + item.name} onClick={openModal({modalData: {file: filesData.path + '/' + item.name, modalType: 'rename'}})}>
+                            <a href={filesData.path + '/' + item.name} onClick={(event) =>{event.preventDefault(); openModal({actionData: {file: filesData.path + '/' + item.name, modalType: 'rename'}})} }>
                                 <RenameIcon height={28} width={28} pointerEvents='none'/>
-                            </a> */}
+                            </a>
                         </td>
                     </tr>
                 ))}
             </tbody>
         </table>
-        {/* <Modal modalData={modalData}/> */}
+        <Modal modalData={modalData}/>
     </div>
     );
 }
