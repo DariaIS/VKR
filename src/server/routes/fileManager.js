@@ -17,16 +17,13 @@ module.exports = function(app) {
         if (isFolder(base + path)) {
             let files = fs.readdirSync(base + path).map(item => {
                 const isDir = fs.lstatSync(base + path + '/' + item).isDirectory();
-                let size = 0;
-                if (!isDir) {
-                    size = fs.statSync(base + path + '/' + item);
-                    console.log(size.size);
-                }
+                let fileInfo = fs.statSync(base + path + '/' + item);
 
                 return {
                     name: item,
                     dir: isDir,
-                    size: size.size ?? 0
+                    size: fileInfo.size,
+                    birthTime: fileInfo.birthtime
                 }
             })
             res.json({
@@ -35,5 +32,35 @@ module.exports = function(app) {
                 files: files
             });
         }
+    });
+
+    app.get('/removefile', (req, res) => {
+        const base = './files/';
+        let path = '';
+
+        if ('path' in req.query) {
+            path = req.query.path;
+        }
+        console.log(base + path);
+        fs.rmSync(base + path, { recursive: true });
+        res.json({
+            result: true,
+        });
+    });
+
+    app.post('/renamefile', (req, res) => {
+        const base = './files/';
+        let path = '';
+
+        if ('path' in req.query) {
+            path = req.query.path;
+        }
+        console.log(base + path);
+        fs.rename(base + path, base + req.body.newName, () => {
+            console.log('file renamed')
+        });
+        res.json({
+            result: true,
+        });
     });
 }
