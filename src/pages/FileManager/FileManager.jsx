@@ -10,7 +10,7 @@ import { useFileManager } from './hooks/useFileManager';
 import { Modal } from "../../components/Modal";
 
 export const FileManager = () => {
-    const { parent, filesData, modalData, effectDirectory, clickDirectory, clickRemove, isModalOpen, clickOpenModal, clickCloseModal } = useFileManager();
+    const { parent, filesData, modalData, effectDirectory, clickDirectory, clickRemove, isModalOpen, clickOpenModal, clickCloseModal, handleUpload } = useFileManager();
 
     useEffect(() => {effectDirectory()}, []);
 
@@ -71,8 +71,8 @@ export const FileManager = () => {
                                 <RemoveIcon height={28} width={28} pointerEvents='none'/>
                             </a>
 
-                            <a href={filesData.path + '/' + item.name} onClick={(event) =>
-                                {
+                            <a href={filesData.path + '/' + item.name} onClick={
+                                (event) => {
                                     clickOpenModal(event, {
                                         actionData: {
                                             file: event.target.attributes.href.value, 
@@ -88,6 +88,10 @@ export const FileManager = () => {
             </tbody>
         </table>
         {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={modalData}/>}
+            <form onSubmit={(event) => handleUpload(event, {path: filesData.path})}> 
+                <input type="file" name="fileUpload"/>
+                <button type='submit' className="button button--blue signin__button">Upload</button>
+            </form>
     </div>
     );
 }

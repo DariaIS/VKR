@@ -23,7 +23,7 @@ export const useModalRename = () => {
                     'Accept': 'application/json',
                 },
                 method: "POST",
-                body: JSON.stringify({newName})
+                body: JSON.stringify({ newName })
             
             })
             .then(res => res.json())

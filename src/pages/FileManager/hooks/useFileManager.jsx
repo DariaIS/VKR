@@ -65,11 +65,42 @@ export const useFileManager = () => {
         event.preventDefault();
         SetIsModalOpen(true);
         setModalData(actionData);
-        console.log(isModalOpen);
     }
 
     const clickCloseModal = () => {
         SetIsModalOpen(false);
+    }
+
+    const handleUpload = (event, { path }) => {
+        event.preventDefault();
+        console.log(event.target[0].files[0]);
+
+        if (event.target[0].files != 0) {
+            const formData = new FormData();
+            const name = event.target[0].files[0].name;
+            formData.append('file', event.target[0].files[0], event.target[0].files[0].name);
+            console.log(event.target[0].files[0])
+            for (var key of formData.entries()) {
+                console.log(key[0] + ', ' + key[1]);
+            }
+            fetch('http://localhost:3001/uploadfile?path=' + path, {
+                // headers:  {
+                //     'Access-Control-Allow-Credentials': true
+                // },
+                method: "POST",
+                body: formData
+            
+            })
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    // window.location.reload();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            )
+        }
     }
 
     return {
@@ -81,6 +112,7 @@ export const useFileManager = () => {
         clickRemove,
         isModalOpen,
         clickOpenModal,
-        clickCloseModal
+        clickCloseModal,
+        handleUpload
     };
 };

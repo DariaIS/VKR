@@ -1,10 +1,13 @@
 const fs = require('fs');
+const fileUpload = require('express-fileupload');
 
 module.exports = function(app) {
 
     function isFolder(path) {
         return fs.lstatSync(path).isDirectory() && fs.existsSync(path);
     }
+    
+    app.use(fileUpload());
 
     app.get('/fileManager', (req, res) => {
         const base = './files/';
@@ -49,20 +52,44 @@ module.exports = function(app) {
 
     app.post('/renamefile', (req, res) => {
         const base = './files/';
-        let path = '';
         let extension = '';
+        let path = req.query.path;
 
-
-        if ('path' in req.query) {
-            path = req.query.path;
+        if (path.includes('.'))
             extension = path.split('.').pop();
-        }
-        // console.log(base + req.body.newName + (extension != '' && '.' + extension))
-        fs.rename(base + path, base + req.body.newName + (extension != '' && '.' + extension),
+        
+        let tempPath = path.split('/');
+        if (tempPath.length != 2)
+            tempPath.shift();
+        tempPath.pop()
+
+        let oldPath = base + path;
+        let newPath;
+        if (tempPath.length != 0)
+            newPath = base + tempPath.join('/') + '/' + req.body.newName + (extension != '' ? '.' + extension : extension)
+        else newPath = base + req.body.newName + (extension != '' ? '.' + extension : extension)
+        console.log(oldPath)
+        console.log(newPath)
+        fs.rename(
+            oldPath, 
+            newPath,
             () =>
                 res.json({
                     result: true,
                 })
         );
+    });
+
+    app.post('/uploadfile', (req, res) => {
+        const base = './files/';
+        let path = '';
+        console.log(req.query)
+
+        if ('path' in req.query) {
+            path = req.query.path;
+        }
+        console.log(path != '')
+        console.log(base + (path != '' ?? path) + '/' + req.files.file.name)
+        // req.files.file.mv(base + (path != '' && path) + '/' + req.files.file.name)
     });
 }
