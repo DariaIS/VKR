@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { ModalRename } from '../ModalRename/ModalRename';
 
 export const Modal = ({ isModalOpen, clickCloseModal, modalData }) => {
+        console.log(modalData)
 
-    if (isModalOpen) {
         return (
-            <div className={`show`}>
-                <div className={'modal__backdrop'} onClick={clickCloseModal}>
-                    <div className='modal__container'>
-                        {modalData.modalType === 'rename' && <ModalRename modalData={modalData.file}/>}
+            <>
+                <div className={`modal__backdrop ${isModalOpen ? `show` : `hide`}`} tabIndex="-1" onClick={clickCloseModal}></div>
+                    <div className={`modal__container ${isModalOpen ? `show` : `hide`}`}>
+                        {modalData.modalType === 'rename' && <ModalRename file={modalData.file}/>}
                     </div>
-                </div>
-            </div>
+            </>
         );
-    }
 };

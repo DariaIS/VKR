@@ -41,7 +41,6 @@ module.exports = function(app) {
         if ('path' in req.query) {
             path = req.query.path;
         }
-        console.log(base + path);
         fs.rmSync(base + path, { recursive: true });
         res.json({
             result: true,
@@ -51,16 +50,19 @@ module.exports = function(app) {
     app.post('/renamefile', (req, res) => {
         const base = './files/';
         let path = '';
+        let extension = '';
+
 
         if ('path' in req.query) {
             path = req.query.path;
+            extension = path.split('.').pop();
         }
-        console.log(base + path);
-        fs.rename(base + path, base + req.body.newName, () => {
-            console.log('file renamed')
-        });
-        res.json({
-            result: true,
-        });
+        // console.log(base + req.body.newName + (extension != '' && '.' + extension))
+        fs.rename(base + path, base + req.body.newName + (extension != '' && '.' + extension),
+            () =>
+                res.json({
+                    result: true,
+                })
+        );
     });
 }
