@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 export const useFileManager = () => {
     const [parent, setParent] = useState('');
+    const [isModalOpen, SetIsModalOpen] = useState(false);
+
     const [filesData, setFilesData] = useState({
         path: '',
         files: []
@@ -9,7 +11,8 @@ export const useFileManager = () => {
 
     const [modalData, setModalData] = useState({
         file: '',
-        modalType: ''
+        modalType: '',
+        isOpen: false
     });
 
     const clickDirectory = event => {
@@ -58,9 +61,15 @@ export const useFileManager = () => {
         )
     }
 
-    const openModal = ({ actionData }) => {
-        console.log(actionData);
+    const clickOpenModal = (event, { actionData }) => {
+        event.preventDefault();
+        SetIsModalOpen(true);
         setModalData(actionData);
+        console.log(isModalOpen);
+    }
+
+    const clickCloseModal = () => {
+        SetIsModalOpen(false);
     }
 
     return {
@@ -70,6 +79,8 @@ export const useFileManager = () => {
         effectDirectory,
         clickDirectory,
         clickRemove,
-        openModal
+        isModalOpen,
+        clickOpenModal,
+        clickCloseModal
     };
 };

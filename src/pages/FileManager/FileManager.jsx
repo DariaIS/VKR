@@ -10,7 +10,7 @@ import { useFileManager } from './hooks/useFileManager';
 import { Modal } from "../../components/Modal";
 
 export const FileManager = () => {
-    const { parent, filesData, modalData, effectDirectory, clickDirectory, clickRemove, openModal } = useFileManager();
+    const { parent, filesData, modalData, effectDirectory, clickDirectory, clickRemove, isModalOpen, clickOpenModal, clickCloseModal } = useFileManager();
 
     useEffect(() => {effectDirectory()}, []);
 
@@ -71,7 +71,15 @@ export const FileManager = () => {
                                 <RemoveIcon height={28} width={28} pointerEvents='none'/>
                             </a>
 
-                            <a href={filesData.path + '/' + item.name} onClick={(event) =>{event.preventDefault(); openModal({actionData: {file: filesData.path + '/' + item.name, modalType: 'rename'}})} }>
+                            <a href={filesData.path + '/' + item.name} onClick={(event) =>
+                                {
+                                    clickOpenModal(event, {
+                                        actionData: {
+                                            file: event.target.attributes.href.value, 
+                                            modalType: 'rename', 
+                                        }
+                                    })
+                                }}>
                                 <RenameIcon height={28} width={28} pointerEvents='none'/>
                             </a>
                         </td>
@@ -79,7 +87,7 @@ export const FileManager = () => {
                 ))}
             </tbody>
         </table>
-        <Modal modalData={modalData}/>
+        {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={modalData}/>}
     </div>
     );
 }
