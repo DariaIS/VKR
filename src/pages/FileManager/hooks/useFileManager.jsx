@@ -17,7 +17,6 @@ export const useFileManager = () => {
 
     const clickDirectory = event => {
         event.preventDefault();
-        console.log(event);
         fetch('http://localhost:3001/filemanager?path=' + event.target.attributes.href.value)
         .then(res => res.json())
         .then(
@@ -25,6 +24,7 @@ export const useFileManager = () => {
                 let linkArr = result.path.split('/');
                 linkArr.pop();
                 setParent(linkArr.join('/'));
+                console.log(result)
                 setFilesData(result);
             },
             (error) => {
@@ -38,6 +38,7 @@ export const useFileManager = () => {
         .then(res => res.json())
         .then(
             (result) => {
+                console.log(result)
                 setFilesData(result);
             },
             (error) => {

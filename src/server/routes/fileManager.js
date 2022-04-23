@@ -18,15 +18,31 @@ module.exports = function(app) {
         }
 
         if (isFolder(base + path)) {
+            const ext = ['jpeg', 'png', 'jpg']
             let files = fs.readdirSync(base + path).map(item => {
                 const isDir = fs.lstatSync(base + path + '/' + item).isDirectory();
                 let fileInfo = fs.statSync(base + path + '/' + item);
+                let encodedBuffer = '';
+                if (ext.includes(item.split('.')[1])) {
+                    
+                    // console.log(base + path + '/' + item);
+                    // console.log(process.cwd() + base.split('.')[1] + path + '/' + item);
+                    // res.download(process.cwd() + base.split('.')[1] + path + '/' + item);
+
+                    fs.readFile(process.cwd() + base.split('.')[1] + path + '/' + item, (err, image) => {
+                        console.log(image)
+                        encodedBuffer = image.toString('base64');
+
+                        // res.write(image, 'binary');
+                    });
+                }
 
                 return {
                     name: item,
                     dir: isDir,
                     size: fileInfo.size,
-                    birthTime: fileInfo.birthtime
+                    birthTime: fileInfo.birthtime,
+                    // encodedBuffer: encodedBuffer
                 }
             })
             res.json({
