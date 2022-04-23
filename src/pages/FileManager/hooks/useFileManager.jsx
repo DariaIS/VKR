@@ -47,7 +47,15 @@ export const useFileManager = () => {
         )
     }
 
-    const clickRemove = (event, { path }) => {
+    const getImage = (path, name) => {
+        return (
+            <div>
+                <img src={'http://localhost:3001/getImage?path=' + path} width={150}/>
+            </div>
+        )
+    }
+
+    const clickRemove = (event) => {
         event.preventDefault();
         console.log('http://localhost:3001/removefile?path=' + event.target.attributes.href.value);
         fetch('http://localhost:3001/removefile?path=' + event.target.attributes.href.value)
@@ -104,6 +112,7 @@ export const useFileManager = () => {
         modalData,
         effectDirectory,
         clickDirectory,
+        getImage,
         clickRemove,
         isModalOpen,
         clickOpenModal,

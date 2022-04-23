@@ -10,8 +10,9 @@ import { useFileManager } from './hooks/useFileManager';
 import { Modal } from "../../components/Modal";
 
 export const FileManager = () => {
-    const { parent, filesData, modalData, effectDirectory, clickDirectory, clickRemove, isModalOpen, clickOpenModal, clickCloseModal, handleUpload } = useFileManager();
-
+    const { parent, filesData, modalData, effectDirectory, clickDirectory, getImage, clickRemove, isModalOpen, clickOpenModal, clickCloseModal, handleUpload } = useFileManager();
+    const ext = ['jpeg', 'png', 'jpg']
+    
     useEffect(() => {effectDirectory()}, []);
 
     return (
@@ -61,13 +62,15 @@ export const FileManager = () => {
                                 <td className="analyst__td">
                                     <FileIcon height={28} width={28}/>
                                     {item.name}
+                                    {console.log(item.name.split('.')[1])}
+                                    {ext.includes(item.name.split('.')[1]) && getImage(filesData.path + '/' + item.name, item.name)}
                                 </td>
                                 <td className="analyst__td">{(item.size / 1024).toFixed(2) + ' KB'}</td>
                             </>
                         }
                         <td className="analyst__td">{item.birthTime.replace('T',' ').replace('Z',' ')}</td>
                         <td className="analyst__td">
-                            <a href={filesData.path + '/' + item.name} onClick={(event) => clickRemove(event, {path: filesData.path})}>
+                            <a href={filesData.path + '/' + item.name} onClick={clickRemove}>
                                 <RemoveIcon height={28} width={28} pointerEvents='none'/>
                             </a>
 

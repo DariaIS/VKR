@@ -1,16 +1,20 @@
 const fs = require('fs');
+const express = require('express');
 const fileUpload = require('express-fileupload');
 
 module.exports = function(app) {
 
+
+
+    app.use(fileUpload());
+
     function isFolder(path) {
         return fs.lstatSync(path).isDirectory() && fs.existsSync(path);
     }
-    
-    app.use(fileUpload());
+
+    const base = './files/';
 
     app.get('/fileManager', (req, res) => {
-        const base = './files/';
         let path = '';
 
         if ('path' in req.query) {
@@ -30,7 +34,7 @@ module.exports = function(app) {
                     // res.download(process.cwd() + base.split('.')[1] + path + '/' + item);
 
                     fs.readFile(process.cwd() + base.split('.')[1] + path + '/' + item, (err, image) => {
-                        console.log(image)
+                        // console.log(image)
                         encodedBuffer = image.toString('base64');
 
                         // res.write(image, 'binary');
@@ -53,8 +57,23 @@ module.exports = function(app) {
         }
     });
 
+    app.get('/getImage', (req, res) => {
+
+        // app = express();
+        // let path = req.query.path.split('/')
+        // path.pop();
+        // console.log(path)
+        // app.use('/images', express.static(process.cwd()+ base.split('.')[1] + path));
+        // let path = '';
+
+        // if ('path' in req.query) {
+        //     path = req.query.path;
+        // }
+        // // console.log(process.cwd() + base.split('.')[1] + req.query.path)
+        res.download(process.cwd() + base.split('.')[1] + req.query.path);
+    });
+
     app.get('/removefile', (req, res) => {
-        const base = './files/';
         let path = '';
 
         if ('path' in req.query) {
@@ -68,7 +87,6 @@ module.exports = function(app) {
     });
 
     app.post('/renamefile', (req, res) => {
-        const base = './files/';
         let extension = '';
         let path = req.query.path;
 
@@ -99,7 +117,6 @@ module.exports = function(app) {
     });
 
     app.post('/uploadfile', (req, res) => {
-        const base = './files/';
         let path = '';
 
         if ('path' in req.query) {
