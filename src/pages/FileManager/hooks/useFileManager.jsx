@@ -17,7 +17,7 @@ export const useFileManager = () => {
 
     const clickDirectory = event => {
         event.preventDefault();
-        console.log(event.target.attributes.href.value);
+        console.log(event);
         fetch('http://localhost:3001/filemanager?path=' + event.target.attributes.href.value)
         .then(res => res.json())
         .then(
@@ -30,7 +30,8 @@ export const useFileManager = () => {
             (error) => {
                 console.log(error);
             }
-    )}
+        )
+    }
 
     const effectDirectory = () => {
         fetch('http://localhost:3001/fileManager')
@@ -45,14 +46,13 @@ export const useFileManager = () => {
         )
     }
 
-    const clickRemove = (event) => {
+    const clickRemove = (event, { path }) => {
         event.preventDefault();
         console.log('http://localhost:3001/removefile?path=' + event.target.attributes.href.value);
         fetch('http://localhost:3001/removefile?path=' + event.target.attributes.href.value)
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result);
                 window.location.reload();
             },
             (error) => {
@@ -73,20 +73,14 @@ export const useFileManager = () => {
 
     const handleUpload = (event, { path }) => {
         event.preventDefault();
-        console.log(event.target[0].files[0]);
+        console.log(event.target[0].files.length);
 
-        if (event.target[0].files != 0) {
+        if (event.target[0].files[0]) {
             const formData = new FormData();
             const name = event.target[0].files[0].name;
             formData.append('file', event.target[0].files[0], event.target[0].files[0].name);
             console.log(event.target[0].files[0])
-            for (var key of formData.entries()) {
-                console.log(key[0] + ', ' + key[1]);
-            }
             fetch('http://localhost:3001/uploadfile?path=' + path, {
-                // headers:  {
-                //     'Access-Control-Allow-Credentials': true
-                // },
                 method: "POST",
                 body: formData
             
@@ -94,7 +88,7 @@ export const useFileManager = () => {
             .then(res => res.json())
             .then(
                 (result) => {
-                    // window.location.reload();
+                    window.location.reload();
                 },
                 (error) => {
                     console.log(error);

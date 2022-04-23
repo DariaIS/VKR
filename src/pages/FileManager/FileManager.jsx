@@ -67,7 +67,7 @@ export const FileManager = () => {
                         }
                         <td className="analyst__td">{item.birthTime.replace('T',' ').replace('Z',' ')}</td>
                         <td className="analyst__td">
-                            <a href={filesData.path + '/' + item.name} onClick={clickRemove}>
+                            <a href={filesData.path + '/' + item.name} onClick={(event) => clickRemove(event, {path: filesData.path})}>
                                 <RemoveIcon height={28} width={28} pointerEvents='none'/>
                             </a>
 
