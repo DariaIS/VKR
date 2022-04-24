@@ -3,12 +3,10 @@ import { useState } from 'react';
 export const useFileManager = () => {
     const [parent, setParent] = useState('');
     const [isModalOpen, SetIsModalOpen] = useState(false);
-
     const [filesData, setFilesData] = useState({
         path: '',
         files: []
     });
-
     const [modalData, setModalData] = useState({
         file: '',
         modalType: '',
@@ -38,7 +36,6 @@ export const useFileManager = () => {
         .then(res => res.json())
         .then(
             (result) => {
-                console.log(result)
                 setFilesData(result);
             },
             (error) => {
@@ -106,6 +103,50 @@ export const useFileManager = () => {
         }
     }
 
+    const findTextNode = (node, text) => {
+        if (text != '') {
+            if (node.nodeType === 1) {
+                let child = node.firstChild;
+    
+                while (child) {
+                    let nextChild = child.nextSibling;
+                    if (child.nodeType === 1)
+                        findTextNode(child, text);
+                    else if (child.nodeType === 3 && child.nodeValue.includes(text)) {
+                        let newSpan = document.createElement('span');
+                        newSpan.className = 'node-select';
+                        newSpan.innerHTML = text;
+                        node.replaceChild(newSpan, child);
+                        newSpan.before(child.nodeValue.split(text)[0]);
+                        newSpan.after(child.nodeValue.split(text)[1]);
+                    }
+                    child = nextChild;
+                }
+            }
+        } 
+    }
+
+    const clearTextNode = (node) => {
+        if (node.nodeType === 1) {
+            let child = node.firstChild;
+
+            while (child) {
+                let nextChild = child.nextSibling;
+                if (child.nodeType === 1) {
+                    if (child.childNodes.length === 1 && child.childNodes[0]?.nodeType === 3) {
+                        if (child.tagName === 'SPAN' && child.className === 'node-select') {
+                            console.log(child);
+                            console.log(child.firstChild);
+                            node.replaceChild(child.firstChild, child);
+                        }
+                    } else if (child.childNodes.length != 0)
+                        clearTextNode(child);
+                }
+                child = nextChild;
+            }
+        }
+    }
+
     return {
         parent,
         filesData,
@@ -117,6 +158,8 @@ export const useFileManager = () => {
         isModalOpen,
         clickOpenModal,
         clickCloseModal,
-        handleUpload
+        handleUpload,
+        findTextNode,
+        clearTextNode
     };
 };
