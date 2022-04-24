@@ -105,20 +105,25 @@ export const useFileManager = () => {
 
     const findTextNode = (node, text) => {
         if (text != '') {
+            // clearTextNode(node);
             if (node.nodeType === 1) {
                 let child = node.firstChild;
     
                 while (child) {
                     let nextChild = child.nextSibling;
-                    if (child.nodeType === 1)
+                    if (child.nodeType === 1 && child.tagName != 'SPAN' && child.className !== 'node-select')
                         findTextNode(child, text);
                     else if (child.nodeType === 3 && child.nodeValue.includes(text)) {
                         let newSpan = document.createElement('span');
                         newSpan.className = 'node-select';
                         newSpan.innerHTML = text;
-                        node.replaceChild(newSpan, child);
-                        newSpan.before(child.nodeValue.split(text)[0]);
-                        newSpan.after(child.nodeValue.split(text)[1]);
+                        let line = child.nodeValue.split(text);
+                        line.forEach(element => {
+                            child.before(element);
+                            if (line.indexOf(element) !== line.length - 1)
+                                child.before(newSpan.cloneNode(true));
+                        });
+                        node.removeChild(child);
                     }
                     child = nextChild;
                 }
@@ -129,20 +134,31 @@ export const useFileManager = () => {
     const clearTextNode = (node) => {
         if (node.nodeType === 1) {
             let child = node.firstChild;
-
+            console.log(node)
             while (child) {
                 let nextChild = child.nextSibling;
                 if (child.nodeType === 1) {
                     if (child.childNodes.length === 1 && child.childNodes[0]?.nodeType === 3) {
+                        child.childNodes[0].innerHTML = child.childNodes[0]?.nodeType;
                         if (child.tagName === 'SPAN' && child.className === 'node-select') {
-                            console.log(child);
-                            console.log(child.firstChild);
                             node.replaceChild(child.firstChild, child);
                         }
                     } else if (child.childNodes.length != 0)
                         clearTextNode(child);
                 }
                 child = nextChild;
+            }
+            let line = '';
+            let isLine = true;
+            node.childNodes.forEach(elem => {
+                if (elem.nodeValue === null || elem.nodeType !== 3)
+                    isLine = false;
+                else {
+                    line += elem.nodeValue;
+                }
+            })
+            if (isLine) {
+                node.innerHTML = line;
             }
         }
     }

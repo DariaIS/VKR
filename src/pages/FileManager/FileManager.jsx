@@ -43,7 +43,7 @@ export const FileManager = () => {
                     setNodeText(e.target.value);
                 }}
             /> 
-            <button className="button button--blue" onClick={() => findTextNode(document.body, nodeText)}>Find</button>
+            <button className="button button--blue" onClick={() => findTextNode(document.body, nodeText.trim())}>Find</button>
             <button className="button button--white" onClick={() => clearTextNode(document.body)}>Clear</button>
 
         </div>
