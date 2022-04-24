@@ -14,7 +14,8 @@ export const FileManager = () => {
         parent, 
         filesData, 
         modalData, 
-        effectDirectory, 
+        effectDirectory,
+        getDirectory,
         clickDirectory, 
         getImage, 
         clickRemove, 
@@ -99,7 +100,7 @@ export const FileManager = () => {
                         }
                         <td className="analyst__td">{item.birthTime.replace('T',' ').replace('Z',' ')}</td>
                         <td className="analyst__td">
-                            <a href={filesData.path + '/' + item.name} onClick={clickRemove}>
+                            <a href={filesData.path + '/' + item.name} onClick={(event) => clickRemove(event, {path: filesData.path})}>
                                 <RemoveIcon height={28} width={28} pointerEvents='none'/>
                             </a>
 
@@ -108,9 +109,10 @@ export const FileManager = () => {
                                     clickOpenModal(event, {
                                         actionData: {
                                             file: event.target.attributes.href.value, 
-                                            modalType: 'rename', 
+                                            modalType: 'rename',
+                                            directory: () => getDirectory(filesData.path)
                                         }
-                                    })
+                                    });
                                 }}>
                                 <RenameIcon height={28} width={28} pointerEvents='none'/>
                             </a>

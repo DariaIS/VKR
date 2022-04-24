@@ -13,9 +13,8 @@ export const useFileManager = () => {
         isOpen: false
     });
 
-    const clickDirectory = event => {
-        event.preventDefault();
-        fetch('http://localhost:3001/filemanager?path=' + event.target.attributes.href.value)
+    const getDirectory = (path) => {
+        fetch('http://localhost:3001/filemanager?path=' + path)
         .then(res => res.json())
         .then(
             (result) => {
@@ -29,6 +28,11 @@ export const useFileManager = () => {
                 console.log(error);
             }
         )
+    }
+
+    const clickDirectory = event => {
+        event.preventDefault();
+        getDirectory(event.target.attributes.href.value);
     }
 
     const effectDirectory = () => {
@@ -52,14 +56,15 @@ export const useFileManager = () => {
         )
     }
 
-    const clickRemove = (event) => {
+    const clickRemove = (event, { path }) => {
         event.preventDefault();
         console.log('http://localhost:3001/removefile?path=' + event.target.attributes.href.value);
         fetch('http://localhost:3001/removefile?path=' + event.target.attributes.href.value)
         .then(res => res.json())
         .then(
             (result) => {
-                window.location.reload();
+                effectDirectory();
+                getDirectory(path);
             },
             (error) => {
                 console.log(error);
@@ -94,7 +99,8 @@ export const useFileManager = () => {
             .then(res => res.json())
             .then(
                 (result) => {
-                    window.location.reload();
+                    // window.location.reload();
+                    getDirectory(path);
                 },
                 (error) => {
                     console.log(error);
@@ -168,6 +174,7 @@ export const useFileManager = () => {
         filesData,
         modalData,
         effectDirectory,
+        getDirectory,
         clickDirectory,
         getImage,
         clickRemove,

@@ -29,7 +29,8 @@ export const useModalRename = () => {
             .then(res => res.json())
             .then(
                 (result) => {
-                    window.location.reload();
+                    // window.location.reload();
+                    console.log(result);
                 },
                 (error) => {
                     setError(error);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useModalRename } from './hooks/useModalRename';
 
-export const ModalRename = ({ file }) => {
+export const ModalRename = ({ directory, closeModal, file }) => {
     const { handleChangeName, clickRename, error } = useModalRename();
 
     return (
@@ -12,7 +12,7 @@ export const ModalRename = ({ file }) => {
                     onChange={handleChangeName}
                 />
             </label>
-            <button type='button' className="button button--blue signin__button" onClick={() => clickRename(file)}>Change</button>
+            <button type='button' className="button button--blue signin__button" onClick={() => {clickRename(file); closeModal(); directory()}}>Change</button>
             {error && <div>{error}</div>}
         </>
     );
