@@ -111,24 +111,29 @@ export const useFileManager = () => {
 
     const findTextNode = (node, text) => {
         if (text != '') {
-            // clearTextNode(node);
+            clearTextNode(node);
             if (node.nodeType === 1) {
                 let child = node.firstChild;
     
                 while (child) {
                     let nextChild = child.nextSibling;
-                    if (child.nodeType === 1 && child.tagName != 'SPAN' && child.className !== 'node-select')
+                    if (child.nodeType === 1 && child.className !== 'node-select')
                         findTextNode(child, text);
                     else if (child.nodeType === 3 && child.nodeValue.includes(text)) {
                         let newSpan = document.createElement('span');
                         newSpan.className = 'node-select';
                         newSpan.innerHTML = text;
-                        let line = child.nodeValue.split(text);
-                        line.forEach(element => {
-                            child.before(element);
-                            if (line.indexOf(element) !== line.length - 1)
-                                child.before(newSpan.cloneNode(true));
-                        });
+                        let textline = child.nodeValue.split(text);
+                        console.log(textline);
+                        if (textline.length == 2 && textline[0] === '' && textline[1] === '') {
+                            child.before(newSpan.cloneNode(true));
+                        } else {
+                            textline.forEach(element => {
+                                child.before(element);
+                                if (textline.indexOf(element) !== textline.length - 1)
+                                    child.before(newSpan.cloneNode(true));
+                            });
+                        }
                         node.removeChild(child);
                     }
                     child = nextChild;
@@ -140,7 +145,7 @@ export const useFileManager = () => {
     const clearTextNode = (node) => {
         if (node.nodeType === 1) {
             let child = node.firstChild;
-            console.log(node)
+            let hasSpan = false;
             while (child) {
                 let nextChild = child.nextSibling;
                 if (child.nodeType === 1) {
@@ -148,23 +153,23 @@ export const useFileManager = () => {
                         child.childNodes[0].innerHTML = child.childNodes[0]?.nodeType;
                         if (child.tagName === 'SPAN' && child.className === 'node-select') {
                             node.replaceChild(child.firstChild, child);
+                            hasSpan = true;
                         }
                     } else if (child.childNodes.length != 0)
                         clearTextNode(child);
                 }
                 child = nextChild;
             }
-            let line = '';
-            let isLine = true;
-            node.childNodes.forEach(elem => {
-                if (elem.nodeValue === null || elem.nodeType !== 3)
-                    isLine = false;
-                else {
-                    line += elem.nodeValue;
-                }
-            })
-            if (isLine) {
-                node.innerHTML = line;
+            if (hasSpan) {
+                let line = '';            
+                node.childNodes.forEach(elem => {
+                    console.log(elem);
+                    if (elem.nodeType === 3) {
+                        if (elem.nodeType !== null)
+                            line += elem.nodeValue;
+                    }
+                })
+                node.textContent = line;
             }
         }
     }

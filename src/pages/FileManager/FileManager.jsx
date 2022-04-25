@@ -82,7 +82,9 @@ export const FileManager = () => {
                                 <td className="analyst__td">
                                     <a href={filesData.path + '/' + item.name} onClick={clickDirectory}>
                                         <DirectoryIcon height={30} width={30} pointerEvents='none'/>
-                                        {item.name}
+                                        <span>
+                                            {item.name}
+                                        </span>
                                     </a>
                                 </td>
                                 <td className="analyst__td"></td>
@@ -92,7 +94,9 @@ export const FileManager = () => {
                             <>
                                 <td className="analyst__td">
                                     <FileIcon height={28} width={28}/>
-                                    {item.name}
+                                    <span>
+                                        {item.name}
+                                    </span>
                                     {ext.includes(item.name.split('.')[1]) && getImage(filesData.path + '/' + item.name, item.name)}
                                 </td>
                                 <td className="analyst__td">{(item.size / 1024).toFixed(2) + ' KB'}</td>
