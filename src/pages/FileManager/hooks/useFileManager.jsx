@@ -123,11 +123,10 @@ export const useFileManager = () => {
                         let newSpan = document.createElement('span');
                         newSpan.className = 'node-select';
                         newSpan.innerHTML = text;
-                        let textline = child.nodeValue.split(text);
-                        console.log(textline);
-                        if (textline.length == 2 && textline[0] === '' && textline[1] === '') {
+                        if (child.nodeValue === text) {
                             child.before(newSpan.cloneNode(true));
                         } else {
+                            let textline = child.nodeValue.split(text);
                             textline.forEach(element => {
                                 child.before(element);
                                 if (textline.indexOf(element) !== textline.length - 1)
