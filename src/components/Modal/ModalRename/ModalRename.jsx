@@ -12,7 +12,7 @@ export const ModalRename = ({ directory, closeModal, file }) => {
                     onChange={handleChangeName}
                 />
             </label>
-            <button type='button' className="button button--blue signin__button" onClick={() => {clickRename(file); closeModal(); directory()}}>Change</button>
+            <button type='button' className="button button--blue signin__button" onClick={() => {clickRename(file, directory); closeModal();}}>Change</button>
             {error && <div>{error}</div>}
         </>
     );

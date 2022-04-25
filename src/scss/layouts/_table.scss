@@ -1,0 +1,43 @@
+.table {
+    
+  &:not(:last-child) {
+      margin-bottom: 10rem;
+  }
+}
+
+.table__title {
+  margin-bottom: 2rem;
+}
+
+
+.table__item {
+  border-collapse: collapse;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  overflow: hidden;
+
+  &:not(:last-child) {
+      margin-bottom: 5rem;
+  }
+}
+
+.table__thead {
+  background-color: $color-main;
+  color: white;
+}
+
+.table__tbody {
+  border: 1px solid $gray--lighten;
+
+  tr:nth-child(even) {
+      background-color: $gray--lighten;
+  }
+}
+
+.table__th, .table__td {
+  font-weight: 400;
+  border: none;
+  padding: 20px 20px 20px 30px;
+  text-align: left;
+}

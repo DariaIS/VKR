@@ -82,43 +82,43 @@ function Analyst() {
     return (
         <div className="analyst section container">
             <span className="analyst__title title title--medium">Вы вошли как аналитик</span>
-            <div className="analyst__table">
-            <span className="analyst__table-title title title--small">Выберите дату для формирования отчета</span>
+            <div className="table">
+            <span className="table__title title title--small">Выберите дату для формирования отчета</span>
                 <Calendar onClickDay={date} value={pickedDate} minDetail="year"/>
                 {
                     dateTable.length !== 0 && 
                     <div>
-                        <span className="analyst__table-title title title--small">Отчет о въездах и выездах на {pickedDate.toLocaleDateString()}</span>
-                        <table className="analyst__table-item">
-                            <thead className="analyst__thead">
-                                <tr className="analyst__tr">
-                                    <th className="analyst__th">
+                        <span className="table__title title title--small">Отчет о въездах и выездах на {pickedDate.toLocaleDateString()}</span>
+                        <table className="table__item">
+                            <thead className="table__thead">
+                                <tr className="table__tr">
+                                    <th className="table__th">
                                         Номер автомобиля
                                     </th>
-                                    <th className="analyst__th">
+                                    <th className="table__th">
                                         Регион
                                     </th>
-                                    <th className="analyst__th">
+                                    <th className="table__th">
                                         Марка автомобиля
                                     </th>
-                                    <th className="analyst__th">
+                                    <th className="table__th">
                                         Время въезда
                                     </th>
-                                    <th className="analyst__th">
+                                    <th className="table__th">
                                         Время выезда
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="analyst__tbody">
+                            <tbody className="table__tbody">
                                 {
                                     Object.values(dateTable).map(val => {
                                         return (
-                                            <tr className="analyst__tr" key={val.id_car}>
-                                                <td className="analyst__td">{val.license_plate}</td>
-                                                <td className="analyst__td">{val.region}</td>
-                                                <td className="analyst__td">{val.car_brand}</td>
-                                                <td className="analyst__td">{val.arrival_time}</td>
-                                                <td className="analyst__td">{val.departure_time}</td>
+                                            <tr className="table__tr" key={val.id_car}>
+                                                <td className="table__td">{val.license_plate}</td>
+                                                <td className="table__td">{val.region}</td>
+                                                <td className="table__td">{val.car_brand}</td>
+                                                <td className="table__td">{val.arrival_time}</td>
+                                                <td className="table__td">{val.departure_time}</td>
                                             </tr>
                                         )
                                     })
@@ -144,32 +144,32 @@ function Analyst() {
                 }
             </div>
             
-            <div className="analyst__table">
-                <span className="analyst__table-title title title--small">Все машины, присутствующие в базе данных</span>
-                <table className="analyst__table-item">
-                    <thead className="analyst__thead">
-                        <tr className="analyst__tr">
-                            <th className="analyst__th">Номер машины</th>
-                            <th className="analyst__th">Марка машины</th>
-                            <th className="analyst__th">Фамилия</th>
-                            <th className="analyst__th">Имя</th>
-                            <th className="analyst__th">Отчество</th>
-                            <th className="analyst__th">Дата предоставления доступа</th>
-                            <th className="analyst__th">Дата истечения прав доступа</th>
+            <div className="table__table">
+                <span className="table__title title title--small">Все машины, присутствующие в базе данных</span>
+                <table className="table__item">
+                    <thead className="table__thead">
+                        <tr className="table__tr">
+                            <th className="table__th">Номер машины</th>
+                            <th className="table__th">Марка машины</th>
+                            <th className="table__th">Фамилия</th>
+                            <th className="table__th">Имя</th>
+                            <th className="table__th">Отчество</th>
+                            <th className="table__th">Дата предоставления доступа</th>
+                            <th className="table__th">Дата истечения прав доступа</th>
                         </tr>
                     </thead>
-                    <tbody className="analyst__tbody">
+                    <tbody className="table__tbody">
                         {
                             Object.values(carTable).map(val => {
                                 return (
-                                    <tr className="analyst__tr" key={val.id_car}>
-                                        <td className="analyst__td">{val.license_plate}</td>
-                                        <td className="analyst__td">{val.car_brand}</td>
-                                        <td className="analyst__td">{val.last_name}</td>
-                                        <td className="analyst__td">{val.name}</td>
-                                        <td className="analyst__td">{val.middle_name}</td>
-                                        <td className="analyst__td">{new Date(val.start_date).toLocaleDateString()}</td>
-                                        <td className="analyst__td">{new Date(val.expiration_date).toLocaleDateString()}</td>
+                                    <tr className="table__tr" key={val.id_car}>
+                                        <td className="table__td">{val.license_plate}</td>
+                                        <td className="table__td">{val.car_brand}</td>
+                                        <td className="table__td">{val.last_name}</td>
+                                        <td className="table__td">{val.name}</td>
+                                        <td className="table__td">{val.middle_name}</td>
+                                        <td className="table__td">{new Date(val.start_date).toLocaleDateString()}</td>
+                                        <td className="table__td">{new Date(val.expiration_date).toLocaleDateString()}</td>
                                     </tr>
                                 )
                             })

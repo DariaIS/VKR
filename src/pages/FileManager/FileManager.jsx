@@ -34,8 +34,8 @@ export const FileManager = () => {
     useEffect(() => {effectDirectory()}, []);
 
     return (
-    <div className="analyst section container analyst__table">
-        <div>
+    <div className="fileManager section container table">
+        <div className="fileManager__textNode">
             <input 
                 className="input input--small input--default" 
                 type="text" 
@@ -48,62 +48,62 @@ export const FileManager = () => {
             <button className="button button--white" onClick={() => clearTextNode(document.body)}>Clear</button>
 
         </div>
-        <span className="analyst__table-title title title--small">
+        <span className="table__title title title--small">
             <a href={parent} onClick={clickDirectory}>
                 <GoBack height={30} width={30} pointerEvents='none'/>
                 Go back
             </a>
         </span>
-        <span className="analyst__table-title title title--small">
+        <span className="table__title title title--small">
             directory: {filesData.path === '' ? '/' : filesData.path}
         </span>
-        <table className="analyst__table-item">
-            <thead className="analyst__thead">
-                <tr className="analyst__tr">
-                    <th className="analyst__th">
+        <table className="table__item">
+            <thead className="table__thead">
+                <tr className="table__tr">
+                    <th className="table__th">
                         Name
                     </th>
-                    <th className="analyst__th">
+                    <th className="table__th">
                         Size
                     </th>
-                    <th className="analyst__th">
+                    <th className="table__th">
                         Date created
                     </th>
-                    <th className="analyst__th">
+                    <th className="table__th">
                         Actions
                     </th>
                 </tr>
             </thead>
-            <tbody className="analyst__tbody">
+            <tbody className="table__tbody">
                 {filesData.files.map(item => (
-                    <tr className="analyst__tr" key={item.name}>
+                    <tr className="table__tr" key={item.name}>
                         {item.dir && 
                             <>
-                                <td className="analyst__td">
+                                <td className="table__td">
                                     <a href={filesData.path + '/' + item.name} onClick={clickDirectory}>
                                         <DirectoryIcon height={30} width={30} pointerEvents='none'/>
-                                        <span>
+                                        <span className="fileManager__dir-name">
                                             {item.name}
                                         </span>
                                     </a>
                                 </td>
-                                <td className="analyst__td"></td>
+                                <td className="table__td"></td>
                             </>
                         }
                         {!item.dir && 
                             <>
-                                <td className="analyst__td">
+                                <td className="table__td">
                                     <FileIcon height={28} width={28}/>
                                     <span>
                                         {item.name}
                                     </span>
                                     {ext.includes(item.name.split('.')[1]) && getImage(filesData.path + '/' + item.name, item.name)}
                                 </td>
-                                <td className="analyst__td">{(item.size / 1024).toFixed(2) + ' KB'}</td>
+                                <td className="table__td">{(item.size / 1024).toFixed(2) + ' KB'}</td>
                             </>
                         }
-                        <td className="analyst__td">{item.birthTime.replace('T',' ').replace('Z',' ')}</td>
-                        <td className="analyst__td">
+                        <td className="table__td">{item.birthTime.replace('T',' ').replace('Z',' ')}</td>
+                        <td className="table__td">
                             <a href={filesData.path + '/' + item.name} onClick={(event) => clickRemove(event, {path: filesData.path})}>
                                 <RemoveIcon height={28} width={28} pointerEvents='none'/>
                             </a>

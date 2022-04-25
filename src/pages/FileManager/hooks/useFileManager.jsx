@@ -63,7 +63,6 @@ export const useFileManager = () => {
         .then(res => res.json())
         .then(
             (result) => {
-                effectDirectory();
                 getDirectory(path);
             },
             (error) => {

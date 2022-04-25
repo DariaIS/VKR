@@ -10,7 +10,7 @@ export const useModalRename = () => {
             setNewName(value);
         }
     
-    const clickRename = (file) => {
+    const clickRename = (file, update) => {
 
         if (!newName.trim()) {
             setError('Please write new name');
@@ -29,7 +29,7 @@ export const useModalRename = () => {
             .then(res => res.json())
             .then(
                 (result) => {
-                    // window.location.reload();
+                    update();
                     console.log(result);
                 },
                 (error) => {
