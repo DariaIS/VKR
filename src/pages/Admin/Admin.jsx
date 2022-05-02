@@ -16,13 +16,15 @@ function Admin() {
     const [addCarStatus, setAddCarStatus] = useState('');
     const [addCarWarningStatus, setAddCarWarningStatus] = useState('');
 
-
     const [userNameAdd, setUserNameAdd] = useState('');
     const [passwordAdd, setPasswordAdd] = useState('');
     const [roleAdd, setRoleAdd] = useState('');
-
     const [addUserStatus, setAddUserStatus] = useState('');
     const [addUserWarningStatus, setAddUserWarningStatus] = useState('');
+
+    const [userNameDelete, setUserNameDelete] = useState('');
+    const [deleteUserStatus, setDeleteUserStatus] = useState('');
+    const [deleteUserWarningStatus, setDeleteUserWarningStatus] = useState('');
 
     const addCar = (e) => {
         Axios.post('http://localhost:3001/addCar', {
@@ -68,6 +70,28 @@ function Admin() {
                 }
         });
         e.preventDefault();
+    };
+
+    const deleteUser = (e) => {
+        e.preventDefault();
+        console.log(userNameDelete)
+        if (userNameDelete !== '') {
+            Axios.post('http://localhost:3001/deleteUser', {
+                userName: userNameDelete, 
+            }).then((response) => {            
+                if (response.data.message)
+                    if (response.data.message === 'Пользователь успешно удален!') {
+                        setDeleteUserStatus(response.data.message);
+                        setDeleteUserWarningStatus('');
+                    }
+                    else  {
+                        setDeleteUserWarningStatus(response.data.message);
+                        setDeleteUserStatus('');
+                    }
+            });
+        } else {
+            setDeleteUserWarningStatus('Пожалуйста, введите имя пользователя');
+        }
     };
 
     return (
@@ -211,6 +235,24 @@ function Admin() {
                     <button type='button' className="button button--blue signin__button" onClick={addUser}>Добавить пользователя</button>
                     <span className="status status--warning">{addUserWarningStatus}</span>
                     <span className="status status--success">{addUserStatus}</span>
+                </div>
+            </div>
+            <div className="admin__forms section">
+                <span className="admin__title admin__title--section title title--small">Удалить пользователя</span>
+                <form className='admin__user-form'>
+                    <label className="admin__form-item form__item">
+                        <input className="input input--medium input--default" type="text" name="name"
+                            onChange={(e) => {
+                                setUserNameDelete(e.target.value);
+                            }}
+                        />
+                        <span className="input__name">Имя пользователя</span>
+                    </label>
+                </form>
+                <div className="admin__add-result">
+                    <button type='button' className="button button--blue signin__button" onClick={deleteUser}>Удалить</button>
+                    <span className="status status--warning">{deleteUserWarningStatus}</span>
+                    <span className="status status--success">{deleteUserStatus}</span>
                 </div>
             </div>
         </div>

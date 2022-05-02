@@ -51,7 +51,7 @@ export const useFileManager = () => {
     const getImage = (path, name) => {
         return (
             <div>
-                <img src={'http://localhost:3001/getImage?path=' + path} width={150}/>
+                <img alt='some' src={'http://localhost:3001/getImage?path=' + path} width={150}/>
             </div>
         )
     }
@@ -87,7 +87,6 @@ export const useFileManager = () => {
 
         if (event.target[0].files[0]) {
             const formData = new FormData();
-            const name = event.target[0].files[0].name;
             formData.append('file', event.target[0].files[0], event.target[0].files[0].name);
             console.log(event.target[0].files[0])
             fetch('http://localhost:3001/uploadfile?path=' + path, {
@@ -109,7 +108,7 @@ export const useFileManager = () => {
     }
 
     const findTextNode = (node, text) => {
-        if (text != '') {
+        if (text !== '') {
             clearTextNode(node);
             if (node.nodeType === 1) {
                 let child = node.firstChild;
@@ -123,7 +122,7 @@ export const useFileManager = () => {
                         newSpan.className = 'node-select';
                         newSpan.innerHTML = text;
                         if (child.nodeValue === text) {
-                            child.before(newSpan.cloneNode(true));
+                            child.before(newSpan);
                         } else {
                             let textline = child.nodeValue.split(text);
                             textline.forEach(element => {
@@ -153,7 +152,7 @@ export const useFileManager = () => {
                             node.replaceChild(child.firstChild, child);
                             hasSpan = true;
                         }
-                    } else if (child.childNodes.length != 0)
+                    } else if (child.childNodes.length !== 0)
                         clearTextNode(child);
                 }
                 child = nextChild;

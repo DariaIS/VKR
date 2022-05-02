@@ -44,33 +44,33 @@ export const FileManager = () => {
                     setNodeText(e.target.value);
                 }}
             /> 
-            <button className="button button--blue" onClick={() => findTextNode(document.body, nodeText.trim())}>Find</button>
-            <button className="button button--white" onClick={() => clearTextNode(document.body)}>Clear</button>
+            <button className="button button--blue" onClick={() => findTextNode(document.body, nodeText.trim())}>Найти</button>
+            <button className="button button--white" onClick={() => clearTextNode(document.body)}>Отчистить</button>
 
         </div>
         <span className="table__title title title--small">
             <a href={parent} onClick={clickDirectory}>
                 <GoBack height={30} width={30} pointerEvents='none'/>
-                Go back
+                Назад
             </a>
         </span>
         <span className="table__title title title--small">
-            directory: {filesData.path === '' ? '/' : filesData.path}
+            Папка: {filesData.path === '' ? '/' : filesData.path}
         </span>
         <table className="table__item">
             <thead className="table__thead">
                 <tr className="table__tr">
                     <th className="table__th">
-                        Name
+                        Название
                     </th>
                     <th className="table__th">
-                        Size
+                        Размер
                     </th>
                     <th className="table__th">
-                        Date created
+                        Дата создания
                     </th>
                     <th className="table__th">
-                        Actions
+                        Действия
                     </th>
                 </tr>
             </thead>

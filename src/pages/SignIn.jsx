@@ -14,14 +14,16 @@ function SignIn() {
     Axios.defaults.withCredentials = true;
 
     const login = () => {
-        Axios.post('http://localhost:3001/login', {
-            username: username, 
-            password: password
-        }).then((response) => {
-            if (response.data.message)
-                setLoginStatus(response.data.message);
-            else navigate('/home');
-        });
+        if (username !== '' && password !== '') {
+            Axios.post('http://localhost:3001/login', {
+                username: username, 
+                password: password
+            }).then((response) => {
+                if (response.data.message)
+                    setLoginStatus(response.data.message);
+                else navigate('/home');
+            });
+        } else setLoginStatus('Заполнены не все поля!');
     };
 
     useEffect(() => {

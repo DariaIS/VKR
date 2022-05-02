@@ -63,7 +63,6 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
     const username = req.body.username;
-
     const password = req.body.password;
 
     db.query(
@@ -79,8 +78,7 @@ app.post('/login', (req, res) => {
                 if(comparison) {
                     req.session.user = result;
                     res.send(result);
-                }
-                res.send( { message: 'Неверный логин или пароль!' });
+                } else res.send( { message: 'Неверный логин или пароль!' });
             } else
                 res.send( { message: 'Неверный логин или пароль!' });
         }
@@ -95,35 +93,35 @@ app.get('/logout', (req, res) => {
 
 function translitRuEn(lit) {
     let letters = [
-       ["а","A"],
-       ["a","A"],
-       ["А","A"],
-       ["в","B"],
-       ["В","B"],
-       ["е","E"],
-       ["e","E"],
-       ["к","K"],
-       ["К","K"],
-       ["м","M"],
-       ["М","M"],
-       ["н","H"],
-       ["Н","H"],
-       ["о","O"],
-       ["o","O"],
-       ["О","O"],
-       ["р","P"],
-       ["p","P"],
-       ["Р","P"],
-       ["с","C"],
-       ["c","C"],
-       ["С","C"],
-       ["т","T"],
-       ["Т","T"],
-       ["у","y"],
-       ["У","y"],
-       ["х","X"],
-       ["x","X"],
-       ["Х","X"],
+        ["а","A"],
+        ["a","A"],
+        ["А","A"],
+        ["в","B"],
+        ["В","B"],
+        ["е","E"],
+        ["e","E"],
+        ["к","K"],
+        ["К","K"],
+        ["м","M"],
+        ["М","M"],
+        ["н","H"],
+        ["Н","H"],
+        ["о","O"],
+        ["o","O"],
+        ["О","O"],
+        ["р","P"],
+        ["p","P"],
+        ["Р","P"],
+        ["с","C"],
+        ["c","C"],
+        ["С","C"],
+        ["т","T"],
+        ["Т","T"],
+        ["у","y"],
+        ["У","y"],
+        ["х","X"],
+        ["x","X"],
+        ["Х","X"],
     ]
 
     let result = lit;
@@ -399,6 +397,68 @@ app.post("/addUser", async (req, res) => {
 
         UserAdding();
     }
+});
+
+app.post("/deleteUser", async (req, res) => {
+    const userName = req.body.userName;
+    
+    let warning = false;
+
+    console.log("\n");
+
+    let checkUser = () => {
+        return new Promise((resolve, reject) => {
+            db.query(
+                "SELECT id_user FROM user WHERE user_name=?",
+                [userName], (err, result) => {
+                    if (result.length === 0) {
+                        console.log(result.length + " такого пользователя нет");
+                        res.send({message: 'Пользователь с веденным именем отсутствует!'});
+                        warning = true;
+                    }
+                    else  {
+                        console.log(result.length + " такой пользователь есть");
+                        idUser = result[0].id_user;
+                    }
+                    
+                    if(err) {
+                        return reject(error);
+                    }
+                    return resolve(result);                                           
+            });
+        });
+    }
+
+    let deleteUser = () => {
+        return new Promise((resolve, reject) => {
+            console.log("deleteUser");
+            db.query(
+                "DELETE FROM user WHERE id_user=?",
+                [idUser], (err, result) => {
+                    res.send( { message: 'Пользователь успешно удален!' });
+                    console.log(result + " пользователь удален")
+
+                    if(err){
+                        return reject(err);
+                    }
+                    return resolve(result);
+            });
+        });
+    }
+
+    async function userDeleting() {
+
+        try {
+            await checkUser();
+            if (!warning)
+                await deleteUser();
+                            
+        } catch(error){
+            console.log(error)
+        }
+    }
+
+    userDeleting();
 });
 
 app.post('/inOutCar', (req, res) => {
