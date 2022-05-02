@@ -77,10 +77,8 @@ app.post('/login', (req, res) => {
                 if(comparison) {
                     req.session.user = result;
                     res.send(result);
-                }
-                res.send( { message: 'Неверный логин или пароль!' });
-            } else
-                res.send( { message: 'Неверный логин или пароль!' });
+                } else res.send( { message: 'Неверный логин или пароль!' });
+            } else res.send( { message: 'Неверный логин или пароль!' });
         }
     );
 });
@@ -526,7 +524,7 @@ app.post('/inOutCar', (req, res) => {
                             }
                             return resolve(result);
                     });
-                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate[0] + ' въехал');
+                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль c номером ' + plate[0] + ' въехал');
                     req.session.log = log;         
                     res.send({ log: log, message: 'Машина может быть пропущена!' });   
                 }
@@ -540,7 +538,7 @@ app.post('/inOutCar', (req, res) => {
                             }
                             return resolve(result);
                     })
-                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Автомобиль c номером ' + plate[0] + ' выехал');
+                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль c номером ' + plate[0] + ' выехал');
                 }
             });
         }

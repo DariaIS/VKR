@@ -5,50 +5,6 @@
     }
 }
 
-.analyst__table {
-    
-    &:not(:last-child) {
-        margin-bottom: 10rem;
-    }
-}
-
-.analyst__table-title {
-    margin-bottom: 2rem;
-}
-
-
-.analyst__table-item {
-    border-collapse: collapse;
-    width: 100%;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    overflow: hidden;
-
-    &:not(:last-child) {
-        margin-bottom: 5rem;
-    }
-}
-
-.analyst__thead {
-    background-color: $color-main;
-    color: white;
-}
-
-.analyst__tbody {
-    border: 1px solid $gray--lighten;
-
-    tr:nth-child(even) {
-        background-color: $gray--lighten;
-    }
-}
-
-.analyst__th, .analyst__td {
-    font-weight: 400;
-    border: none;
-    padding: 20px 20px 20px 30px;
-    text-align: left;
-}
-
 .analyst__export-buttons {
     display: flex;
     justify-content: center;
@@ -60,4 +16,4 @@
     &:not(:last-child) {
         margin-right: 40px;
     }
-  }
+}
