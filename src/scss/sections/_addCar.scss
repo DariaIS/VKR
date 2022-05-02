@@ -1,0 +1,29 @@
+.addCar__title {
+
+    &:not(:last-child) {
+        margin-bottom: 5rem;
+    }
+}
+
+.addCar__form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+}
+
+.addCar__add-result {
+    text-align: center;
+}
+
+.addCar__form-item {
+    width: fit-content;
+
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}
+
+.addCar__radio {
+    display: flex;
+    flex-direction: column;
+}

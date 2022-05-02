@@ -1,0 +1,12 @@
+.byDate__export-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.byDate__export-buttons > span {
+    display: block;
+
+    &:not(:last-child) {
+        margin-right: 40px;
+    }
+}

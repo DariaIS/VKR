@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Navigation = () => {
+export const SecurityNavigation = () => {
 
     return (
         <>

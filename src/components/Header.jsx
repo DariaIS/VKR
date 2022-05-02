@@ -21,12 +21,6 @@ export const Header = ({ children }) => {
                 <div className="header__nav">
                     <nav className="nav">
                         <ul className="nav__list">
-                            {/* <li className="nav__item">
-                                <a href="/home" className="nav__link">Поддержка </a>
-                            </li>
-                            <li className="nav__item">
-                                <a href="/home" className="nav__link">Контакты</a>
-                            </li> */}
                             {children}
                             <li className="nav__item">
                                 <a href="/" className="nav__link nav__link--blue" onClick={logOut}>Выйти</a>

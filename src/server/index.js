@@ -73,7 +73,6 @@ app.post('/login', (req, res) => {
 
             if (result.length > 0) {
                 const comparison = await bcrypt.compare(password, result[0].password);
-                console.log(comparison);
                 if(comparison) {
                     req.session.user = result;
                     res.send(result);
@@ -140,8 +139,8 @@ app.post("/addCar", (req, res) => {
         res.send( { message: 'Не все поля заполнены!' });
     else if (!Number.isInteger(parseInt(req.body.region, 10)) || req.body.region === "0") {
         res.send( { message: 'Введен неверный регион!' });
-        console.log(Number.isInteger(parseInt(req.body.region, 10)));
-        console.log(req.body.region);
+        // console.log(Number.isInteger(parseInt(req.body.region, 10)));
+        // console.log(req.body.region);
     }
     else {
         let plate = req.body.plate;
@@ -158,7 +157,6 @@ app.post("/addCar", (req, res) => {
         let warning = false;
         let interval;
 
-        console.log("\n");
         if (position === "student")
             interval = "1";
         else interval = "5";
@@ -170,13 +168,13 @@ app.post("/addCar", (req, res) => {
                     "SELECT id_gates FROM gates WHERE gates_name=?",
                     [gates], (err, result) => {
                         if (result.length === 0) {
-                            console.log(result.length + " такой проходной нет")
+                            // console.log(result.length + " такой проходной нет")
                             res.send( { message: 'Введенной вами проходной не существует!' }); 
                             warning = true;
                         }
                         else  {
                             idGates = result[0].id_gates;
-                            console.log(result.length + " проходная есть");
+                            // console.log(result.length + " проходная есть");
                         }
                         
 
@@ -206,11 +204,13 @@ app.post("/addCar", (req, res) => {
                     "SELECT * FROM car WHERE license_plate=? AND region=?",
                     [plate, region], (err, result) => {
                         if (result.length != 0) {
-                            console.log(result.length + " машина уже есть")
+                            // console.log(result.length + " машина уже есть")
                             res.send( { message: 'Машина с веденным номером уже есть в базе данных!' }); 
                             warning = true;
                         }
-                        else console.log(result.length + " такой машины нет");
+                        else {
+                            // console.log(result.length + " такой машины нет");
+                        } 
                         
                         if(err) {
                             return reject(error);
@@ -228,8 +228,8 @@ app.post("/addCar", (req, res) => {
                         
                         if (result.length != 0) {
                             idPerson = result[0].id_person;
-                            console.log(idPerson + " такой человек есть");
-                            console.log(warning);
+                            // console.log(idPerson + " такой человек есть");
+                            // console.log(warning);
                         }
                         
                         if(err) {
@@ -242,38 +242,38 @@ app.post("/addCar", (req, res) => {
         
         let AddPerson = () => {
             return new Promise((resolve, reject) => {
-                console.log("AddPerson");
+                // console.log("AddPerson");
                 db.query(
                     "INSERT INTO person (last_name, name, middle_name, chair, position) VALUES (?, ?, ?, ?, ?)",
                     [lastName, name, middleName, chair, position], (err, result) => {
                         idPerson = result.insertId;
-                        console.log(idPerson + " человек добавлен")
+                        // console.log(idPerson + " человек добавлен")
                         
                         if(err){
                             return reject(error);
                         }
                         return resolve(result);
                 });
-                console.log(warning);
-                console.log(idPerson);
+                // console.log(warning);
+                // console.log(idPerson);
             });
         }
 
         let AddCar = () => {
             return new Promise((resolve, reject) => {
 
-                console.log("AddCar");
-                console.log(idPerson);
-                console.log(brand);
-                console.log(plate);
-                console.log(interval);
+                // console.log("AddCar");
+                // console.log(idPerson);
+                // console.log(brand);
+                // console.log(plate);
+                // console.log(interval);
                 
                 db.query(
                     "INSERT INTO car (id_person, car_brand, license_plate, region, start_date, expiration_date) VALUES (?, ?, ?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL ? YEAR))",
                     [idPerson, brand, plate, region, interval], (err, result) => {
 
                         idCar = result.insertId;
-                        console.log(idCar + " машина добавлена")
+                        // console.log(idCar + " машина добавлена")
 
                         if(err){
                             return reject(error);
@@ -286,12 +286,12 @@ app.post("/addCar", (req, res) => {
         let AddGates = () => {
             return new Promise((resolve, reject) => {
                 
-                console.log("AddGates");
+                // console.log("AddGates");
                 db.query(
                     "INSERT INTO gates_allowed (id_car, id_gates) VALUES (?, ?)",
                     [idCar, idGates], (err, result) => {
                         res.send( { message: 'Запись успешно добавлена!' });
-                        console.log(result + " запись добавлена")
+                        // console.log(result + " запись добавлена")
 
                         if(err){
                             return reject(error);
@@ -338,8 +338,8 @@ app.post("/addUser", async (req, res) => {
         
         let warning = false;
 
-        console.log("\n");
-        console.log(password);
+        // console.log("\n");
+        // console.log(password);
 
         let CheckUser = () => {
             return new Promise((resolve, reject) => {
@@ -347,10 +347,10 @@ app.post("/addUser", async (req, res) => {
                     "SELECT id_user FROM user WHERE user_name=?",
                     [userName], (err, result) => {
                         if (result.length === 0) {
-                            console.log(result.length + " такого пользователя нет")
+                            // console.log(result.length + " такого пользователя нет")
                         }
                         else  {
-                            console.log(result.length + " такой пользователь есть");
+                            // console.log(result.length + " такой пользователь есть");
                             res.send( { message: 'Введенное имя пользователя недоступно!' }); 
                             warning = true;
                         }
@@ -366,12 +366,12 @@ app.post("/addUser", async (req, res) => {
         let AddUser = () => {
             return new Promise((resolve, reject) => {
                 
-                console.log("AddUser");
+                // console.log("AddUser");
                 db.query(
                     "INSERT INTO user (user_name, password, role) VALUES (?, ?, ?)",
                     [userName, password, role], (err, result) => {
                         res.send( { message: 'Пользователь успешно добавлен!' });
-                        console.log(result + " пользователь добавлен")
+                        // console.log(result + " пользователь добавлен")
 
                         if(err){
                             return reject(err);
@@ -473,7 +473,7 @@ app.post('/inOutCar', (req, res) => {
                                 "INSERT INTO date (date) VALUES (CURDATE())",
                                 (err, result) => {
                                     idDay = result.insertId;
-                                    console.log(idDay)
+                                    // console.log(idDay)
                             });
                         }
                         else {
@@ -572,13 +572,13 @@ app.get('/InOutLog', (req, res) => {
 
 app.post('/dateTable', (req, res) => {
     const date = req.body.date;
-    console.log(date)
+    // console.log(date)
 
     db.query(
         "SELECT * FROM arriving_date INNER JOIN date ON date.id_date INNER JOIN car ON car.id_car WHERE arriving_date.id_date=date.id_date AND arriving_date.id_car=car.id_car AND date.date=?",
         [date],
         (err, result) => {
-            console.log(result)
+            // console.log(result)
             if (err)
                 res.send({ err: err });
             res.send({ result });
