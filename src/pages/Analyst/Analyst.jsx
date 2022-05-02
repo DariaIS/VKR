@@ -11,12 +11,11 @@ import '../../fonts/Roboto-Regular.js';
 
 
 
-function Analyst() {
+export const Analyst = () => {
 
     const [carTable, setCarTable] = useState('');
     const [dateTable, setDateTable] = useState('');
     const [sortedField, setSortedField] = useState('');
-
 
     const [pickedDate, setPickedDate] = useState(new Date());
 
@@ -180,5 +179,3 @@ function Analyst() {
         </div>
     );
 }
-
-export default Analyst;

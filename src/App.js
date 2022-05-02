@@ -1,19 +1,17 @@
 import React from "react";
 
-import { SignIn, Role } from './pages';
+import { SignIn, Home } from './pages';
 import { Route, Routes } from 'react-router-dom';
 
-function App() {
+export const App = () => {
   return (
     <div className="wrapper">
         <div className="content">
             <Routes>
                 <Route path="/" element={<SignIn/>} exact />
-                <Route path="/home" element={<Role/>} exact />
+                <Route path="/home" element={<Home/>} exact />
             </Routes>
             </div>
     </div>
   );
 }
-
-export default App;

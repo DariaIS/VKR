@@ -1,7 +1,7 @@
 import React from "react";
 import Axios from 'axios';
 
-function Header() {
+export const Header = ({ children }) => {
 
     const logOut = () => {
         Axios.get('http://localhost:3001/logout').then((response) => {
@@ -21,14 +21,15 @@ function Header() {
                 <div className="header__nav">
                     <nav className="nav">
                         <ul className="nav__list">
-                            <li className="nav__item">
+                            {/* <li className="nav__item">
                                 <a href="/home" className="nav__link">Поддержка </a>
                             </li>
                             <li className="nav__item">
                                 <a href="/home" className="nav__link">Контакты</a>
-                            </li>
+                            </li> */}
+                            {children}
                             <li className="nav__item">
-                                <a href="/" className="nav__link" onClick={logOut}>Выйти</a>
+                                <a href="/" className="nav__link nav__link--blue" onClick={logOut}>Выйти</a>
                             </li>
                         </ul>
                     </nav>

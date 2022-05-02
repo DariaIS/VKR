@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
-function Security() {
+export const Security = () => {
 
     const [carStatus, setCarStatus] = useState('');
     const [carWarningStatus, setCarWarningStatus] = useState('');
