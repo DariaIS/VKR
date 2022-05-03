@@ -3,8 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { SignIn, Home } from './pages';
 import { AddCar, AddUser } from './pages/Admin';
-
-import { ByDate } from './pages/Analyst';
+import { ByDate, AllCars } from './pages/Analyst';
 
 export const App = () => {
   return (
@@ -18,6 +17,7 @@ export const App = () => {
                 <Route path="/addUser" element={<AddUser/>} exact />
 
                 <Route path="/byDate" element={<ByDate/>} exact />
+                <Route path="/allCars" element={<AllCars/>} exact />
             </Routes>
             </div>
     </div>

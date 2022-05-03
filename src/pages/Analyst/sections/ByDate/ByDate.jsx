@@ -1,7 +1,6 @@
 import React from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import ReactExport from "react-export-excel";
 
 import { Header } from '../../../../components';
 import { AnalystNavigation } from '../../AnalystNavigation/AnalystNavigation';
@@ -9,11 +8,15 @@ import { AnalystNavigation } from '../../AnalystNavigation/AnalystNavigation';
 import { useByDate } from './hooks/useByDate';
 
 export const ByDate = () => {
-    const { dateTable, pickedDate, byDate, exportPDF } = useByDate();
-
-    const ExcelFile = ReactExport.ExcelFile;
-    const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-    const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+    const {
+        dateTable,
+        pickedDate,
+        byDate,
+        exportPDF,
+        ExcelFile,
+        ExcelSheet,
+        ExcelColumn
+    } = useByDate();
 
     return (
         <>

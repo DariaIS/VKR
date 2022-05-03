@@ -1,0 +1,16 @@
+.allCars__export-buttons {
+    display: flex;
+    justify-content: center;
+
+    &:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+}
+
+.allCars__export-buttons > span {
+    display: block;
+
+    &:not(:last-child) {
+        margin-right: 40px;
+    }
+}

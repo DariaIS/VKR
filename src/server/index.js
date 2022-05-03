@@ -73,11 +73,11 @@ app.post('/login', (req, res) => {
 
             if (result.length > 0) {
                 const comparison = await bcrypt.compare(password, result[0].password);
-                if(comparison) {
+                if (comparison) {
                     req.session.user = result;
                     res.send(result);
-                } else res.send( { message: 'Неверный логин или пароль!' });
-            } else res.send( { message: 'Неверный логин или пароль!' });
+                } else res.send({ message: 'Неверный логин или пароль!' });
+            } else res.send({ message: 'Неверный логин или пароль!' });
         }
     );
 });
@@ -90,35 +90,35 @@ app.get('/logout', (req, res) => {
 
 function translitRuEn(lit) {
     let letters = [
-       ["а","A"],
-       ["a","A"],
-       ["А","A"],
-       ["в","B"],
-       ["В","B"],
-       ["е","E"],
-       ["e","E"],
-       ["к","K"],
-       ["К","K"],
-       ["м","M"],
-       ["М","M"],
-       ["н","H"],
-       ["Н","H"],
-       ["о","O"],
-       ["o","O"],
-       ["О","O"],
-       ["р","P"],
-       ["p","P"],
-       ["Р","P"],
-       ["с","C"],
-       ["c","C"],
-       ["С","C"],
-       ["т","T"],
-       ["Т","T"],
-       ["у","y"],
-       ["У","y"],
-       ["х","X"],
-       ["x","X"],
-       ["Х","X"],
+        ["а", "A"],
+        ["a", "A"],
+        ["А", "A"],
+        ["в", "B"],
+        ["В", "B"],
+        ["е", "E"],
+        ["e", "E"],
+        ["к", "K"],
+        ["К", "K"],
+        ["м", "M"],
+        ["М", "M"],
+        ["н", "H"],
+        ["Н", "H"],
+        ["о", "O"],
+        ["o", "O"],
+        ["О", "O"],
+        ["р", "P"],
+        ["p", "P"],
+        ["Р", "P"],
+        ["с", "C"],
+        ["c", "C"],
+        ["С", "C"],
+        ["т", "T"],
+        ["Т", "T"],
+        ["у", "y"],
+        ["У", "y"],
+        ["х", "X"],
+        ["x", "X"],
+        ["Х", "X"],
     ]
 
     let result = lit;
@@ -136,9 +136,9 @@ function translitRuEn(lit) {
 
 app.post("/addCar", (req, res) => {
     if (req.body.plate === '' || req.body.region === '' || req.body.brand === '' || req.body.lastName === '' || req.body.name === '' || req.body.middleName === '' || req.body.chair === '' || req.body.gates === '' || req.body.position === '')
-        res.send( { message: 'Не все поля заполнены!' });
+        res.send({ message: 'Не все поля заполнены!' });
     else if (!Number.isInteger(parseInt(req.body.region, 10)) || req.body.region === "0") {
-        res.send( { message: 'Введен неверный регион!' });
+        res.send({ message: 'Введен неверный регион!' });
         // console.log(Number.isInteger(parseInt(req.body.region, 10)));
         // console.log(req.body.region);
     }
@@ -152,7 +152,7 @@ app.post("/addCar", (req, res) => {
         const chair = req.body.chair;
         const position = req.body.position;
         const gates = req.body.gates;
-        
+
         let idPerson, idCar, idGates;
         let warning = false;
         let interval;
@@ -169,20 +169,20 @@ app.post("/addCar", (req, res) => {
                     [gates], (err, result) => {
                         if (result.length === 0) {
                             // console.log(result.length + " такой проходной нет")
-                            res.send( { message: 'Введенной вами проходной не существует!' }); 
+                            res.send({ message: 'Введенной вами проходной не существует!' });
                             warning = true;
                         }
-                        else  {
+                        else {
                             idGates = result[0].id_gates;
                             // console.log(result.length + " проходная есть");
                         }
-                        
 
-                        if(err) {
+
+                        if (err) {
                             return reject(error);
                         }
-                        return resolve(result);                                           
-                });
+                        return resolve(result);
+                    });
             });
         }
 
@@ -190,11 +190,11 @@ app.post("/addCar", (req, res) => {
             return new Promise((resolve, reject) => {
 
                 plate = translitRuEn(plate);
-                                        
-                if(!plate) {
+
+                if (!plate) {
                     return reject(false);
                 }
-                return resolve(plate);      
+                return resolve(plate);
             });
         }
 
@@ -205,18 +205,18 @@ app.post("/addCar", (req, res) => {
                     [plate, region], (err, result) => {
                         if (result.length != 0) {
                             // console.log(result.length + " машина уже есть")
-                            res.send( { message: 'Машина с веденным номером уже есть в базе данных!' }); 
+                            res.send({ message: 'Машина с веденным номером уже есть в базе данных!' });
                             warning = true;
                         }
                         else {
                             // console.log(result.length + " такой машины нет");
-                        } 
-                        
-                        if(err) {
+                        }
+
+                        if (err) {
                             return reject(error);
                         }
-                        return resolve(result);                                           
-                });
+                        return resolve(result);
+                    });
             });
         }
 
@@ -225,21 +225,21 @@ app.post("/addCar", (req, res) => {
                 db.query(
                     "SELECT id_person FROM person WHERE last_name=? AND name=? AND middle_name=? AND chair=? AND position=?",
                     [lastName, name, middleName, chair, position], (err, result) => {
-                        
+
                         if (result.length != 0) {
                             idPerson = result[0].id_person;
                             // console.log(idPerson + " такой человек есть");
                             // console.log(warning);
                         }
-                        
-                        if(err) {
+
+                        if (err) {
                             return reject(error);
                         }
-                        return resolve(result);       
-                });                     
+                        return resolve(result);
+                    });
             });
         }
-        
+
         let AddPerson = () => {
             return new Promise((resolve, reject) => {
                 // console.log("AddPerson");
@@ -248,12 +248,12 @@ app.post("/addCar", (req, res) => {
                     [lastName, name, middleName, chair, position], (err, result) => {
                         idPerson = result.insertId;
                         // console.log(idPerson + " человек добавлен")
-                        
-                        if(err){
+
+                        if (err) {
                             return reject(error);
                         }
                         return resolve(result);
-                });
+                    });
                 // console.log(warning);
                 // console.log(idPerson);
             });
@@ -267,7 +267,7 @@ app.post("/addCar", (req, res) => {
                 // console.log(brand);
                 // console.log(plate);
                 // console.log(interval);
-                
+
                 db.query(
                     "INSERT INTO car (id_person, car_brand, license_plate, region, start_date, expiration_date) VALUES (?, ?, ?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL ? YEAR))",
                     [idPerson, brand, plate, region, interval], (err, result) => {
@@ -275,34 +275,34 @@ app.post("/addCar", (req, res) => {
                         idCar = result.insertId;
                         // console.log(idCar + " машина добавлена")
 
-                        if(err){
+                        if (err) {
                             return reject(error);
                         }
                         return resolve(result);
-                });
+                    });
             });
         }
 
         let AddGates = () => {
             return new Promise((resolve, reject) => {
-                
+
                 // console.log("AddGates");
                 db.query(
                     "INSERT INTO gates_allowed (id_car, id_gates) VALUES (?, ?)",
                     [idCar, idGates], (err, result) => {
-                        res.send( { message: 'Запись успешно добавлена!' });
+                        res.send({ message: 'Запись успешно добавлена!' });
                         // console.log(result + " запись добавлена")
 
-                        if(err){
+                        if (err) {
                             return reject(error);
                         }
                         return resolve(result);
-                });
+                    });
             });
         }
 
         async function CarAdding() {
- 
+
             try {
                 await CheckGates();
                 if (!warning)
@@ -317,8 +317,8 @@ app.post("/addCar", (req, res) => {
                     await AddCar();
                 if (!warning)
                     await AddGates();
-                                
-            } catch(error){
+
+            } catch (error) {
                 console.log(error)
             }
         }
@@ -329,13 +329,13 @@ app.post("/addCar", (req, res) => {
 
 app.post("/addUser", async (req, res) => {
     if (req.body.userName === '' || req.body.password === '' || req.body.role === '')
-        res.send( { message: 'Не все поля заполнены!' });
+        res.send({ message: 'Не все поля заполнены!' });
     else {
         const encryptedPassword = await bcrypt.hash(req.body.password, saltRounds)
         const userName = req.body.userName;
         const password = encryptedPassword;
         const role = req.body.role;
-        
+
         let warning = false;
 
         // console.log("\n");
@@ -349,46 +349,46 @@ app.post("/addUser", async (req, res) => {
                         if (result.length === 0) {
                             // console.log(result.length + " такого пользователя нет")
                         }
-                        else  {
+                        else {
                             // console.log(result.length + " такой пользователь есть");
-                            res.send( { message: 'Введенное имя пользователя недоступно!' }); 
+                            res.send({ message: 'Введенное имя пользователя недоступно!' });
                             warning = true;
                         }
-                        
-                        if(err) {
+
+                        if (err) {
                             return reject(error);
                         }
-                        return resolve(result);                                           
-                });
+                        return resolve(result);
+                    });
             });
         }
 
         let AddUser = () => {
             return new Promise((resolve, reject) => {
-                
+
                 // console.log("AddUser");
                 db.query(
                     "INSERT INTO user (user_name, password, role) VALUES (?, ?, ?)",
                     [userName, password, role], (err, result) => {
-                        res.send( { message: 'Пользователь успешно добавлен!' });
+                        res.send({ message: 'Пользователь успешно добавлен!' });
                         // console.log(result + " пользователь добавлен")
 
-                        if(err){
+                        if (err) {
                             return reject(err);
                         }
                         return resolve(result);
-                });
+                    });
             });
         }
 
         async function UserAdding() {
- 
+
             try {
                 await CheckUser();
                 if (!warning)
                     await AddUser();
-                                
-            } catch(error){
+
+            } catch (error) {
                 console.log(error)
             }
         }
@@ -402,12 +402,12 @@ app.post('/inOutCar', (req, res) => {
 
     let log = [];
     let plate = fs.readFileSync("car.txt", "utf8").toString().split("\n");
-    
+
     if (req.session.log)
         log = req.session.log;
 
     if (plate[0].trim().length < 6) {
-        log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + 'Номер автомобиля не распознан');
+        log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 'Номер автомобиля не распознан');
         req.session.log = log;
         res.send({ log: log, message: 'Номер машины не распознан!' });
     }
@@ -415,7 +415,7 @@ app.post('/inOutCar', (req, res) => {
         let warning = false;
         let idCar, idDay;
         let idGates = '1';
-        
+
         plate[0] = translitRuEn(plate[0].trim());
 
         let CheckCarInOut = () => {
@@ -425,18 +425,18 @@ app.post('/inOutCar', (req, res) => {
                     "SELECT id_car FROM car WHERE license_plate=?",
                     [plate[0]], (err, result) => {
                         if (result.length === 0) {
-                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate[0] + ' отсутствует в базе данных');
+                            log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' отсутствует в базе данных');
                             req.session.log = log;
-                            res.send({ log: log, message: 'Машины с данным номером нет в базе данных!' }); 
+                            res.send({ log: log, message: 'Машины с данным номером нет в базе данных!' });
                             warning = true;
                         }
                         else idCar = result[0].id_car;
 
-                        if(err){
+                        if (err) {
                             return reject(error);
                         }
                         return resolve(result);
-                });
+                    });
             });
         }
 
@@ -447,17 +447,17 @@ app.post('/inOutCar', (req, res) => {
                     "SELECT * FROM gates_allowed WHERE id_car=? AND id_gates=?",
                     [idCar, idGates], (err, result) => {
                         if (result.length === 0) {
-                            log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль с номером ' + plate[0] + ' не имеет доступа к данной проходной');
+                            log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' не имеет доступа к данной проходной');
                             req.session.log = log;
-                            res.send({ log: log, message: 'У машины с данным номером нет доступа к этой проходной!' }); 
+                            res.send({ log: log, message: 'У машины с данным номером нет доступа к этой проходной!' });
                             warning = true;
                         }
 
-                        if(err){
+                        if (err) {
                             return reject(error);
                         }
                         return resolve(result);
-                });
+                    });
             });
         }
 
@@ -468,20 +468,20 @@ app.post('/inOutCar', (req, res) => {
                     "SELECT id_date FROM date WHERE date=CURDATE()",
                     (err, result) => {
 
-                        if (result.length === 0){
+                        if (result.length === 0) {
                             db.query(
                                 "INSERT INTO date (date) VALUES (CURDATE())",
                                 (err, result) => {
                                     idDay = result.insertId;
                                     // console.log(idDay)
-                            });
+                                });
                         }
                         else {
                             idDay = result[0].id_day;
                         }
-                            
 
-                        if(err){
+
+                        if (err) {
                             return reject(error);
                         }
                         return resolve(result);
@@ -503,49 +503,49 @@ app.post('/inOutCar', (req, res) => {
                                 [idDay, idCar]);
                         }
 
-                        if(err){
+                        if (err) {
                             return reject(error);
                         }
                         return resolve(result);
-                });
+                    });
             });
         }
 
         let AddCarInOut = () => {
             return new Promise((resolve, reject) => {
 
-                if (direction === 'in') {                    
+                if (direction === 'in') {
                     db.query(
                         "UPDATE arriving_date SET arrival_time=CURTIME() WHERE id_date=? AND id_car=?",
                         [idDay, idCar], (err, result) => {
 
-                            if(err){
+                            if (err) {
                                 return reject(error);
                             }
                             return resolve(result);
-                    });
-                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль c номером ' + plate[0] + ' въехал');
-                    req.session.log = log;         
-                    res.send({ log: log, message: 'Машина может быть пропущена!' });   
+                        });
+                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' въехал');
+                    req.session.log = log;
+                    res.send({ log: log, message: 'Машина может быть пропущена!' });
                 }
                 else {
                     db.query(
                         "UPDATE arriving_date SET departure_time=CURTIME() WHERE id_date=? AND id_car=?",
                         [idDay, idCar], (err, result) => {
 
-                            if(err){
+                            if (err) {
                                 return reject(error);
                             }
                             return resolve(result);
-                    })
-                    log.push(new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + ' Автомобиль c номером ' + plate[0] + ' выехал');
+                        })
+                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' выехал');
                 }
             });
         }
 
-        
+
         async function CarInOut() {
- 
+
             try {
                 await CheckCarInOut();
                 if (!warning)
@@ -556,7 +556,7 @@ app.post('/inOutCar', (req, res) => {
                     await CheckAddArrDate();
                 if (!warning)
                     await AddCarInOut();
-            } catch(error){
+            } catch (error) {
                 console.log(error)
             }
         }
@@ -588,9 +588,10 @@ app.post('/dateTable', (req, res) => {
 
 app.get('/carTable', (req, res) => {
     db.query("SELECT * FROM car INNER JOIN person ON person.id_person WHERE person.id_person=car.id_person", (err, result) => {
-        // result.forEach(element => {
-        //     console.log(element.start_date)
-        // });
+        result.forEach(element => {
+            element.start_date = new Date(element.start_date).toLocaleDateString();
+            element.expiration_date = new Date(element.expiration_date).toLocaleDateString();
+        });
         res.send({ result });
         // console.log(err)
     });

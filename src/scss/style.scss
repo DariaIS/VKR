@@ -17,9 +17,13 @@
 @import 'modules/footer';
 
 @import 'sections/signin';
-@import 'sections/admin';
+
 @import 'sections/analyst';
+@import 'sections/byDate';
+@import 'sections/allCars';
+
 @import 'sections/security';
+
+@import 'sections/admin';
 @import 'sections/addCar';
 @import 'sections/addUser';
-@import 'sections/byDate';

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import Axios from 'axios';
+
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import 'react-calendar/dist/Calendar.css';
+
+import ReactExport from "react-export-excel";
 
 import '../../../../../fonts/Roboto-Regular';
 
@@ -10,6 +12,10 @@ export const useByDate = () => {
 
     const [dateTable, setDateTable] = useState('');
     const [pickedDate, setPickedDate] = useState(new Date());
+
+    const ExcelFile = ReactExport.ExcelFile;
+    const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+    const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
     const byDate = (newDate) => {
         setPickedDate(newDate);
@@ -63,6 +69,9 @@ export const useByDate = () => {
         dateTable,
         pickedDate,
         byDate,
-        exportPDF
+        exportPDF,
+        ExcelFile,
+        ExcelSheet,
+        ExcelColumn
     };
 }
