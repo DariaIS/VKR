@@ -21,12 +21,12 @@ export const useAllCars = () => {
 
         const headers = [['Номер автомобиля', 'Марка автомобиля', 'ФИО владельца', 'Дата предоставления доступа', 'Дата истечения прав доступа']];
 
-        const data = carTable.map(val => [
-            val.license_plate + ' ' + val.region,
-            val.car_brand,
-            val.last_name + ' ' + val.name + ' ' + val.middle_name,
-            val.start_date,
-            val.expiration_date
+        const data = carTable.map(elem => [
+            elem.license_plate,
+            elem.car_brand,
+            elem.name,
+            elem.start_date,
+            elem.expiration_date
         ]);
 
         doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')

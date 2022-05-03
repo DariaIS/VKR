@@ -56,14 +56,14 @@ export const AllCars = () => {
                         </thead>
                         <tbody className="table__tbody">
                             {
-                                Object.values(carTable).map(val => {
+                                Object.values(carTable).map(elem => {
                                     return (
-                                        <tr className="table__tr" key={val.id_car}>
-                                            <td className="table__td">{val.license_plate + ' ' + val.region}</td>
-                                            <td className="table__td">{val.car_brand}</td>
-                                            <td className="table__td">{val.last_name + ' '+ val.name + ' '+ val.middle_name}</td>
-                                            <td className="table__td">{val.start_date}</td>
-                                            <td className="table__td">{val.expiration_date}</td>
+                                        <tr className="table__tr" key={elem.id_car}>
+                                            <td className="table__td">{elem.license_plate}</td>
+                                            <td className="table__td">{elem.car_brand}</td>
+                                            <td className="table__td">{elem.name}</td>
+                                            <td className="table__td">{elem.start_date}</td>
+                                            <td className="table__td">{elem.expiration_date}</td>
                                         </tr>
                                     )
                                 })

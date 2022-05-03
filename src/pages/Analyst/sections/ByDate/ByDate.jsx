@@ -38,9 +38,6 @@ export const ByDate = () => {
                                                 Номер автомобиля
                                             </th>
                                             <th className="table__th">
-                                                Регион
-                                            </th>
-                                            <th className="table__th">
                                                 Марка автомобиля
                                             </th>
                                             <th className="table__th">
@@ -56,7 +53,6 @@ export const ByDate = () => {
                                             return (
                                                 <tr className="table__tr" key={val.id_car}>
                                                     <td className="table__td">{val.license_plate}</td>
-                                                    <td className="table__td">{val.region}</td>
                                                     <td className="table__td">{val.car_brand}</td>
                                                     <td className="table__td">{val.arrival_time}</td>
                                                     <td className="table__td">{val.departure_time}</td>
@@ -66,7 +62,6 @@ export const ByDate = () => {
                                     </tbody>
                                 </table>
                                 <div className="byDate__export-buttons">
-                                    {console.log(dateTable)}
                                     {<ExcelFile filename={"Отчет " + pickedDate.toLocaleDateString()} element={<button type='button' className="button button--white signin__button">Экспорт Excel</button>}>
                                         <ExcelSheet data={dateTable} name={"Отчет " + pickedDate.toLocaleDateString()}>
                                             <ExcelColumn label="Номер автомобиля" value="license_plate" />

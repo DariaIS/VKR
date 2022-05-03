@@ -20,7 +20,6 @@ export const useByDate = () => {
     const byDate = (newDate) => {
         setPickedDate(newDate);
         newDate = newDate.getFullYear() + "-" + ("0" + (newDate.getMonth() + 1)).slice(-2) + "-" + ("0" + newDate.getDate()).slice(-2);
-        console.log(newDate);
 
         Axios.post('http://localhost:3001/dateTable', {
             date: newDate,
@@ -31,14 +30,19 @@ export const useByDate = () => {
 
     const exportPDF = () => {
         const unit = "pt";
-        const size = "A4"; // Use A1, A2, A3 or A4
-        const orientation = "portrait"; // portrait or landscape
+        const size = "A4";
+        const orientation = "portrait";
 
         const doc = new jsPDF(orientation, unit, size);
 
-        const headers = [['Номер автомобиля', "Регион", "Марка автомобиля", "Время въезда", "Время выезда"]];
+        const headers = [['Номер автомобиля', 'Марка автомобиля', 'Время въезда', 'Время выезда']];
 
-        const data = dateTable.map(val => [val.license_plate, val.region, val.car_brand, val.arrival_time, val.departure_time]);
+        const data = dateTable.map(val => [
+            val.license_plate,
+            val.car_brand,
+            val.arrival_time,
+            val.departure_time
+        ]);
 
         doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')
         doc.setFont('Roboto-Regular');
