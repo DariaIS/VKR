@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Axios from 'axios';
 
 import { Header } from '../../../../components';
-import { AnalystNavigation } from '../../AnalystNavigation/AnalystNavigation';
+import { AnalystNavigation } from '../../AnalystNavigation';
 
 import { useAllCars } from './hooks/useAllCars';
 

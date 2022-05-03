@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 import { Header } from '../../../../components';
-import { AnalystNavigation } from '../../AnalystNavigation/AnalystNavigation';
+import { AnalystNavigation } from '../../AnalystNavigation';
 
 import { useByDate } from './hooks/useByDate';
 

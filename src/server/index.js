@@ -413,78 +413,81 @@ app.post('/inOutCar', (req, res) => {
     }
     else {
         let warning = false;
-        let idCar, idDay;
+        let idCar, idDate;
         let idGates = '1';
 
         plate[0] = translitRuEn(plate[0].trim());
 
         let CheckCarInOut = () => {
             return new Promise((resolve, reject) => {
-
                 db.query(
                     "SELECT id_car FROM car WHERE license_plate=?",
                     [plate[0]], (err, result) => {
-                        if (result.length === 0) {
-                            log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' отсутствует в базе данных');
-                            req.session.log = log;
-                            res.send({ log: log, message: 'Машины с данным номером нет в базе данных!' });
-                            warning = true;
-                        }
-                        else idCar = result[0].id_car;
-
                         if (err) {
-                            return reject(error);
+                            console.log(err);
+                            return reject(err);
                         }
-                        return resolve(result);
-                    });
+                        else {
+                            if (result.length === 0) {
+                                log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' отсутствует в базе данных');
+                                req.session.log = log;
+                                res.send({ log: log, message: 'Машины с данным номером нет в базе данных!' });
+                                warning = true;
+                            }
+                            else idCar = result[0].id_car;
+                            return resolve(result);
+                        }
+                    }
+                );
             });
         }
 
         let CheckRightGates = () => {
             return new Promise((resolve, reject) => {
-
                 db.query(
                     "SELECT * FROM gates_allowed WHERE id_car=? AND id_gates=?",
                     [idCar, idGates], (err, result) => {
-                        if (result.length === 0) {
-                            log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' не имеет доступа к данной проходной');
-                            req.session.log = log;
-                            res.send({ log: log, message: 'У машины с данным номером нет доступа к этой проходной!' });
-                            warning = true;
-                        }
-
                         if (err) {
-                            return reject(error);
+                            console.log(err);
+                            return reject(err);
+                        } else {
+                            if (result.length === 0) {
+                                log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' не имеет доступа к данной проходной');
+                                req.session.log = log;
+                                res.send({ log: log, message: 'У машины с данным номером нет доступа к этой проходной!' });
+                                warning = true;
+                            }
+                            return resolve(result);
                         }
-                        return resolve(result);
-                    });
+                    }
+                );
             });
         }
 
         let AddDate = () => {
             return new Promise((resolve, reject) => {
-
                 db.query(
                     "SELECT id_date FROM date WHERE date=CURDATE()",
                     (err, result) => {
-
-                        if (result.length === 0) {
-                            db.query(
-                                "INSERT INTO date (date) VALUES (CURDATE())",
-                                (err, result) => {
-                                    idDay = result.insertId;
-                                    // console.log(idDay)
-                                });
-                        }
-                        else {
-                            idDay = result[0].id_day;
-                        }
-
-
                         if (err) {
-                            return reject(error);
+                            console.log(err);
+                            return reject(err);
+                        } else {
+                            if (result.length === 0) {
+                                db.query(
+                                    "INSERT INTO date (date) VALUES (CURDATE())",
+                                    (err, result) => {
+                                        if (err) {
+                                            console.log(err)
+                                        } else idDate = result.insertId;
+                                        // console.log(idDay)
+                                    });
+                            }
+                            else {
+                                idDate = result[0].id_date;
+                            }
+                            return resolve(result);
                         }
-                        return resolve(result);
                     }
                 );
             });
@@ -492,22 +495,23 @@ app.post('/inOutCar', (req, res) => {
 
         let CheckAddArrDate = () => {
             return new Promise((resolve, reject) => {
-
                 db.query(
                     "SELECT * FROM arriving_date WHERE id_date=? AND id_car=?",
-                    [idDay, idCar], (err, result) => {
-
-                        if (result.length === 0) {
-                            db.query(
-                                "INSERT INTO arriving_date (id_date, id_car) VALUES (?, ?)",
-                                [idDay, idCar]);
-                        }
-
+                    [idDate, idCar], (err, result) => {
                         if (err) {
-                            return reject(error);
+                            console.log(err);
+                            return reject(err);
                         }
-                        return resolve(result);
-                    });
+                        else {
+                            if (result.length === 0) {
+                                db.query(
+                                    "INSERT INTO arriving_date (id_date, id_car) VALUES (?, ?)",
+                                    [idDate, idCar]);
+                            }
+                            return resolve(result);
+                        }
+                    }
+                );
             });
         }
 
@@ -516,29 +520,36 @@ app.post('/inOutCar', (req, res) => {
 
                 if (direction === 'in') {
                     db.query(
-                        "UPDATE arriving_date SET arrival_time=CURTIME() WHERE id_date=? AND id_car=?",
-                        [idDay, idCar], (err, result) => {
+                        "UPDATE arriving_date SET arrival_time=CURTIME(), departure_time=NULL WHERE id_date=? AND id_car=?",
+                        [idDate, idCar], (err, result) => {
 
                             if (err) {
-                                return reject(error);
+                                console.log(err);
+                                return reject(err);
+                            } else {
+                                log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' въехал');
+                                req.session.log = log;
+                                res.send({ log: log, message: 'Машина может быть пропущена!' });
+                                return resolve(result);
                             }
-                            return resolve(result);
                         });
-                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' въехал');
-                    req.session.log = log;
-                    res.send({ log: log, message: 'Машина может быть пропущена!' });
                 }
                 else {
                     db.query(
                         "UPDATE arriving_date SET departure_time=CURTIME() WHERE id_date=? AND id_car=?",
-                        [idDay, idCar], (err, result) => {
+                        [idDate, idCar], (err, result) => {
 
                             if (err) {
-                                return reject(error);
+                                console.log(err);
+                                return reject(err);
                             }
-                            return resolve(result);
+                            else {
+                                log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' выехал');
+                                req.session.log = log;
+                                res.send({ log: log });
+                                return resolve(result);
+                            }
                         })
-                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' выехал');
                 }
             });
         }
@@ -604,7 +615,7 @@ app.get('/carTable', (req, res) => {
                     elem.expiration_date = new Date(elem.expiration_date).toLocaleDateString();
                     elem.license_plate = elem.license_plate + ' ' + elem.region;
                     delete elem.region;
-                    elem.name = elem.last_name + ' '+ elem.name + ' '+ elem.middle_name;
+                    elem.name = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name;
                     delete elem.last_name;
                     delete elem.middle_name;
                 });

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Header } from '../../components';
-import { AnalystNavigation } from './AnalystNavigation/AnalystNavigation';
+import { AnalystNavigation } from './AnalystNavigation';
 
 export const Analyst = () => {
 
