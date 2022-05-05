@@ -21,31 +21,31 @@ export const useAddCar = () => {
 
         switch (e.target.name) {
             case 'plate':
-                setPlate(e.target.value);
+                setPlate(e.target.value.trim());
                 break;
             case 'region':
-                setRegion(e.target.value);
+                setRegion(e.target.value.trim());
                 break;
             case 'brand':
-                setBrand(e.target.value);
+                setBrand(e.target.value.trim());
                 break;
             case 'lastName':
-                setLastName(e.target.value);
+                setLastName(e.target.value.trim());
                 break;
             case 'name':
-                setName(e.target.value);
+                setName(e.target.value.trim());
                 break;
             case 'middleName':
-                setMiddleName(e.target.value);
+                setMiddleName(e.target.value.trim());
                 break;
             case 'chair':
-                setChair(e.target.value);
+                setChair(e.target.value.trim());
                 break;
             case 'gates':
                 setPosition(e.target.value);
                 break;
             case 'position':
-                setGates(e.target.value);
+                setGates(e.target.value.trim());
                 break;
             default:
                 break;

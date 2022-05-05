@@ -2,8 +2,8 @@ import React from "react";
 import { Route, Routes } from 'react-router-dom';
 
 import { SignIn, Home } from './pages';
-import { AddCar, AddUser } from './pages/Admin';
-import { ByDate, AllCars } from './pages/Analyst';
+import { AddCar, AddUser } from './pages/Admin/sections';
+import { ByDate, AllCars } from './pages/Analyst/sections';
 
 export const App = () => {
   return (

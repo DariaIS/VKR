@@ -7,8 +7,6 @@ const session = require('express-session');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 
-const saltRounds = 10;
-
 const app = express();
 
 app.use(express.json());
@@ -52,35 +50,10 @@ db.connect(function (err) {
     }
 });
 
-app.get('/login', (req, res) => {
-    if (req.session.user) {
-        res.send({ loggedIn: true, user: req.session.user });
-    } else
-        res.send({ loggedIn: false });
-});
+require('./routes')(app, db);
+// require('./routes')(db);
 
-app.post('/login', (req, res) => {
-    const username = req.body.username;
-
-    const password = req.body.password;
-
-    db.query(
-        "SELECT * FROM user WHERE user_name = ?",
-        [username],
-        async (err, result) => {
-            if (err)
-                res.send({ err: err });
-
-            if (result.length > 0) {
-                const comparison = await bcrypt.compare(password, result[0].password);
-                if (comparison) {
-                    req.session.user = result;
-                    res.send(result);
-                } else res.send({ message: 'Неверный логин или пароль!' });
-            } else res.send({ message: 'Неверный логин или пароль!' });
-        }
-    );
-});
+const saltRounds = 10;
 
 app.get('/logout', (req, res) => {
     req.session.loggedIn = false;

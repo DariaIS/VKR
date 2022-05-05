@@ -1,4 +1,4 @@
-export { SignIn } from './SignIn';
+export { SignIn } from './SignIn/SignIn';
 export { Admin } from './Admin/Admin';
 export { Analyst } from './Analyst/Analyst';
 export { Security } from './Security/Security';

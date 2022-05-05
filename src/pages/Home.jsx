@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Axios from "axios";
+import React, { useEffect, useState } from 'react';
+import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { Admin, Analyst, Security } from "./index";
@@ -13,10 +13,10 @@ export const Home = () => {
     Axios.defaults.withCredentials = true;
 
     useEffect(() => {
-        Axios.get('http://localhost:3001/login').then((response) => {
-            if (response.data.loggedIn === true) {
+        Axios.get('http://localhost:3001/login')
+        .then((response) => {
+            if (response.data.loggedIn) {
                 setRole(response.data.user[0].role);
-                // console.log(response.data);
             }
             else return navigate('/');
         });
