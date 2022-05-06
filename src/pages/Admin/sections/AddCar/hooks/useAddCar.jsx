@@ -42,10 +42,10 @@ export const useAddCar = () => {
                 setChair(e.target.value.trim());
                 break;
             case 'gates':
-                setPosition(e.target.value);
+                setGates(e.target.value);
                 break;
             case 'position':
-                setGates(e.target.value.trim());
+                setPosition(e.target.value.trim());
                 break;
             default:
                 break;

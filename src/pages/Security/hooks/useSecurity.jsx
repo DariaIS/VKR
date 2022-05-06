@@ -18,7 +18,7 @@ export const useSecurity = () => {
     const inOut = (e) => {
         setError('');
         setSuccess('');
-        Axios.post('http://localhost:3001/InOutCar', {
+        Axios.post('http://localhost:3001/inOutCar', {
             direction: e.target.id
         }).then((response) => {
             setInOutLog(response.data.log)

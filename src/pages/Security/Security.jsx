@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Axios from 'axios';
 
 import { Header } from '../../components';
-import { SecurityNavigation } from './SecurityNavigation';
 
 import { useSecurity } from './hooks/useSecurity';
 
@@ -26,9 +25,7 @@ export const Security = () => {
 
     return (
         <>
-            <Header>
-                <SecurityNavigation />
-            </Header>
+            <Header />
             <div className="security section container">
                 <div className="security__checking">
                     <div className="security__car-result">

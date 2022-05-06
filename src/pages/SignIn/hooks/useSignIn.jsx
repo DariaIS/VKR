@@ -5,6 +5,9 @@ import Axios from 'axios';
 export const useSignIn = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const [showPassword, setShowPassword] = useState(false);
+
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -26,9 +29,9 @@ export const useSignIn = () => {
         }
     };
 
-    const handleInput = (e) => {
+    const handleInputChange = (e) => {
         setError('');
-        
+
         switch (e.target.name) {
             case 'name':
                 setUsername(e.target.value.trim());
@@ -41,9 +44,20 @@ export const useSignIn = () => {
         };
     }
 
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     return {
         login,
-        handleInput,
+        handleInputChange,
+        showPassword,
+        handleClickShowPassword,
+        handleMouseDownPassword,
         navigate,
         error
     };
