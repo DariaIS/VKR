@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Header } from '../../../../components';
 import { AdminNavigation } from '../../AdminNavigation';
+import { ProtectedRoute } from '../../../../components/ProtectedRoute';
 
 import { useAddCar } from './hooks/useAddCar';
 
@@ -9,7 +10,7 @@ export const AddCar = () => {
     const { handleInput, addCar, error, success } = useAddCar();
 
     return (
-        <>
+        <ProtectedRoute role='admin' setNewRole={null}>
             <Header>
                 <AdminNavigation />
             </Header>
@@ -92,6 +93,6 @@ export const AddCar = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </ProtectedRoute>
     );
 }

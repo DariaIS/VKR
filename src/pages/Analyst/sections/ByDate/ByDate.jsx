@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 
 import { Header } from '../../../../components';
 import { AnalystNavigation } from '../../AnalystNavigation';
+import { ProtectedRoute } from '../../../../components/ProtectedRoute';
 
 import { useByDate } from './hooks/useByDate';
 
@@ -19,7 +20,7 @@ export const ByDate = () => {
     } = useByDate();
 
     return (
-        <>
+        <ProtectedRoute role='analyst' setNewRole={null}>
             <Header>
                 <AnalystNavigation />
             </Header>
@@ -78,6 +79,6 @@ export const ByDate = () => {
                     }
                 </div>
             </div>
-        </>
+        </ProtectedRoute>
     )
 }

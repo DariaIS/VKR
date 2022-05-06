@@ -3,6 +3,7 @@ import Axios from 'axios';
 
 import { Header } from '../../../../components';
 import { AnalystNavigation } from '../../AnalystNavigation';
+import { ProtectedRoute } from '../../../../components/ProtectedRoute';
 
 import { useAllCars } from './hooks/useAllCars';
 
@@ -24,7 +25,7 @@ export const AllCars = () => {
     }, [setCarTable]);
 
     return (
-        <>
+        <ProtectedRoute role='analyst' setNewRole={null}>
             <Header>
                 <AnalystNavigation />
             </Header>
@@ -72,6 +73,6 @@ export const AllCars = () => {
                     </table>
                 </div>
             </div>
-        </>
+        </ProtectedRoute>
     )
 }

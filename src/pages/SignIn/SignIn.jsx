@@ -20,8 +20,9 @@ export const SignIn = () => {
 
     Axios.defaults.withCredentials = true;
     useEffect(() => {
-        console.log('edd')
+        console.log('signin')
         Axios.get('http://localhost:3001/login').then((response) => {
+            console.log(response.data)
             if (response.data.loggedIn) {
                 return navigate('/home');
             }
