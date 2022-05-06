@@ -42,7 +42,7 @@
             outline: none;
         }
 
-        &:focus ~ .input__label {
+        &:focus ~ .input__name {
             color: $color-main;
         }
 
