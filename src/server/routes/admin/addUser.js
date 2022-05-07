@@ -33,7 +33,7 @@ module.exports = function (app, db) {
                             }
     
                             if (err) {
-                                return reject(error);
+                                return reject(err);
                             }
                             return resolve(result);
                         });
@@ -46,12 +46,11 @@ module.exports = function (app, db) {
                     db.query(
                         "INSERT INTO user (user_name, password, role) VALUES (?, ?, ?)",
                         [userName, password, role], (err, result) => {
-                            res.send({ message: 'Пользователь успешно добавлен!' });
-                            // console.log(result + " пользователь добавлен")
-    
                             if (err) {
                                 return reject(err);
                             }
+                            res.send({ message: 'Пользователь успешно добавлен!' });
+                            // console.log(result + " пользователь добавлен")
                             return resolve(result);
                         });
                 });

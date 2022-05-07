@@ -6,9 +6,9 @@
 }
 
 .addCar__form {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     justify-items: center;
+    justify-content: space-between;
 }
 
 .addCar__add-result {
