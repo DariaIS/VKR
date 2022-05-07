@@ -16,10 +16,13 @@ export const ProtectedRoute = ({ children, role, setNewRole }) => {
                 if (response.data.loggedIn) {
                     if (role === null) {
                         setNewRole(response.data.user[0].role);
-                        return setIsLoaded(true);
+                        setIsLoaded(true);
                     }
-                    else if (response.data.user[0].role !== role)
-                        return navigate('/');
+                    else {
+                        if (response.data.user[0].role === role)
+                            setIsLoaded(true);
+                        else return navigate('/');
+                    }
                 }
                 else return navigate('/');
             })
