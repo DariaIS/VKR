@@ -12,7 +12,7 @@ export const ProtectedRoute = ({ children, role, setNewRole }) => {
         console.log('route')
         Axios.get('http://localhost:3001/login')
             .then((response) => {
-                console.log(response.data)
+                // console.log(response.data)
                 if (response.data.loggedIn) {
                     if (role === null) {
                         setNewRole(response.data.user[0].role);

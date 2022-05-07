@@ -5,7 +5,7 @@ import { Header } from '../../../../components';
 import { AnalystNavigation } from '../../AnalystNavigation';
 
 import { ProtectedRoute } from '../../../../components/ProtectedRoute';
-import { SortableTable } from '../../../../components/SortableTable';
+import { Table } from '../../../../components/Table';
 
 import { useAllCars } from './hooks/useAllCars';
 
@@ -49,9 +49,16 @@ export const AllCars = () => {
                             </ExcelFile>}
                             {<button className="button button--blue signin__button" onClick={exportPDF}>Экспорт PDF</button>}
                         </div>
-                        <SortableTable
-                            headers={['Номер машины', 'Марка машины', 'ФИО владельца', 'Дата предоставления доступа', 'Дата истечения прав доступа']}
-                            data={carTable} />
+                        <Table
+                            headers={
+                                [['Номер машины', 'license_plate'],
+                                ['Марка машины', 'car_brand'],
+                                ['ФИО владельца', 'name'],
+                                ['Дата предоставления доступа', 'start_date'],
+                                ['Дата истечения прав доступа', 'expiration_date']]
+                            }
+                            data={carTable}
+                            setData={setCarTable} />
                         {/* <table className="table__item">
                         <thead className="table__thead">
                             <tr className="table__tr">
