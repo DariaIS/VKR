@@ -42,6 +42,7 @@ export const Security = () => {
                             onClick={(e) => inOut(e)}>
                             Автомобиль выезжает
                         </button>
+                        {(error === '' && success === '') && <span className="status">&nbsp;</span>}
                         {error !== '' && <span className="status status--warning">{error}</span>}
                         {success !== '' && <span className="status status--success">{success}</span>}
                     </div>
