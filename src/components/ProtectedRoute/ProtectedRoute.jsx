@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export const ProtectedRoute = ({ children, role, setNewRole }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    // const [isLogin, setIsLogin] = useState(false);
     let navigate = useNavigate();
 
     Axios.defaults.withCredentials = true;
@@ -16,6 +16,7 @@ export const ProtectedRoute = ({ children, role, setNewRole }) => {
                 if (response.data.loggedIn) {
                     if (role === null) {
                         setNewRole(response.data.user[0].role);
+                        return setIsLoaded(true);
                     }
                     else if (response.data.user[0].role !== role)
                         return navigate('/');
@@ -27,5 +28,5 @@ export const ProtectedRoute = ({ children, role, setNewRole }) => {
             });
     }, [role, setNewRole, navigate]);
 
-    return children;
+    return isLoaded ? children : <div></div>;
 };

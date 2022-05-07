@@ -12,10 +12,13 @@ export const AllCars = () => {
     const [cars, setCars] = useState('');
 
     useEffect(() => {
+        let isMounted = true;
         console.log('car')
         Axios.get('http://localhost:3001/carTable').then((response) => {
-            setCars(response.data.result);
+            if (isMounted)
+                setCars(response.data.result);
         });
+        return () => isMounted = false
     }, [setCars]);
 
     return (
