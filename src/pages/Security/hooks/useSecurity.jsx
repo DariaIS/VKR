@@ -8,12 +8,6 @@ export const useSecurity = () => {
     
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    
-    const scroll = () => { 
-        let logBlock = document.getElementsByClassName('security__log')[0];
-        logBlock.scrollTop = logBlock.scrollHeight;
-        setLogScroll(logBlock);
-    }
 
     const inOut = (e) => {
         setError('');
@@ -38,7 +32,7 @@ export const useSecurity = () => {
     return {
         inOutLog,
         setInOutLog,
-        scroll,
+        setLogScroll,
         inOut,
         error,
         success

@@ -9,7 +9,7 @@ export const Security = () => {
     const {
         inOutLog,
         setInOutLog,
-        scroll,
+        setLogScroll,
         inOut,
         error,
         success
@@ -18,10 +18,13 @@ export const Security = () => {
     useEffect(() => {
         Axios.get('http://localhost:3001/inOutLog').then((response) => {
             setInOutLog(response.data.log);
+
+            let logBlock = document.getElementsByClassName('security__log')[0];
+            logBlock.scrollTop = logBlock.scrollHeight;
+            console.log('sc')
+            setLogScroll(logBlock);
         });
-        scroll();
-        // console.log('effect');
-    }, [setInOutLog, scroll]);
+    }, [setInOutLog, setLogScroll]);
 
     return (
         <>
