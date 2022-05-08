@@ -35,7 +35,7 @@ export const useCarsTable = (items) => {
         doc.setFontSize(16);
         doc.text('Все автомобили на ' + new Date().toLocaleDateString(), 40, 50)
 
-        let content = {
+        const content = {
             startY: 70,
             head: headers,
             body: data,

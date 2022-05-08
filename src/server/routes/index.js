@@ -3,6 +3,7 @@ const logoutRoutes = require('./authorize/logout');
 
 const addCarRoutes = require('./admin/addCar');
 const addUserRoutes = require('./admin/addUser');
+const expiredCarsRoutes = require('./admin/expiredCars');
 
 const inOutCarRoutes = require('./security/inOutCar');
 const inOutLogRoutes = require('./security/inOutLog');
@@ -16,6 +17,7 @@ module.exports = function(app, db) {
 
     addCarRoutes(app, db);
     addUserRoutes(app, db);
+    expiredCarsRoutes(app, db);
 
     inOutCarRoutes(app, db);
     inOutLogRoutes(app);

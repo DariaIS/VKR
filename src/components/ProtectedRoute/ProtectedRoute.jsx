@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export const ProtectedRoute = ({ children, role, setNewRole }) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     Axios.defaults.withCredentials = true;
     useEffect(() => {

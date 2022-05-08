@@ -13,13 +13,14 @@ export const AllCars = () => {
 
     useEffect(() => {
         let isMounted = true;
-        console.log('car')
-        Axios.get('http://localhost:3001/carTable').then((response) => {
-            if (isMounted)
+        if (isMounted) {
+            console.log('car')
+            Axios.get('http://localhost:3001/carTable').then((response) => {
                 setCars(response.data.result);
-        });
+            });
+        }
         return () => isMounted = false
-    }, [setCars]);
+    }, []);
 
     return (
         <ProtectedRoute role='analyst' setNewRole={null}>
