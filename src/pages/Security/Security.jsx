@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Axios from 'axios';
 
 import { Header } from '../../components';
+import { Modal } from "../../components/Modal";
 
 import { useSecurity } from './hooks/useSecurity';
 
@@ -10,6 +11,8 @@ export const Security = () => {
         inOutLog,
         setInOutLog,
         setLogScroll,
+        isModalOpen,
+        clickCloseModal,
         inOut,
         error,
         success
@@ -56,6 +59,7 @@ export const Security = () => {
                     }
                 </div>
             </div>
+            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalType='plate'/>}
         </>
 
     );

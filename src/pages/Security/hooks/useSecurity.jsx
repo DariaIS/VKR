@@ -6,8 +6,18 @@ export const useSecurity = () => {
     const [inOutLog, setInOutLog] = useState('');
     const [logScroll, setLogScroll] = useState('');
 
+    const [isModalOpen, SetIsModalOpen] = useState(false);
+    
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const clickOpenModal = (data) => {
+        SetIsModalOpen(true);
+    }
+
+    const clickCloseModal = () => {
+        SetIsModalOpen(false);
+    }
 
     const inOut = (e, plate) => {
         setError('');
@@ -26,6 +36,7 @@ export const useSecurity = () => {
             }
             else if (response.data.carPlateErr) {
                 console.log(response.data.carPlateErr);
+                clickOpenModal();
             }
             logScroll.scrollTop = logScroll.scrollHeight;
         });
@@ -35,6 +46,8 @@ export const useSecurity = () => {
         inOutLog,
         setInOutLog,
         setLogScroll,
+        isModalOpen,
+        clickCloseModal,
         inOut,
         error,
         success
