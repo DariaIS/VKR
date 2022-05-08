@@ -6,16 +6,19 @@ module.exports = function (app, db) {
     app.post('/inOutCar', (req, res) => {
         const direction = req.body.direction;
 
+        let plate = req.query.plate;
+        if (!plate)
+            plate = fs.readFileSync("car.txt", "utf8").toString().split("\n");
+        
+            console.log(plate);
         let log = [];
-        let plate = fs.readFileSync("car.txt", "utf8").toString().split("\n");
-
         if (req.session.log)
             log = req.session.log;
 
         if (plate[0].trim().length < 6) {
-            log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 'Номер автомобиля не распознан');
+            log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Номер автомобиля не распознан');
             req.session.log = log;
-            res.send({ log: log, message: 'Номер машины не распознан!' });
+            res.send({ log: log, err: 'Номер машины не распознан!' });
         }
         else {
             let warning = false;
@@ -27,7 +30,7 @@ module.exports = function (app, db) {
             let CheckCarInOut = () => {
                 return new Promise((resolve, reject) => {
                     db.query(
-                        "SELECT id_car FROM car WHERE license_plate=?",
+                        "SELECT id_car, expiration_date FROM car WHERE license_plate=?",
                         [plate[0]], (err, result) => {
                             if (err) {
                                 console.log(err);
@@ -37,10 +40,22 @@ module.exports = function (app, db) {
                                 if (result.length === 0) {
                                     log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' отсутствует в базе данных');
                                     req.session.log = log;
-                                    res.send({ log: log, message: 'Машины с данным номером нет в базе данных!' });
+                                    res.send({ log: log, err: 'Машины с данным номером нет в базе данных!' });
                                     warning = true;
                                 }
-                                else idCar = result[0].id_car;
+                                else {
+                                    let expDate = new Date(result[0].expiration_date);
+                                    expDate.setDate(expDate.getDate() + 1);
+                                    if (new Date() < expDate) {
+                                        idCar = result[0].id_car;
+                                    }
+                                    else {
+                                        warning = true;
+                                        log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' У автомобиля с номером ' + plate[0] + ' истекли права доступа');
+                                        req.session.log = log;
+                                        res.send({ log: log, err: 'У данного автомобиля истекли права доступа!' });
+                                    }
+                                }
                                 return resolve(result);
                             }
                         }
@@ -60,7 +75,7 @@ module.exports = function (app, db) {
                                 if (result.length === 0) {
                                     log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' не имеет доступа к данной проходной');
                                     req.session.log = log;
-                                    res.send({ log: log, message: 'У машины с данным номером нет доступа к этой проходной!' });
+                                    res.send({ log: log, err: 'У машины с данным номером нет доступа к этой проходной!' });
                                     warning = true;
                                 }
                                 return resolve(result);
@@ -86,7 +101,6 @@ module.exports = function (app, db) {
                                             if (err) {
                                                 console.log(err)
                                             } else idDate = result.insertId;
-                                            // console.log(idDay)
                                         });
                                 }
                                 else {

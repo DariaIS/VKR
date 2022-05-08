@@ -35,11 +35,11 @@ export const Security = () => {
                     <span className="security__title title title--medium">Вы вошли как охрана</span>
                     <span className="security__text">Пропускная 7-ого корпуса</span>
                     <button id='in' type='button' className="button button--blue security__button"
-                        onClick={(e) => inOut(e)}>
+                        onClick={(e) => inOut(e, '')}>
                         Автомобиль въезжает
                     </button>
                     <button id='out' type='button' className="button button--white security__button"
-                        onClick={(e) => inOut(e)}>
+                        onClick={(e) => inOut(e, '')}>
                         Автомобиль выезжает
                     </button>
                     {(error === '' && success === '') && <span className="status">&nbsp;</span>}
