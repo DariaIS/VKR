@@ -1,68 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Axios from 'axios';
 
+import { Header } from '../../components';
+
+import { useSecurity } from './hooks/useSecurity';
+
 export const Security = () => {
-
-    const [carStatus, setCarStatus] = useState('');
-    const [carWarningStatus, setCarWarningStatus] = useState('');
-
-    const [CarDirection, setCarDirection] = useState('');
-    const [inOutLog, setInOutLog] = useState('');
-    const [logScroll, setLogScroll] = useState('');
+    const {
+        inOutLog,
+        setInOutLog,
+        setLogScroll,
+        inOut,
+        error,
+        success
+    } = useSecurity();
 
     useEffect(() => {
         Axios.get('http://localhost:3001/inOutLog').then((response) => {
-            // console.log(response.data.result);
+            console.log(response.data)
             setInOutLog(response.data.log);
-            
-            // logScroll.scrollTop = logScroll.scrollHeight;
-        });
 
-        let logBlock = document.getElementsByClassName('security__log')[0];
-        logBlock.scrollTop = logBlock.scrollHeight
-        setLogScroll(logBlock);
-    }, []);
-
-    const inOutCar = () => {
-        console.log(CarDirection)
-        Axios.post('http://localhost:3001/InOutCar', {
-            direction: CarDirection
-        }).then((response) => {
-            setInOutLog(response.data.log)
-            if (response.data.message)
-                if (response.data.message === 'Машина может быть пропущена!') {
-                    setCarStatus(response.data.message);
-                    setCarWarningStatus('');
-                }
-                else  {
-                    setCarWarningStatus(response.data.message);
-                    setCarStatus('');
-                }
-            logScroll.scrollTop = logScroll.scrollHeight;
+            let logBlock = document.getElementsByClassName('security__log')[0];
+            logBlock.scrollTop = logBlock.scrollHeight;
+            console.log('sc')
+            setLogScroll(logBlock);
         });
-    }
+    }, [setInOutLog, setLogScroll]);
 
     return (
-        <div className="security section container">
-            <div className="security__checking">
+        <>
+            <Header />
+            <div className="security section container">
                 <div className="security__car-result">
-                <span className="security__title title title--medium">Вы вошли как охрана</span>
-                <span className="security__text">Пропускная 7-ого корпуса</span>
+                    <span className="security__title title title--medium">Вы вошли как охрана</span>
+                    <span className="security__text">Пропускная 7-ого корпуса</span>
                     <button id='in' type='button' className="button button--blue security__button"
-                        onClick={(e) => {
-                            setCarDirection(e.target.id);
-                            inOutCar();
-                        }}>
-                        Автомобиль въезжает</button>
+                        onClick={(e) => inOut(e)}>
+                        Автомобиль въезжает
+                    </button>
                     <button id='out' type='button' className="button button--white security__button"
-                        onClick={(e) => {
-                            setCarDirection(e.target.id);
-                            inOutCar();
-                        }}>
+                        onClick={(e) => inOut(e)}>
                         Автомобиль выезжает
                     </button>
-                    <span className="status status--warning">{carWarningStatus}</span>
-                    <span className="status status--success">{carStatus}</span>
+                    {(error === '' && success === '') && <span className="status">&nbsp;</span>}
+                    {error !== '' && <span className="status status--warning">{error}</span>}
+                    {success !== '' && <span className="status status--success">{success}</span>}
                 </div>
                 <div className="security__log">
                     {
@@ -74,8 +56,7 @@ export const Security = () => {
                     }
                 </div>
             </div>
-        </div>
+        </>
+
     );
 }
-
-export default Security;

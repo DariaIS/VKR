@@ -61,3 +61,12 @@
         margin: auto;
     }
 }
+
+.signin__eye-icon {
+    width: 28px;
+    color: $color-main;
+    position: absolute;
+    right: 0;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}

@@ -1,0 +1,14 @@
+.byDate__export-buttons {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.byDate__export-buttons > span {
+    display: block;
+
+    &:not(:last-child) {
+        margin-right: 40px;
+    }
+}

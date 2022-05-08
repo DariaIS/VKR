@@ -1,7 +1,9 @@
 import React from "react";
+import { Route, Routes } from 'react-router-dom';
 
 import { SignIn, Home } from './pages';
-import { Route, Routes } from 'react-router-dom';
+import { AddCar, AddUser } from './pages/Admin/sections';
+import { ByDate, AllCars } from './pages/Analyst/sections';
 
 export const App = () => {
   return (
@@ -10,6 +12,12 @@ export const App = () => {
             <Routes>
                 <Route path="/" element={<SignIn/>} exact />
                 <Route path="/home" element={<Home/>} exact />
+
+                <Route path="/addCar" element={<AddCar/>} exact />
+                <Route path="/addUser" element={<AddUser/>} exact />
+
+                <Route path="/byDate" element={<ByDate/>} exact />
+                <Route path="/allCars" element={<AllCars/>} exact />
             </Routes>
             </div>
     </div>
