@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import Select from 'react-select';
 
 import { usePlateModal } from './hooks/usePlateModal';
 
 export const PlateModal = ({ closeModal }) => {
-    // const { handlePlate, clickPlate, error } = usePlateModal();
+    const { plates, getPlates } = usePlateModal();
+
+    useEffect(() => {
+        console.log('PlateModal')
+        getPlates();
+    }, [getPlates]);
 
     return (
         <>
@@ -13,8 +20,9 @@ export const PlateModal = ({ closeModal }) => {
                 Пожалуйста, введите его вручную.
             </p>
             <label className="plateModal__form form__item">
-                <input className=" input input--medium input--default" type="text" name="plate"
-                // onChange={handlePlate}
+                <Select className="plateModal__select"
+                    // onChange={this.handleChange}
+                    options={plates}
                 />
             </label>
             <button type='button' className="plateModal__button button button--blue signin__button" onClick={() => { closeModal(); }}>Подтвердить</button>

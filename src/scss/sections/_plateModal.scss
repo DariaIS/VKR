@@ -22,3 +22,13 @@
         margin-bottom: 3rem;
     }
 }
+
+.plateModal__select {
+    @media (min-width: $screen-lg) {
+        width: 452px;
+    }
+
+    @media (max-width: ($screen-lg - 1)) {
+        width: 320px;
+    }
+}

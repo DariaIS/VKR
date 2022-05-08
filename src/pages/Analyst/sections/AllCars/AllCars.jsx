@@ -16,7 +16,8 @@ export const AllCars = () => {
         if (isMounted) {
             console.log('car')
             Axios.get('http://localhost:3001/carTable').then((response) => {
-                setCars(response.data.result);
+                if (response.data.result)
+                    setCars(response.data.result);
             });
         }
         return () => isMounted = false
