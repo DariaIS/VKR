@@ -46,8 +46,8 @@ export const Security = () => {
                         Автомобиль выезжает
                     </button>
                     {(error === '' && success === '') && <span className="status">&nbsp;</span>}
-                    {error !== '' && <span className="status status--warning">{error}</span>}
-                    {success !== '' && <span className="status status--success">{success}</span>}
+                    {error !== '' && <span className="status status--warning status--center">{error}</span>}
+                    {success !== '' && <span className="status status--success status--center">{success}</span>}
                 </div>
                 <div className="security__log">
                     {
@@ -59,7 +59,7 @@ export const Security = () => {
                     }
                 </div>
             </div>
-            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalType='plate'/>}
+            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalType='plate' accept={inOut}/>}
         </>
 
     );

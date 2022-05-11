@@ -23,7 +23,14 @@
     }
 }
 
+.plateModal__elems {
+    display: flex;
+    align-items: center;
+}
+
 .plateModal__select {
+    display: inline-block;
+
     @media (min-width: $screen-lg) {
         width: 452px;
     }

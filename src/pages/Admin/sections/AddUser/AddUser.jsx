@@ -7,7 +7,12 @@ import { ProtectedRoute } from '../../../../components/ProtectedRoute';
 import { useAddUser } from './hooks/useAddUser';
 
 export const AddUser = () => {
-    const { handleInput, addUser, error, success } = useAddUser();
+    const { 
+        handleInput,
+        addUser,
+        error,
+        success 
+    } = useAddUser();
 
     return (
         <ProtectedRoute role='admin' setNewRole={null}>
@@ -48,8 +53,8 @@ export const AddUser = () => {
                     </form>
                     <div className="addUser__add-result">
                         <button type='button' className="button button--blue signin__button" onClick={addUser}>Добавить пользователя</button>
-                        {error !== '' && <span className="status status--warning">{error}</span>}
-                        {success !== '' && <span className="status status--success">{success}</span>}
+                        {error !== '' && <span className="status status--warning status--center">{error}</span>}
+                        {success !== '' && <span className="status status--success status--center">{success}</span>}
                     </div>
                 </div>
             </div>

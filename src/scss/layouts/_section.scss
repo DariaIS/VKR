@@ -57,7 +57,6 @@
 
 .status {
     display: block;
-    text-align: center;
     font-size: 2rem;
 
     &--success {
@@ -66,5 +65,13 @@
 
     &--warning {
         color: $color-danger;
+    }
+
+    &--center {
+        text-align: center;
+    }
+
+    &--left {
+        text-align: left;
     }
 }

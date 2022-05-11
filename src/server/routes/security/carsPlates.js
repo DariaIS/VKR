@@ -9,9 +9,9 @@ module.exports = function (app, db) {
                 else {
                     result.forEach(elem => {
                         elem.label = elem.license_plate + ' ' + elem.region;
+                        elem.value = [elem.license_plate, elem.region];
                         delete elem.region;
                         delete elem.license_plate;
-                        elem.value = elem.id_car;
                         delete elem.id_car;
                     });
                     res.send({ result });

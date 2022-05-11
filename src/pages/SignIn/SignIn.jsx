@@ -24,7 +24,7 @@ export const SignIn = () => {
     useEffect(() => {
         console.log('signin')
         Axios.get('http://localhost:3001/login').then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
             if (response.data.loggedIn) {
                 return navigate('/home');
             }
@@ -55,7 +55,7 @@ export const SignIn = () => {
                             </span>
                         </label>
                         <button type='button' className="button button--blue signin__button" onClick={(e) => login(e)}>Войти</button>
-                        {error !== '' && <span className="status status--warning">{error}</span>}
+                        {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     </form>
                 </div>
             </div> 

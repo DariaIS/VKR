@@ -7,7 +7,12 @@ import { ProtectedRoute } from '../../../../components/ProtectedRoute';
 import { useAddCar } from './hooks/useAddCar';
 
 export const AddCar = () => {
-    const { handleInput, addCar, error, success } = useAddCar();
+    const { 
+        handleInput,
+        addCar, 
+        error, 
+        success 
+    } = useAddCar();
 
     return (
         <ProtectedRoute role='admin' setNewRole={null}>
@@ -41,8 +46,8 @@ export const AddCar = () => {
                     </form>
                     <div className="addCar__add-result">
                         <button type='button' className="button button--blue signin__button" onClick={addCar}>Добавить запись</button>
-                        {error !== '' && <span className="status status--warning">{error}</span>}
-                        {success !== '' && <span className="status status--success">{success}</span>}
+                        {error !== '' && <span className="status status--warning status--center">{error}</span>}
+                        {success !== '' && <span className="status status--success status--center">{success}</span>}
                     </div>
                 </div>
             </div>

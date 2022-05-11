@@ -9,7 +9,9 @@ module.exports = function (app, db) {
         let plate = req.query.plate;
         if (!plate)
             plate = fs.readFileSync("car.txt", "utf8").toString().split("\n");
-        
+        else {
+            plate = plate.split(',');
+        }
             console.log(plate);
         let log = [];
         if (req.session.log)

@@ -22,6 +22,7 @@ export const useSecurity = () => {
     const inOut = (e, plate) => {
         setError('');
         setSuccess('');
+        console.log(e.target.id);
         Axios.post(`http://localhost:3001/inOutCar?plate=${plate}`, {
             direction: e.target.id
         }).then((response) => {
