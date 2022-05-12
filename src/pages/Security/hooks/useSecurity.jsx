@@ -19,12 +19,11 @@ export const useSecurity = () => {
         SetIsModalOpen(false);
     }
 
-    const inOut = (e, plate) => {
+    const inOut = (direction, plate) => {
         setError('');
         setSuccess('');
-        console.log(e.target.id);
         Axios.post(`http://localhost:3001/inOutCar?plate=${plate}`, {
-            direction: e.target.id
+            direction: direction
         }).then((response) => {
             setInOutLog(response.data.log)
             if (response.data.message) {
@@ -36,7 +35,6 @@ export const useSecurity = () => {
                 setSuccess('');
             }
             else if (response.data.carPlateErr) {
-                console.log(response.data.carPlateErr);
                 clickOpenModal();
             }
             logScroll.scrollTop = logScroll.scrollHeight;

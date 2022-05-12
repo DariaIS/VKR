@@ -7,16 +7,16 @@ export const usePlateModal = (accept, closeModal) => {
 
     const [error, setError] = useState('');
 
-    const handleSelectChange = (e) => {
+    const handleSelectChange = (value) => {
         // console.log(e);
         setError('');
-        setPlate(e.value);
+        setPlate(value);
     }
 
-    const handleAcceptClick = (e) => {
+    const handleAcceptClick = (direction) => {
         if (plate) {
-            console.log(plate);
-            accept(e, plate);
+            // console.log(plate);
+            accept(direction, plate);
             closeModal();
         }
         else setError('Пожалуйста, введите номер');
@@ -25,7 +25,7 @@ export const usePlateModal = (accept, closeModal) => {
     const getPlates = useCallback(() => {
         console.log('getPlates')
         Axios.get('http://localhost:3001/carsPlates').then((response) => {
-            console.log(response.data.result);
+            // console.log(response.data.result);
             setPlateList(response.data.result);
         });
     }, []);

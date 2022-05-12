@@ -12,7 +12,7 @@ module.exports = function (app, db) {
         else {
             plate = plate.split(',');
         }
-            console.log(plate);
+            // console.log(plate);
         let log = [];
         if (req.session.log)
             log = req.session.log;

@@ -1,2 +1,2 @@
-export { AddCar } from './AddCar/AddCar';
-export { AddUser } from './AddUser/AddUser';
+export { AddCarPage } from './AddCar/AddCarPage';
+export { AddUserPage } from './AddUser/AddUserPage';

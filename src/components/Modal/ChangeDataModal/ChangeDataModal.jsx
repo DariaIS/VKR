@@ -4,19 +4,19 @@ import Select from 'react-select';
 
 import { usePlateModal } from './hooks/usePlateModal';
 
-export const PlateModal = ({ closeModal, accept }) => {
+export const ChangeDataModal = ({ closeModal, accept, plate }) => {
     const {
-        plateList,
+        handleInputChange,
         handleSelectChange,
-        getPlates,
+        getPlateData,
+        plateData,
         handleAcceptClick,
         error
-    } = usePlateModal(accept, closeModal);
+    } = usePlateModal(accept, plate, closeModal);
 
     useEffect(() => {
-        console.log('PlateModal')
-        getPlates();
-    }, [getPlates]);
+        console.log('ChangeDataModal')
+    }, []);
 
     return (
         <>
@@ -25,12 +25,12 @@ export const PlateModal = ({ closeModal, accept }) => {
                 {/* {'\n'} */}
             </p>
             <div className='plateModal__elems'>
-                <Select className="select"
-                    onChange={(e) => handleSelectChange(e.value)}
-                    options={plateList}
-                />
+                {/* <Select className="plateModal__select"
+                    onChange={(e) => handleSelectChange(e)}
+                    options={}
+                /> */}
                 <button type='button' className="plateModal__button button button--whit" onClick={closeModal}>Отмена</button>
-                <button id='in' type='button' className="plateModal__button button button--blue" onClick={(e) => handleAcceptClick(e.target.id)}>Подтвердить</button>
+                <button id='in' type='button' className="plateModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Подтвердить</button>
             </div>
             {/* {error && <div>{error}</div>} */}
             {error === '' && <span className="status">&nbsp;</span>}
