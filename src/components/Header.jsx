@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Axios from 'axios';
 
 export const Header = ({ children }) => {
@@ -13,17 +14,17 @@ export const Header = ({ children }) => {
         <header className="header">
             <div className="header__content container">
                 <h1 className="header__logo">
-                    <a className="header__logo-link" href="/home">
+                    <Link className="header__logo-link" to='/home'>
                         <span>Пропускная</span>
                         <span>система</span>
-                    </a>
+                    </Link>
                 </h1>
                 <div className="header__nav">
                     <nav className="nav">
                         <ul className="nav__list">
                             {children}
                             <li className="nav__item">
-                                <a href="/" className="nav__link nav__link--blue" onClick={logOut}>Выйти</a>
+                                <Link to='/' className="nav__link nav__link--blue" onClick={logOut}>Выйти</Link>
                             </li>
                         </ul>
                     </nav>

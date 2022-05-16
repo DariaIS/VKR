@@ -15,22 +15,23 @@ export const ChangeDataModal = ({ closeModal, accept, plate }) => {
     } = usePlateModal(accept, plate, closeModal);
 
     useEffect(() => {
-        console.log('ChangeDataModal')
+        console.log('ChangeDataModal');
+        console.log('plate');
     }, []);
 
     return (
         <>
-            <p className='plateModal__text'>
+            <p className='changeDataModal__text'>
                 Номер не распознан! Пожалуйста, введите номер вручную.
                 {/* {'\n'} */}
             </p>
-            <div className='plateModal__elems'>
+            <div className='changeDataModal__elems'>
                 {/* <Select className="plateModal__select"
                     onChange={(e) => handleSelectChange(e)}
                     options={}
                 /> */}
-                <button type='button' className="plateModal__button button button--whit" onClick={closeModal}>Отмена</button>
-                <button id='in' type='button' className="plateModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Подтвердить</button>
+                <button type='button' className="changeDataModal__button button button--whit" onClick={closeModal}>Отмена</button>
+                <button id='in' type='button' className="changeDataModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Подтвердить</button>
             </div>
             {/* {error && <div>{error}</div>} */}
             {error === '' && <span className="status">&nbsp;</span>}

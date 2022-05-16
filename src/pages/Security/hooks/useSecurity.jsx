@@ -34,7 +34,7 @@ export const useSecurity = () => {
                 setError(response.data.err);
                 setSuccess('');
             }
-            else if (response.data.carPlateErr) {
+            else if (response.data.carPlateErr && direction === 'in') {
                 clickOpenModal();
             }
             logScroll.scrollTop = logScroll.scrollHeight;

@@ -1,2 +1,2 @@
-export { ByDatePage } from './ByDate/ByDatePage';
-export { AllCarsPage } from './AllCars/AllCarsPage';
+export { ByDate } from './ByDate/ByDate';
+export { AllCars } from './AllCars/AllCars';
