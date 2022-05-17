@@ -1,6 +1,6 @@
 module.exports = function (app, db) {
 
-    app.get('/people', (req, res) => {
+    app.get('/allPeople', (req, res) => {
         db.query(
             "SELECT * FROM person",
             (err, result) => {

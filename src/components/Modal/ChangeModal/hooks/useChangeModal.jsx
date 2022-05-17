@@ -4,44 +4,61 @@ import Axios from 'axios';
 export const useChangeModal = (idCar, closeModal) => {
     const [plateData, setPlateData] = useState('');
     const [peopleList, setPeopleList] = useState('');
+    const [gatesList, setGatesList] = useState('');
+
+    const [selectedPerson, setSelectedPerson] = useState('');
+    const [selectedGates, setSelectedGates] = useState('');
 
     const [error, setError] = useState('');
 
-    const handleSelectChange = () => {
-        // console.log(e);
+    const handlePersonSelect = (e) => {
+        setSelectedPerson(e);
         setError('');
-        // setGatesChange(e.value);
+    }
+
+    const handleGatesSelect = (e) => {
+        console.log(e);
+        setSelectedGates(e);
+        setError('');
     }
 
     const handleAcceptClick = () => {
-        console.log(plateData);
+        if (selectedGates.length !== 0) {
+            console.log(selectedPerson);
+            console.log(selectedGates);
+        }
+        else {
+            setError('Не все поля заполнены!');
+
+        }
         // accept(e, plate);
         // closeModal();
     }
 
     const getPlateData = useCallback(() => {
-        console.log(idCar);
-        Axios.get(`http://localhost:3001/changeData?plate=${idCar}`)
+        console.log('getPlateData');
+        Axios.get(`http://localhost:3001/changeCarData?plate=${idCar}`)
             .then((response) => {
-                console.log(response.data.result);
-                setPlateData(response.data.result);
+                console.log(response.data);
+                setPeopleList(response.data.peopleList);
+                setGatesList(response.data.gatesList);
+
+                const person = response.data.peopleList.find(element => element.value === response.data.carData.id_person);
+                setSelectedPerson(person);
+                setSelectedGates(response.data.carData.gates);
+                setPlateData(response.data.carData);
             });
     }, [idCar]);
 
-    const getPeopleList = useCallback(() => {
-        console.log('getPeopleList')
-        Axios.get('http://localhost:3001/people')
-            .then((response) => {
-                // console.log(response.data.result);
-                setPeopleList(response.data.result);
-            });
-    }, []);
 
     return {
-        handleSelectChange,
+        handlePersonSelect,
+        handleGatesSelect,
         getPlateData,
-        getPeopleList,
         peopleList,
+        gatesList,
+        selectedPerson,
+        selectedGates,
         handleAcceptClick,
         error
     };

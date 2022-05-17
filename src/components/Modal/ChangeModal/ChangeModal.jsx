@@ -6,33 +6,41 @@ import { useChangeModal } from './hooks/useChangeModal';
 
 export const ChangeModal = ({ idCar, closeModal }) => {
     const {
-        handleSelectChange,
+        handlePersonSelect,
+        handleGatesSelect,
         getPlateData,
-        getPeopleList,
         peopleList,
+        gatesList,
+        selectedPerson,
+        selectedGates,
         handleAcceptClick,
         error
     } = useChangeModal(idCar, closeModal);
 
     useEffect(() => {
-        console.log(idCar);
         getPlateData();
-        getPeopleList();
-    }, [idCar, getPlateData, getPeopleList]);
+    }, [getPlateData]);
 
     return (
         <>
-            <p className='changeDataModal__text'>
+            <p className='changeModal__text'>
                 Изменение данных об автомобиле
                 {/* {'\n'} */}
             </p>
-            <div className='changeDataModal__elems'>
-                <Select className="plateModal__select"
-                    onChange={(e) => handleSelectChange(e)}
+            <div className='changeModal__elems'>
+                <Select className="changeModal__select"
+                    value={selectedPerson}
+                    onChange={(e) => handlePersonSelect(e)}
                     options={peopleList}
                 />
-                <button type='button' className="changeDataModal__button button button--whit" onClick={closeModal}>Отмена</button>
-                <button id='in' type='button' className="changeDataModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Подтвердить</button>
+                <Select className="changeModal__select"
+                    isMulti='true'
+                    value={selectedGates}
+                    onChange={(e) => handleGatesSelect(e)}
+                    options={gatesList}
+                />
+                <button type='button' className="changeModal__button button button--whit" onClick={closeModal}>Отмена</button>
+                <button id='in' type='button' className="changeModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Подтвердить</button>
             </div>
             {/* {error && <div>{error}</div>} */}
             {error === '' && <span className="status">&nbsp;</span>}
