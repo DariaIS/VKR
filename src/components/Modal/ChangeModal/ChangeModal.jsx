@@ -2,34 +2,35 @@ import React, { useEffect } from 'react';
 
 import Select from 'react-select';
 
-import { usePlateModal } from './hooks/usePlateModal';
+import { useChangeModal } from './hooks/useChangeModal';
 
-export const ChangeDataModal = ({ closeModal, accept, plate }) => {
+export const ChangeModal = ({ idCar, closeModal }) => {
     const {
-        handleInputChange,
         handleSelectChange,
         getPlateData,
-        plateData,
+        getPeopleList,
+        peopleList,
         handleAcceptClick,
         error
-    } = usePlateModal(accept, plate, closeModal);
+    } = useChangeModal(idCar, closeModal);
 
     useEffect(() => {
-        console.log('ChangeDataModal');
-        console.log('plate');
-    }, []);
+        console.log(idCar);
+        getPlateData();
+        getPeopleList();
+    }, [idCar, getPlateData, getPeopleList]);
 
     return (
         <>
             <p className='changeDataModal__text'>
-                Номер не распознан! Пожалуйста, введите номер вручную.
+                Изменение данных об автомобиле
                 {/* {'\n'} */}
             </p>
             <div className='changeDataModal__elems'>
-                {/* <Select className="plateModal__select"
+                <Select className="plateModal__select"
                     onChange={(e) => handleSelectChange(e)}
-                    options={}
-                /> */}
+                    options={peopleList}
+                />
                 <button type='button' className="changeDataModal__button button button--whit" onClick={closeModal}>Отмена</button>
                 <button id='in' type='button' className="changeDataModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Подтвердить</button>
             </div>

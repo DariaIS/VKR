@@ -1,6 +1,6 @@
 module.exports = function (app, db) {
 
-    app.get('/carsPlates', (req, res) => {
+    app.get('/notExpCarPlates', (req, res) => {
         db.query(
             "SELECT id_car, license_plate, region FROM car WHERE expiration_date > CURDATE()",
             (err, result) => {

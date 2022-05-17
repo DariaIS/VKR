@@ -13,7 +13,6 @@ module.exports = function (app, db) {
             execFileSync('tempExe.exe', []);
             console.log('fine');
             plate = fs.readFileSync('car.txt', 'utf8').toString().split("\n");
-            console.log(plate);
         }
         else {
             plate = plate.split(',');
@@ -22,6 +21,8 @@ module.exports = function (app, db) {
         let log = [];
         if (req.session.log)
             log = req.session.log;
+            
+        console.log(plate);
 
         if (plate[0].trim().length < 6) {
             log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Номер автомобиля не распознан');

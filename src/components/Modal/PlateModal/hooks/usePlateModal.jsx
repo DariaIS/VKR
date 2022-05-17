@@ -24,7 +24,7 @@ export const usePlateModal = (accept, closeModal) => {
 
     const getPlates = useCallback(() => {
         console.log('getPlates')
-        Axios.get('http://localhost:3001/carsPlates').then((response) => {
+        Axios.get('http://localhost:3001/notExpCarPlates').then((response) => {
             // console.log(response.data.result);
             setPlateList(response.data.result);
         });

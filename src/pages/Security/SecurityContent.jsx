@@ -57,7 +57,7 @@ export const SecurityContent = () => {
                     }
                 </div>
             </div>
-            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalType='plate' accept={inOut}/>}
+            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{modalType: 'plate', accept: inOut}}/>}
         </>
     );
 }

@@ -11,6 +11,9 @@ export const AdminNavigation = () => {
             <li className="nav__item">
                 <Link to='/addCar' className="nav__link nav__link--white">Добавить автомобиль</Link>
             </li>
+            <li className="nav__item">
+                <Link to='/changeData' className="nav__link nav__link--white">Изменить данные</Link>
+            </li>
         </>
     );
 }
