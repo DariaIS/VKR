@@ -1,4 +1,6 @@
 const fs = require('fs');
+const { execFileSync } = require('child_process');
+
 const translit = require('../../functions/translitRuEn');
 
 module.exports = function (app, db) {
@@ -7,12 +9,16 @@ module.exports = function (app, db) {
         const direction = req.body.direction;
 
         let plate = req.query.plate;
-        if (!plate)
-            plate = fs.readFileSync("car.txt", "utf8").toString().split("\n");
+        if (!plate) {
+            execFileSync('tempExe.exe', []);
+            console.log('fine');
+            plate = fs.readFileSync('car.txt', 'utf8').toString().split("\n");
+            console.log(plate);
+        }
         else {
             plate = plate.split(',');
         }
-            // console.log(plate);
+        // console.log(plate);
         let log = [];
         if (req.session.log)
             log = req.session.log;
