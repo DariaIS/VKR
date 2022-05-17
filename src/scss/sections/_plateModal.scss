@@ -1,0 +1,29 @@
+.plateModal__form {
+    &:not(:last-child){
+        margin-right: 15px;
+    }
+}
+
+.plateModal__text {
+    white-space: break-spaces;
+    display: block;
+    font-weight: 400;
+    color: $black;
+
+    @media (min-width: $screen-lg) {
+        font-size: 2.5rem;
+    }
+
+    @media (max-width: ($screen-lg - 1)) {
+        font-size: 2rem;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}
+
+.plateModal__elems {
+    display: flex;
+    align-items: center;
+}

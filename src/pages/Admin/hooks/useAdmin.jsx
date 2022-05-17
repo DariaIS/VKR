@@ -10,7 +10,8 @@ export const useAdmin = () => {
     const getExpiredCars = useCallback(() => {
         console.log('getExpiredCars')
         Axios.get('http://localhost:3001/expiredCars').then((response) => {
-            setExpiredCars(response.data.result);
+            if (response.data.result)
+                setExpiredCars(response.data.result);
         });
     }, []);
 

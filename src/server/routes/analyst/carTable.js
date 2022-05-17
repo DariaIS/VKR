@@ -2,7 +2,7 @@ module.exports = function (app, db) {
 
     app.get('/carTable', (req, res) => {
         db.query(
-            "SELECT id_car, license_plate, region, car_brand, last_name, middle_name, name, start_date, expiration_date FROM car INNER JOIN person ON person.id_person WHERE person.id_person=car.id_person",
+            "SELECT id_car, license_plate, region, car_brand, last_name, middle_name, name, start_date, expiration_date FROM car INNER JOIN person ON person.id_person WHERE person.id_person=car.id_person AND expiration_date > CURDATE()",
             (err, result) => {
                 if (err)
                     res.send({ err: err });

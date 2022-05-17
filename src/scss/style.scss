@@ -8,6 +8,7 @@
 @import 'layouts/section';
 @import 'layouts/modal';
 @import 'layouts/table';
+@import 'layouts/select';
 
 @import 'layouts/form/form';
 @import 'layouts/form/input';
@@ -27,3 +28,6 @@
 @import 'sections/admin';
 @import 'sections/addCar';
 @import 'sections/addUser';
+
+@import 'sections/plateModal';
+@import 'sections/changeDataModal';

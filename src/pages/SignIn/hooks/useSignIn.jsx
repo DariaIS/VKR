@@ -17,7 +17,6 @@ export const useSignIn = () => {
         if (!username || !password)
             setError('Не все поля заполнены!');
         else {
-            console.log(username.length)
             Axios.post('http://localhost:3001/login', {
                 username: username,
                 password: password

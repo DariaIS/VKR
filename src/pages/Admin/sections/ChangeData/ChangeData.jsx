@@ -4,16 +4,16 @@ import { Header } from '../../../../components';
 import { AdminNavigation } from '../../AdminNavigation';
 
 import { ProtectedRoute } from '../../../../components/ProtectedRoute';
-import { AddCarContent } from './AddCarContent';
+import { ChangeDataContent } from './ChangeDataContent';
 
-export const AddCar = () => {
+export const ChangeData = () => {
 
     return (
         <ProtectedRoute role='admin' setNewRole={null}>
             <Header>
                 <AdminNavigation />
             </Header>
-                <AddCarContent />
+                <ChangeDataContent />
         </ProtectedRoute>
     )
 }
