@@ -5,7 +5,9 @@ import "jspdf-autotable";
 
 import ReactExport from "react-export-excel";
 
-export const useSortableExportTable = (items) => {
+import '../../../fonts/Roboto-Regular';
+
+export const useSortableExportTable = (headers, items, fileName) => {
     const [sortConfig, setSortConfig] = useState(null);
 
     const ExcelFile = ReactExport.ExcelFile;
@@ -19,25 +21,20 @@ export const useSortableExportTable = (items) => {
 
         const doc = new jsPDF(orientation, unit, size);
 
-        const headers = [['Номер автомобиля', 'Марка автомобиля', 'ФИО владельца', 'Дата предоставления доступа', 'Дата истечения прав доступа']];
+        const headersPDF = [headers.map(elem => elem[0])];
+        const data = table.map(elem => Object.values(elem));
 
         console.log(table)
-        const data = table.map(elem => [
-            elem.license_plate,
-            elem.car_brand,
-            elem.name,
-            elem.start_date,
-            elem.expiration_date
-        ]);
+        console.log(data)
 
         doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')
         doc.setFont('Roboto-Regular');
         doc.setFontSize(16);
-        doc.text('Все автомобили на ' + new Date().toLocaleDateString(), 40, 50)
+        doc.text(fileName, 40, 50)
 
         const content = {
             startY: 70,
-            head: headers,
+            head: headersPDF,
             body: data,
             theme: 'plain',
             headStyles: {
@@ -51,7 +48,7 @@ export const useSortableExportTable = (items) => {
         };
 
         doc.autoTable(content)
-        doc.save('Все автомобили на ' + new Date().toLocaleDateString() + '.pdf');
+        doc.save(fileName + '.pdf');
     }
 
     const sortedItems = useMemo(() => {

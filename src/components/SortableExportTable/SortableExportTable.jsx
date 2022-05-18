@@ -9,7 +9,7 @@ export const SortableExportTable = ({ headers, data, fileName }) => {
         ExcelFile,
         ExcelSheet,
         ExcelColumn
-    } = useSortableExportTable(data, fileName);
+    } = useSortableExportTable(headers, data, fileName);
 
     const getClassNamesFor = (name) => {
         if (!sortConfig) {
@@ -25,11 +25,7 @@ export const SortableExportTable = ({ headers, data, fileName }) => {
             <div className="allCars__export-buttons">
                 {<ExcelFile filename={fileName} element={<button type='button' className="button button--white signin__button">Экспорт Excel</button>}>
                     <ExcelSheet data={items} name={fileName}>
-                        <ExcelColumn label="Номер автомобиля" value="license_plate" />
-                        <ExcelColumn label="Марка автомобиля" value="car_brand" />
-                        <ExcelColumn label="ФИО владельца" value="name" />
-                        <ExcelColumn label="Дата предоставления доступа" value="start_date" />
-                        <ExcelColumn label="Дата истечения прав доступа" value="expiration_date" />
+                        {headers.map(elem => <ExcelColumn label={elem[0]} value={elem[1]} />)}
                     </ExcelSheet>
                 </ExcelFile>}
                 {<button className="button button--blue signin__button" onClick={() => exportPDF(items)}>Экспорт PDF</button>}
@@ -49,7 +45,7 @@ export const SortableExportTable = ({ headers, data, fileName }) => {
                     {items.map((obj) => (
                         <tr key={obj.id} className='table__tr'>
                             {keys.map(elem => (
-                                elem !== 'id' && <td key={elem + obj.id} className='table__td'>{obj[elem] === null ? 'Нет данных' : obj[elem]}</td>
+                                elem !== 'id' && <td key={elem + obj.id} className='table__td'>{obj[elem]}</td>
                             ))}
                         </tr>
                     ))

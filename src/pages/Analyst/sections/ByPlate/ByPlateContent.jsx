@@ -31,18 +31,15 @@ export const ByPlateContent = () => {
             />
             {
                 inOutData?.length !== 0 &&
-                <div className="table">
-                    <span className="table__title title title--medium">Все машины, присутствующие в базе данных</span>
-                    <SortableExportTable
-                        headers={
-                            [['Дата', 'date'],
-                            ['Время въезда', 'arrival_time'],
-                            ['Время выезда', 'departure_time']]
-                        }
-                        data={inOutData}
-                        fileName={'Въезды и выезды автомобиля ' + plate.label + new Date().toLocaleDateString()}
-                    />
-                </div>
+                <SortableExportTable
+                    headers={
+                        [['Дата', 'date'],
+                        ['Время въезда', 'arrival_time'],
+                        ['Время выезда', 'departure_time']]
+                    }
+                    data={inOutData}
+                    fileName={'Все въезды и выезды автомобиля ' + plate.label + ' на ' + new Date().toLocaleDateString()}
+                />
             }
         </div>
     )
