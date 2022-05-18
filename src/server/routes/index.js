@@ -1,10 +1,12 @@
 const loginRoutes = require('./authorize/login');
 const logoutRoutes = require('./authorize/logout');
 
+const allCarPlatesRoutes = require('./allCarPlates');
+const allPeopleRoutes = require('./allPeople');
+
 const addCarRoutes = require('./admin/addCar');
 const addUserRoutes = require('./admin/addUser');
 const expiredCarsRoutes = require('./admin/expiredCars');
-const allCarPlatesRoutes = require('./admin/allCarPlates');
 const changeCarDataRoutes = require('./admin/changeCarData');
 
 const inOutCarRoutes = require('./security/inOutCar');
@@ -13,16 +15,19 @@ const notExpCarPlatesRoutes = require('./security/notExpCarPlates');
 
 const dateTableRoutes = require('./analyst/dateTable');
 const carTableRoutes = require('./analyst/carTable');
+const byPlateRoutes = require('./analyst/byPlate');
 
 module.exports = function(app, db) {
     loginRoutes(app, db);
     logoutRoutes(app);
 
     
+    allCarPlatesRoutes(app, db);
+    allPeopleRoutes(app, db);
+    
     addCarRoutes(app, db);
     addUserRoutes(app, db);
     expiredCarsRoutes(app, db);
-    allCarPlatesRoutes(app, db);
     changeCarDataRoutes(app, db);
     
     inOutCarRoutes(app, db);
@@ -31,4 +36,5 @@ module.exports = function(app, db) {
 
     dateTableRoutes(app, db);
     carTableRoutes(app, db);
+    byPlateRoutes(app, db);
 }

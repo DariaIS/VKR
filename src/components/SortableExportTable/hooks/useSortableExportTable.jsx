@@ -5,7 +5,7 @@ import "jspdf-autotable";
 
 import ReactExport from "react-export-excel";
 
-export const useCarsTable = (items) => {
+export const useSortableExportTable = (items) => {
     const [sortConfig, setSortConfig] = useState(null);
 
     const ExcelFile = ReactExport.ExcelFile;

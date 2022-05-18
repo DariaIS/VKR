@@ -14,11 +14,13 @@ module.exports = function (app, db) {
                         delete elem.region;
                         if (elem.name != null)
                             elem.name = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name;
-                        else elem.name = '-'
+                        else elem.name = 'Нет данных'
                         delete elem.last_name;
                         delete elem.middle_name;
                         delete elem.position;
                         delete elem.chair;
+                        elem.id = elem.id_car;
+                        delete elem.id_car;
                     });
                     res.send({ result });
                 }
