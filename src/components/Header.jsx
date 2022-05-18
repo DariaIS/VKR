@@ -5,9 +5,7 @@ import Axios from 'axios';
 export const Header = ({ children }) => {
 
     const logOut = () => {
-        Axios.get('http://localhost:3001/logout').then((response) => {
-            console.log(response);
-        });
+        Axios.get('http://localhost:3001/logout');
     };
 
     return (

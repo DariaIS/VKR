@@ -1,10 +1,14 @@
-.plateModal__form {
+.changeModal__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
     &:not(:last-child){
         margin-right: 15px;
     }
 }
 
-.plateModal__text {
+.changeModal__text {
     white-space: break-spaces;
     display: block;
     font-weight: 400;
@@ -23,7 +27,11 @@
     }
 }
 
-.plateModal__elems {
+.changeModal__elems {
     display: flex;
     align-items: center;
+}
+
+.changeModal__select {
+    width: 452px;
 }
