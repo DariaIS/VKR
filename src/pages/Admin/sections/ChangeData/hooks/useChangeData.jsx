@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 export const useChangeData = () => {
     const [plateList, setPlateList] = useState('');
-    const [idCar, setIdCar] = useState('');
+    const [plate, setPlate] = useState('');
 
     const [isModalOpen, SetIsModalOpen] = useState(false);
 
@@ -25,11 +25,11 @@ export const useChangeData = () => {
 
     const handleSelectChange = (value) => {
         setError('');
-        setIdCar(value);
+        setPlate(value);
     }
 
     const handleAcceptClick = () => {
-        if (idCar) {
+        if (plate) {
             // console.log(plate);
             clickOpenModal();
         }
@@ -38,7 +38,7 @@ export const useChangeData = () => {
 
     return {
         plateList,
-        idCar,
+        plate,
         isModalOpen,
         handleSelectChange,
         clickCloseModal,

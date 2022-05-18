@@ -10,7 +10,7 @@ export const ChangeDataContent = () => {
 
     const {
         plateList,
-        idCar,
+        plate,
         isModalOpen,
         handleSelectChange,
         clickCloseModal,
@@ -32,7 +32,7 @@ export const ChangeDataContent = () => {
                     </span>
                     <div className='changeData__elems'>
                         <Select className="select"
-                            onChange={(e) => handleSelectChange(e.value)}
+                            onChange={(e) => handleSelectChange(e)}
                             options={plateList}
                         />
                         <button type='button' className="changeData__button button button--blue" onClick={handleAcceptClick}>Изменить</button>
@@ -40,7 +40,7 @@ export const ChangeDataContent = () => {
                     </div>
                 </div>
             </div>
-            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{modalType: 'change', idCar: idCar}}/>}
+            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{modalType: 'change', plate: plate}}/>}
         </>
     )
 }

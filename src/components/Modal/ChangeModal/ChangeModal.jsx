@@ -4,27 +4,27 @@ import Select from 'react-select';
 
 import { useChangeModal } from './hooks/useChangeModal';
 
-export const ChangeModal = ({ idCar, closeModal }) => {
+export const ChangeModal = ({ plate, closeModal }) => {
     const {
         handlePersonSelect,
         handleGatesSelect,
-        getPlateData,
+        getCarData,
         peopleList,
         gatesList,
         selectedPerson,
         selectedGates,
         handleAcceptClick,
         error
-    } = useChangeModal(idCar, closeModal);
+    } = useChangeModal(plate, closeModal);
 
     useEffect(() => {
-        getPlateData();
-    }, [getPlateData]);
+        getCarData();
+    }, [getCarData]);
 
     return (
         <>
             <p className='changeModal__text'>
-                Изменение данных об автомобиле
+                Просмотр и изменение данных об автомобиле {plate.label.split(' ')[0]} с регионом {plate.label.split(' ')[1]}
                 {/* {'\n'} */}
             </p>
             <div className='changeModal__elems'>
@@ -40,7 +40,7 @@ export const ChangeModal = ({ idCar, closeModal }) => {
                     options={gatesList}
                 />
                 <button type='button' className="changeModal__button button button--whit" onClick={closeModal}>Отмена</button>
-                <button id='in' type='button' className="changeModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Подтвердить</button>
+                <button id='in' type='button' className="changeModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Изменить</button>
             </div>
             {/* {error && <div>{error}</div>} */}
             {error === '' && <span className="status">&nbsp;</span>}

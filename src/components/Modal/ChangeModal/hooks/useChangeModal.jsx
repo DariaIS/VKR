@@ -1,13 +1,14 @@
 import { useState, useCallback } from 'react';
 import Axios from 'axios';
 
-export const useChangeModal = (idCar, closeModal) => {
-    const [plateData, setPlateData] = useState('');
+export const useChangeModal = (plate, closeModal) => {
     const [peopleList, setPeopleList] = useState('');
     const [gatesList, setGatesList] = useState('');
 
     const [selectedPerson, setSelectedPerson] = useState('');
     const [selectedGates, setSelectedGates] = useState('');
+    const [brand, setBrand] = useState('');
+    const [expTime, setExpTime] = useState('');
 
     const [error, setError] = useState('');
 
@@ -35,9 +36,9 @@ export const useChangeModal = (idCar, closeModal) => {
         // closeModal();
     }
 
-    const getPlateData = useCallback(() => {
-        console.log('getPlateData');
-        Axios.get(`http://localhost:3001/changeCarData?plate=${idCar}`)
+    const getCarData = useCallback(() => {
+        console.log(plate);
+        Axios.get(`http://localhost:3001/changeCarData?plate=${plate.value}`)
             .then((response) => {
                 console.log(response.data);
                 setPeopleList(response.data.peopleList);
@@ -46,15 +47,14 @@ export const useChangeModal = (idCar, closeModal) => {
                 const person = response.data.peopleList.find(element => element.value === response.data.carData.id_person);
                 setSelectedPerson(person);
                 setSelectedGates(response.data.carData.gates);
-                setPlateData(response.data.carData);
             });
-    }, [idCar]);
+    }, [plate]);
 
 
     return {
         handlePersonSelect,
         handleGatesSelect,
-        getPlateData,
+        getCarData,
         peopleList,
         gatesList,
         selectedPerson,
