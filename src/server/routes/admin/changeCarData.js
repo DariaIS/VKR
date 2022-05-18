@@ -24,10 +24,11 @@ module.exports = function (app, db) {
                         else {
                             result.forEach(elem => {
                                 if (elem.position === 'student')
-                                    elem.position = '. Студент';
-                                else elem.position = '. Сотрудник';
+                                    elem.position = 'Студент';
+                                else elem.position = 'Сотрудник';
 
-                                elem.label = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name + '. Кафедра - ' + elem.chair + ' ' + elem.position;
+                                
+                                elem.label = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name + '. Кафедра - ' + elem.chair + '. ' + elem.position;
                                 elem.value = elem.id_person;
                                 delete elem.last_name;
                                 delete elem.name;
@@ -81,7 +82,8 @@ module.exports = function (app, db) {
                             carData.plate = result[0].license_plate + ' ' + result[0].region;
                             carData.car_brand = result[0].car_brand;
                             carData.id_person = result[0].id_person;
-                            carData.expiration_date = new Date(result[0].expiration_date).toLocaleDateString();
+                            let tempDate = new Date(result[0].expiration_date).toLocaleDateString();
+                            carData.expiration_date = tempDate.split('.')[2] + '-' + tempDate.split('.')[1] + '-' + tempDate.split('.')[0];
                             carData.gates = [];
 
                             result.forEach(elem => {
@@ -109,5 +111,73 @@ module.exports = function (app, db) {
         }
 
         getData();
+    });
+
+    app.post("/changeCarData", async (req, res) => {
+
+        console.log(req.body);
+        const plateId = req.body.plateId;
+        const personId = req.body.personId;
+        const expDate = req.body.expDate;
+        const brand = req.body.brand;
+        const gates = req.body.gates;
+
+        const updateBrandPerson = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "UPDATE car SET id_person = ?, car_brand = ?, expiration_date = ? WHERE id_car = ?",
+                    [personId, brand, expDate, plateId], (err, result) => {
+
+                        if (err) {
+                            res.send({ err: 'Не удалось изменить запись!' });
+                            return reject(err);
+                        }
+                        return resolve(result);
+                    });
+            });
+        }
+
+        const deleteGates = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "DELETE FROM gates_allowed WHERE id_car = ?",
+                    [plateId], (err, result) => {
+
+                        if (err) {
+                            res.send({ err: 'Не удалось изменить запись!' });
+                            return reject(err);
+                        }
+                        return resolve(result);
+                    });
+            });
+        }
+
+        let addGates = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "INSERT INTO gates_allowed (id_car, id_gates) VALUES ?",
+                    [gates], (err, result) => {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        res.send({ message: 'Запись успешно добавлена!' });
+                        return resolve(result);
+                    });
+            });
+        }
+
+        async function changeCarData() {
+
+            try {
+                await updateBrandPerson();
+                await deleteGates();
+                await addGates();
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        changeCarData();
     });
 }

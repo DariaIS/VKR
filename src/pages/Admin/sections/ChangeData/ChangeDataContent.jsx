@@ -28,10 +28,10 @@ export const ChangeDataContent = () => {
             <div className="changeData container">
                 <div className="changeData__forms section">
                     <span className="changeData__title admin__title--section title title--medium">
-                        Просмотр и Изменение сведений об автомобиле
+                        Просмотр и изменение сведений об автомобиле
                     </span>
                     <div className='changeData__elems'>
-                        <Select className="select"
+                        <Select className="changeData__select select"
                             onChange={(e) => handleSelectChange(e)}
                             options={plateList}
                         />

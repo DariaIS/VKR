@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Axios from 'axios';
 
-export const useAddUser = () => { 
+export const useAddUser = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
@@ -15,7 +15,7 @@ export const useAddUser = () => {
 
         switch (e.target.name) {
             case 'userName':
-                setUserName(e.target.value);
+                setUserName(e.target.value.trim());
                 break;
             case 'password':
                 setPassword(e.target.value);
@@ -28,29 +28,29 @@ export const useAddUser = () => {
         }
     };
 
-    const addUser = (e) => {
-        Axios.post('http://localhost:3001/addUser', {
-            userName: userName,
-            password: password,
-            role: role
-
-        }).then((response) => {
-            if (response.data.message)
-                if (response.data.message === 'Пользователь успешно добавлен!') {
+    const handleAcceptClick = (e) => {
+        setError('');
+        if (userName !== '' && password !== '' && role !== '') {
+            Axios.post('http://localhost:3001/addUser', {
+                userName: userName,
+                password: password,
+                role: role
+            }).then((response) => {
+                if (response.data.message) {
                     setSuccess(response.data.message);
                     setError('');
                 }
                 else {
-                    setError(response.data.message);
+                    setError(response.data.err);
                     setSuccess('');
                 }
-        });
-        e.preventDefault();
+            });
+        } else setError('Не все поля заполнены!');
     };
 
     return {
         handleInput,
-        addUser,
+        handleAcceptClick,
         error,
         success
     };

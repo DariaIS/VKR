@@ -13,6 +13,9 @@ export const ChangeModal = ({ plate, closeModal }) => {
         gatesList,
         selectedPerson,
         selectedGates,
+        expDate,
+        brand,
+        handleInput,
         handleAcceptClick,
         error
     } = useChangeModal(plate, closeModal);
@@ -27,7 +30,19 @@ export const ChangeModal = ({ plate, closeModal }) => {
                 Просмотр и изменение данных об автомобиле {plate.label.split(' ')[0]} с регионом {plate.label.split(' ')[1]}
                 {/* {'\n'} */}
             </p>
-            <div className='changeModal__elems'>
+            <form className='changeModal__form'>
+                <label className="changeModal__form-item form__item">
+                    <input name='brand' className="input input--medium input--default" type="text"
+                        value={brand}
+                        onChange={(e) => handleInput(e)} />
+                    <span className="input__name">Марка автомобиля</span>
+                </label>
+                <label className="changeModal__form-item form__item">
+                    <input name='expDate' className="input input--medium input--default" type="date"
+                        value={expDate}
+                        onChange={(e) => handleInput(e)} />
+                    <span className="input__name">Дата истечения прав доступа</span>
+                </label>
                 <Select className="changeModal__select"
                     value={selectedPerson}
                     onChange={(e) => handlePersonSelect(e)}
@@ -40,11 +55,11 @@ export const ChangeModal = ({ plate, closeModal }) => {
                     options={gatesList}
                 />
                 <button type='button' className="changeModal__button button button--whit" onClick={closeModal}>Отмена</button>
-                <button id='in' type='button' className="changeModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Изменить</button>
-            </div>
+                <button type='button' className="changeModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Изменить</button>
+            </form>
             {/* {error && <div>{error}</div>} */}
             {error === '' && <span className="status">&nbsp;</span>}
-            {error !== '' && <span className="status status--warning status--left">{error}</span>}
+            {error !== '' && <span className="status status--warning status--center">{error}</span>}
         </>
     );
 };

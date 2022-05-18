@@ -5,7 +5,7 @@ import { useAddUser } from './hooks/useAddUser';
 export const AddUserContent = () => {
     const {
         handleInput,
-        addUser,
+        handleAcceptClick,
         error,
         success
     } = useAddUser();
@@ -44,7 +44,7 @@ export const AddUserContent = () => {
                     </div>
                 </form>
                 <div className="addUser__add-result">
-                    <button type='button' className="button button--blue signin__button" onClick={addUser}>Добавить пользователя</button>
+                    <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Добавить пользователя</button>
                     {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     {success !== '' && <span className="status status--success status--center">{success}</span>}
                 </div>
