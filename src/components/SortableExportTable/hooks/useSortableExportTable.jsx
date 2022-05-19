@@ -7,7 +7,7 @@ import ReactExport from "react-export-excel";
 
 import '../../../fonts/Roboto-Regular';
 
-export const useSortableExportTable = (headers, items, fileName) => {
+export const useSortableExportTable = (headers, items, fileName, count) => {
     const [sortConfig, setSortConfig] = useState(null);
 
     const ExcelFile = ReactExport.ExcelFile;
@@ -30,10 +30,12 @@ export const useSortableExportTable = (headers, items, fileName) => {
         doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')
         doc.setFont('Roboto-Regular');
         doc.setFontSize(16);
-        doc.text(fileName, 40, 50)
+        doc.text(fileName, 40, 50);
+        if (count)
+            doc.text(count, 40, 75);
 
         const content = {
-            startY: 70,
+            startY: 100,
             head: headersPDF,
             body: data,
             theme: 'plain',
@@ -47,7 +49,7 @@ export const useSortableExportTable = (headers, items, fileName) => {
             }
         };
 
-        doc.autoTable(content)
+        doc.autoTable(content);
         doc.save(fileName + '.pdf');
     }
 

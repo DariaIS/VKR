@@ -6,12 +6,15 @@ import { SortableExportTable } from '../../../../components/SortableExportTable'
 export const AllCarsContent = () => {
 
     const [cars, setCars] = useState('');
+    const [carNumber, setCarNumber] = useState('');
 
     useEffect(() => {
         console.log('car')
         Axios.get('http://localhost:3001/carTable').then((response) => {
-            if (response.data.result)
+            if (response.data.result) {
                 setCars(response.data.result);
+                setCarNumber(response.data.result.length);
+            }
         });
     }, []);
 
@@ -20,7 +23,8 @@ export const AllCarsContent = () => {
             {
                 cars?.length !== 0 &&
                 <div className="table">
-                    <span className="table__title title title--medium">Все машины, присутствующие в базе данных</span>
+                    <span className="table__title title title--medium">Все автомобили с правом доступа</span>
+                    <span className="table__title title title--medium">Количество автомобилей  - {carNumber}</span>
                     <SortableExportTable
                         headers={
                             [['Номер автомобиля', 'license_plate'],
@@ -30,7 +34,8 @@ export const AllCarsContent = () => {
                             ['Дата истечения прав доступа', 'expiration_date']]
                         }
                         data={cars}
-                        fileName={'Все автомобили на ' + new Date().toLocaleDateString()}
+                        fileName={'Все автомобили с правом доступа на ' + new Date().toLocaleDateString()}
+                        count={'Количество автомобилей - ' + carNumber}
                     />
                 </div>
             }

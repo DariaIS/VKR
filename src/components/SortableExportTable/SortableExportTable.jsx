@@ -1,6 +1,6 @@
 import { useSortableExportTable } from './hooks/useSortableExportTable';
 
-export const SortableExportTable = ({ headers, data, fileName }) => {
+export const SortableExportTable = ({ headers, data, fileName, count }) => {
     const {
         items,
         requestSort,
@@ -9,7 +9,7 @@ export const SortableExportTable = ({ headers, data, fileName }) => {
         ExcelFile,
         ExcelSheet,
         ExcelColumn
-    } = useSortableExportTable(headers, data, fileName);
+    } = useSortableExportTable(headers, data, fileName, count);
 
     const getClassNamesFor = (name) => {
         if (!sortConfig) {

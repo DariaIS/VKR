@@ -1,7 +1,7 @@
 module.exports = function (app, db) {
 
     app.get('/byPlate', (req, res) => {
-        const idCar = req.query.plate;
+        const idCar = req.query.person;
 
         db.query(
             "SELECT `date`, arrival_time, departure_time FROM arriving_date INNER JOIN car, `date` WHERE car.id_car = ? AND arriving_date.id_car = car.id_car AND  arriving_date.id_date = date.id_date",

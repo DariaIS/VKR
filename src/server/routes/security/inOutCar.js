@@ -97,7 +97,7 @@ module.exports = function (app, db) {
             let AddDate = () => {
                 return new Promise((resolve, reject) => {
                     db.query(
-                        "SELECT id_date FROM date WHERE date=CURDATE()",
+                        "SELECT id_date FROM `date` WHERE `date` = CURDATE()",
                         (err, result) => {
                             if (err) {
                                 console.log(err);
@@ -105,7 +105,7 @@ module.exports = function (app, db) {
                             } else {
                                 if (result.length === 0) {
                                     db.query(
-                                        "INSERT INTO date (date) VALUES (CURDATE())",
+                                        "INSERT INTO `date` (`date`) VALUES (CURDATE())",
                                         (err, result) => {
                                             if (err) {
                                                 console.log(err)
