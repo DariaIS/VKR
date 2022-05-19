@@ -24,9 +24,6 @@ export const useSortableExportTable = (headers, items, fileName, count) => {
         const headersPDF = [headers.map(elem => elem[0])];
         const data = table.map(elem => Object.values(elem));
 
-        console.log(table)
-        console.log(data)
-
         doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')
         doc.setFont('Roboto-Regular');
         doc.setFontSize(16);

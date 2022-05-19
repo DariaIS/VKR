@@ -16,7 +16,7 @@ export const ByDateContent = () => {
     } = useByDate();
 
     useEffect(() => {
-        console.log('byDateEffect')
+        console.log('byDateEffect');
         byDate();
     }, [byDate]);
 

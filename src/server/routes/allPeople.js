@@ -9,10 +9,10 @@ module.exports = function (app, db) {
                 else {
                     result.forEach(elem => {
                         if (elem.position === 'student')
-                            elem.position = '. Студент';
-                        else elem.position = '. Сотрудник';
+                            elem.position = 'Студент';
+                        else elem.position = 'Сотрудник';
 
-                        elem.label = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name + '. Кафедра - ' + elem.chair + ' ' + elem.position;
+                        elem.label = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name + '. Кафедра - ' + elem.chair + '. ' + elem.position;
                         elem.value = elem.id_person;
                         delete elem.last_name;
                         delete elem.name;

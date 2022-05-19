@@ -66,9 +66,9 @@ export const Admin = () => {
                             </tbody>
                         </table>
                         {error !== '' && <span className="status status--warning status--center">{error}</span>}
-                        {success !== '' && <span className="status status--success status--center">{success}</span>}
                     </div>
                 }
+                {success !== '' && <span className="status status--success status--center">{success}</span>}
             </div>
         </>
     );

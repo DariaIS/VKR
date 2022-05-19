@@ -16,6 +16,7 @@ const notExpCarPlatesRoutes = require('./security/notExpCarPlates');
 const dateTableRoutes = require('./analyst/dateTable');
 const carTableRoutes = require('./analyst/carTable');
 const byPlateRoutes = require('./analyst/byPlate');
+const byPersonRoutes = require('./analyst/byPerson');
 
 module.exports = function(app, db) {
     loginRoutes(app, db);
@@ -37,4 +38,5 @@ module.exports = function(app, db) {
     dateTableRoutes(app, db);
     carTableRoutes(app, db);
     byPlateRoutes(app, db);
+    byPersonRoutes(app, db);
 }

@@ -7,6 +7,7 @@ export const useByPlate = () => {
     const [plateList, setPlateList] = useState(new Date());
 
     const [plate, setPlate] = useState('');
+    const [status, setStatus] = useState('');
 
     const getPlateList = useCallback(() => {
         Axios.get('http://localhost:3001/allCarPlates').then((response) => {
@@ -16,9 +17,12 @@ export const useByPlate = () => {
     }, []);
 
     const getinOutData = (plate) => {
-        setPlate(plate)
+        setStatus('');
+        setPlate(plate);
         Axios.get(`http://localhost:3001/byPlate?plate=${plate.value}`).then((response) => {
-            console.log(response.data.result);
+            if (response.data.result.length === 0) {
+                setStatus('Нет данных о въездах и выездах данного автомобиля');
+            }
             setInOutData(response.data.result);
         });
     };
@@ -29,6 +33,7 @@ export const useByPlate = () => {
         plateList,
         getinOutData,
         inOutData,
-        plate
+        plate,
+        status
     };
 }
