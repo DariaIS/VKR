@@ -28,6 +28,8 @@ export const PlateModal = ({ closeModal, accept }) => {
                 <Select className="select"
                     onChange={(e) => handleSelectChange(e.value)}
                     options={plateList}
+                    placeholder='Номер и регион'
+                    noOptionsMessage={() => 'Номер не найден'}
                 />
                 <button type='button' className="plateModal__button button button--whit" onClick={closeModal}>Отмена</button>
                 <button id='in' type='button' className="plateModal__button button button--blue" onClick={(e) => handleAcceptClick(e.target.id)}>Подтвердить</button>

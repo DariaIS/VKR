@@ -47,12 +47,16 @@ export const ChangeModal = ({ plate, closeModal }) => {
                     value={selectedPerson}
                     onChange={(e) => handlePersonSelect(e)}
                     options={peopleList}
+                    placeholder='Владелец'
+                    noOptionsMessage={() => 'Владелец не найден'}
                 />
                 <Select className="changeModal__select"
                     isMulti='true'
                     value={selectedGates}
                     onChange={(e) => handleGatesSelect(e)}
                     options={gatesList}
+                    placeholder='Пропускной пункт'
+                    noOptionsMessage={() => 'Пропускной пункт не найден'}
                 />
                 <button type='button' className="changeModal__button button button--whit" onClick={closeModal}>Отмена</button>
                 <button type='button' className="changeModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Изменить</button>

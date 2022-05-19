@@ -25,7 +25,7 @@ export const SortableExportTable = ({ headers, data, fileName }) => {
             <div className="allCars__export-buttons">
                 {<ExcelFile filename={fileName} element={<button type='button' className="button button--white signin__button">Экспорт Excel</button>}>
                     <ExcelSheet data={items} name={fileName}>
-                        {headers.map(elem => <ExcelColumn label={elem[0]} value={elem[1]} />)}
+                        {headers.map(elem => <ExcelColumn key={elem[1]} label={elem[0]} value={elem[1]} />)}
                     </ExcelSheet>
                 </ExcelFile>}
                 {<button className="button button--blue signin__button" onClick={() => exportPDF(items)}>Экспорт PDF</button>}

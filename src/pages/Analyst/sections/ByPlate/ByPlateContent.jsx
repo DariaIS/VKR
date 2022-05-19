@@ -23,14 +23,16 @@ export const ByPlateContent = () => {
     return (
         <div className="allCars section container">
             <span className="changeData__title admin__title--section title title--medium">
-                Введите номер для формирования отчета о въездах и выездах
+                Отчет о въездах и выездах на основе автомобильного номера
             </span>
             <Select className="changeData__select select"
                 onChange={(e) => getinOutData(e)}
                 options={plateList}
+                placeholder='Номер и регион'
+                noOptionsMessage={() => 'Номер не найден'}
             />
             {
-                inOutData?.length !== 0 &&
+                inOutData?.length !== 0 ?
                 <SortableExportTable
                     headers={
                         [['Дата', 'date'],
@@ -40,6 +42,7 @@ export const ByPlateContent = () => {
                     data={inOutData}
                     fileName={'Все въезды и выезды автомобиля ' + plate.label + ' на ' + new Date().toLocaleDateString()}
                 />
+                : <div className="title title--small">Нет данных о въездах и выездах данного автомобиля</div>
             }
         </div>
     )

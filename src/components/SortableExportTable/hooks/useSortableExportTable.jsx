@@ -55,6 +55,19 @@ export const useSortableExportTable = (headers, items, fileName) => {
         let sortableItems = [...items];
         if (sortConfig !== null) {
             sortableItems.sort((a, b) => {
+
+                if (sortConfig.key.split('_')[0] === 'date' || sortConfig.key.split('_')[1] === 'date') {
+                    const aDate = new Date(a[sortConfig.key].split('.')[2] + '-' + a[sortConfig.key].split('.')[1] + '-' + a[sortConfig.key].split('.')[0]);
+                    const bDate = new Date(b[sortConfig.key].split('.')[2] + '-' + b[sortConfig.key].split('.')[1] + '-' + b[sortConfig.key].split('.')[0]);
+
+                    if (aDate < bDate) {
+                        return sortConfig.direction === 'ascending' ? -1 : 1;
+                    }
+                    if (aDate > bDate) {
+                        return sortConfig.direction === 'ascending' ? 1 : -1;
+                    }
+                }
+
                 if (a[sortConfig.key] < b[sortConfig.key]) {
                     return sortConfig.direction === 'ascending' ? -1 : 1;
                 }
