@@ -17,7 +17,7 @@ module.exports = function (app, db) {
         const getAllPeople = () => {
             return new Promise((resolve, reject) => {
                 db.query(
-                    "SELECT * FROM person",
+                    "SELECT * FROM person INNER JOIN chair ON person.id_chair = chair.id_chair",
                     (err, result) => {
                         if (err)
                             return reject(err);
@@ -27,8 +27,7 @@ module.exports = function (app, db) {
                                     elem.position = 'Студент';
                                 else elem.position = 'Сотрудник';
 
-                                
-                                elem.label = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name + '. Кафедра - ' + elem.chair + '. ' + elem.position;
+                                elem.label = elem.last_name + ' ' + elem.name + ' ' + elem.middle_name + '. ' + elem.chair + '. ' + elem.position;
                                 elem.value = elem.id_person;
                                 delete elem.last_name;
                                 delete elem.name;
@@ -36,6 +35,7 @@ module.exports = function (app, db) {
                                 delete elem.position;
                                 delete elem.chair;
                                 delete elem.id_person;
+                                delete elem.id_chair;
                             });
                             peopleList = result;
 

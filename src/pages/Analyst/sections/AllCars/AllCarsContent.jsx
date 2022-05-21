@@ -29,9 +29,9 @@ export const AllCarsContent = () => {
                         headers={
                             [['Номер автомобиля', 'license_plate'],
                             ['Марка', 'car_brand'],
-                            ['ФИО владельца', 'name'],
                             ['Дата предоставления доступа', 'start_date'],
-                            ['Дата истечения прав доступа', 'expiration_date']]
+                            ['Дата истечения прав доступа', 'expiration_date'],
+                            ['Владелец', 'person']]
                         }
                         data={table}
                         fileName={'Все автомобили с правом доступа на ' + new Date().toLocaleDateString()}
