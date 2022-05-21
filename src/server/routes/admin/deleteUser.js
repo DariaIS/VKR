@@ -7,12 +7,8 @@ module.exports = function (app, db) {
         const userName = req.body.userName;
         const password = req.body.password;
 
-        let warning = false;
-
         const checkUserSame = () => {
             return new Promise((resolve, reject) => {
-                console.log(req.session.user.userName.toUpperCase());
-                console.log(req.session.user.userName === userName);
                 if (req.session.user.userName.toUpperCase() === userName.toUpperCase()) {
                     res.send({ err: 'Вы не можете удалить свою учетную запись!' });
                     return reject('err');
@@ -21,11 +17,11 @@ module.exports = function (app, db) {
             })
         }
 
-        const checkUserExist = () => {
+        const checkPassword = () => {
             return new Promise((resolve, reject) => {
                 db.query(
-                    "SELECT password FROM user WHERE user_name=?",
-                    [userName], async (err, result) => {
+                    "SELECT password FROM user WHERE user_name = ?",
+                    [req.session.user.userName], async (err, result) => {
                         if (err) {
                             res.send({ err: 'Произошла ошибка. Пожалуйста, попробуйте снова позже!' });
                             return reject(err);
@@ -38,13 +34,30 @@ module.exports = function (app, db) {
                                 // warning = true;
                                 return reject(err);
                             }
+                        }
 
+                        return resolve(result);
+                    }
+                );
+            });
+        }
+
+        const checkUserExist = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "SELECT password FROM user WHERE user_name = ?",
+                    [userName], async (err, result) => {
+                        if (err) {
+                            res.send({ err: 'Произошла ошибка. Пожалуйста, попробуйте снова позже!' });
+                            return reject(err);
+                        }
+
+                        if (result.length !== 0) {
+                            return resolve(result);
                         } else {
-                            // warning = true;
                             res.send({ err: 'Неверное имя пользователя или пароль!' });
                             return reject(err);
                         }
-                        return resolve(result);
                     }
                 );
             });
@@ -52,7 +65,6 @@ module.exports = function (app, db) {
 
         const deleteUser = () => {
             return new Promise((resolve, reject) => {
-                console.log('deleteUser');
                 db.query(
                     "DELETE FROM user WHERE user_name = ?",
                     [userName], (err, result) => {
@@ -70,7 +82,8 @@ module.exports = function (app, db) {
 
         async function userDeleting() {
             try {
-                await checkUserSame()
+                await checkUserSame();
+                await checkPassword();
                 await checkUserExist();
                 await deleteUser();
             } catch (error) {

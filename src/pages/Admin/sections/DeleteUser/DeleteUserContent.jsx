@@ -24,7 +24,7 @@ export const DeleteUserContent = () => {
                     <label className="user__form-item form__item">
                         <input className="input input--medium input--default" type="text" name="password"
                             onChange={(e) => handleInput(e)} />
-                        <span className="input__name">Пароль</span>
+                        <span className="input__name">Пароль вашей учетной записи</span>
                     </label>
                 </form>
                 <div className="user__add-result">

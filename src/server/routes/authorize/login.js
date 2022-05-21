@@ -20,7 +20,7 @@ module.exports = function (app, db) {
                 if (err)
                     res.send({ err: 'Произошла ошибка. Пожалуйста, попробуйте снова позже!' });
 
-                if (result.length > 0) {
+                if (result.length > 0 && username === result[0].user_name) {
                     const comparison = await bcrypt.compare(password, result[0].password);
                     if (comparison) {
                         req.session.user = {userName: result[0].user_name, role: result[0].role};
