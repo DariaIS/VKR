@@ -1,19 +1,19 @@
 import React from 'react';
 
-import { useAddUser } from './hooks/useAddUser';
+import { useDeleteUser } from './hooks/useDeleteUser';
 
-export const AddUserContent = () => {
+export const DeleteUserContent = () => {
     const {
         handleInput,
         handleAcceptClick,
         error,
         success
-    } = useAddUser();
+    } = useDeleteUser();
 
     return (
         <div className="user container">
             <div className="user__forms section">
-                <span className="user__title admin__title--section title title--medium">Добавление нового пользователя</span>
+                <span className="user__title admin__title--section title title--medium">Удаление пользователя</span>
                 <form className='user__form'>
                     <label className="user__form-item form__item">
                         <input className="input input--medium input--default" type="text" name="userName"
@@ -26,25 +26,9 @@ export const AddUserContent = () => {
                             onChange={(e) => handleInput(e)} />
                         <span className="input__name">Пароль</span>
                     </label>
-
-                    <div className="user__radio"
-                        onChange={(e) => handleInput(e)}>
-                        <label>
-                            <input type="radio" value="admin" name="role" />
-                            Администратор
-                        </label>
-                        <label>
-                            <input type="radio" value="security" name="role" />
-                            Сотрудник охраны
-                        </label>
-                        <label>
-                            <input type="radio" value="analyst" name="role" />
-                            Аналитик
-                        </label>
-                    </div>
                 </form>
                 <div className="user__add-result">
-                    <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Добавить пользователя</button>
+                    <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Удалить пользователя</button>
                     {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     {success !== '' && <span className="status status--success status--center">{success}</span>}
                 </div>

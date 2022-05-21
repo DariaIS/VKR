@@ -8,10 +8,9 @@ import { useByDate } from './hooks/useByDate';
 
 export const ByDateContent = () => {
     const {
-        dateTable,
+        table,
         pickedDate,
         setPickedDate,
-        carNumber,
         byDate
     } = useByDate();
 
@@ -26,10 +25,10 @@ export const ByDateContent = () => {
                 <span className="table__title title title--medium">Выберите дату для формирования отчета</span>
                 <Calendar onClickDay={(e) => setPickedDate(e)} value={pickedDate} minDetail="year" />
                 {
-                    dateTable?.length !== 0 ?
+                    table?.length !== 0 ?
                         <div>
                             <span className="table__title title title--medium">Отчет о въездах и выездах на {pickedDate.toLocaleDateString()}</span>
-                            <span className="table__title title title--small">Количество въежавших автомобилей - {carNumber}</span>
+                            <span className="table__title title title--small">Количество въежавших автомобилей - {table?.length}</span>
                             <SortableExportTable
                                 headers={
                                     [['Номер автомобиля', 'license_plate'],
@@ -37,9 +36,9 @@ export const ByDateContent = () => {
                                     ['Время въезда', 'arrival_time'],
                                     ['Время выезда', 'departure_time']]
                                 }
-                                data={dateTable}
+                                data={table}
                                 fileName={'Въезды и выезды ' + pickedDate.toLocaleDateString()}
-                                count={'Количество въежавших автомобилей - ' + carNumber}
+                                count={'Количество въежавших автомобилей - ' + table?.length}
                             />
                         </div>
                         : <div className="title title--medium">Нет данных о въездах и выездах в этот день</div>

@@ -5,26 +5,26 @@ import { SortableExportTable } from '../../../../components/SortableExportTable'
 
 export const AllCarsContent = () => {
 
-    const [cars, setCars] = useState('');
-    const [carNumber, setCarNumber] = useState('');
+    const [table, setTable] = useState([]);
 
     useEffect(() => {
         console.log('car')
-        Axios.get('http://localhost:3001/carTable').then((response) => {
+        Axios.get('http://localhost:3001/allCars').then((response) => {
             if (response.data.result) {
-                setCars(response.data.result);
-                setCarNumber(response.data.result.length);
+                console.log('Axios')
+                setTable(response.data.result);
             }
         });
     }, []);
 
     return (
         <div className="allCars section container">
+            {console.log(table)}
             {
-                cars?.length !== 0 &&
+                table?.length !== 0 &&
                 <div className="table">
                     <span className="table__title title title--medium">Все автомобили с правом доступа</span>
-                    <span className="table__title title title--medium">Количество автомобилей  - {carNumber}</span>
+                    <span className="table__title title title--medium">Количество автомобилей  - {table?.length}</span>
                     <SortableExportTable
                         headers={
                             [['Номер автомобиля', 'license_plate'],
@@ -33,9 +33,9 @@ export const AllCarsContent = () => {
                             ['Дата предоставления доступа', 'start_date'],
                             ['Дата истечения прав доступа', 'expiration_date']]
                         }
-                        data={cars}
+                        data={table}
                         fileName={'Все автомобили с правом доступа на ' + new Date().toLocaleDateString()}
-                        count={'Количество автомобилей - ' + carNumber}
+                        count={'Количество автомобилей - ' + table?.length}
                     />
                 </div>
             }

@@ -1,6 +1,6 @@
 module.exports = function (app, db) {
     
-    app.post('/dateTable', (req, res) => {
+    app.post('/byDate', (req, res) => {
         const date = req.body.date;
     
         db.query(

@@ -24,7 +24,7 @@ module.exports = function (app, db) {
             
         console.log(plate);
 
-        if (plate[0].trim().length < 6) {
+        if (plate[0].trim() === '404') {
             log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Номер автомобиля не распознан');
             req.session.log = log;
             res.send({ log: log, carPlateErr: 'Номер машины не распознан!' });
@@ -39,15 +39,15 @@ module.exports = function (app, db) {
             let CheckCarInOut = () => {
                 return new Promise((resolve, reject) => {
                     db.query(
-                        "SELECT id_car, expiration_date FROM car WHERE license_plate=?",
-                        [plate[0]], (err, result) => {
+                        "SELECT id_car, expiration_date FROM car WHERE license_plate = ? AND region = ?",
+                        [plate[0], plate[1]], (err, result) => {
                             if (err) {
                                 console.log(err);
                                 return reject(err);
                             }
                             else {
                                 if (result.length === 0) {
-                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' отсутствует в базе данных');
+                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' ' + plate[1] + ' отсутствует в базе данных');
                                     req.session.log = log;
                                     res.send({ log: log, err: 'Машины с данным номером нет в базе данных!' });
                                     warning = true;
@@ -60,7 +60,7 @@ module.exports = function (app, db) {
                                     }
                                     else {
                                         warning = true;
-                                        log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' У автомобиля с номером ' + plate[0] + ' истекли права доступа');
+                                        log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' У автомобиля с номером ' + plate[0] + ' ' + plate[1] + ' истекли права доступа');
                                         req.session.log = log;
                                         res.send({ log: log, err: 'У данного автомобиля истекли права доступа!' });
                                     }
@@ -75,16 +75,16 @@ module.exports = function (app, db) {
             let CheckRightGates = () => {
                 return new Promise((resolve, reject) => {
                     db.query(
-                        "SELECT * FROM gates_allowed WHERE id_car=? AND id_gates=?",
+                        "SELECT * FROM gates_allowed WHERE id_car = ? AND id_gates = ?",
                         [idCar, idGates], (err, result) => {
                             if (err) {
                                 console.log(err);
                                 return reject(err);
                             } else {
                                 if (result.length === 0) {
-                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' не имеет доступа к данной проходной');
+                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' ' + plate[1] + ' не имеет доступа к данной проходной');
                                     req.session.log = log;
-                                    res.send({ log: log, err: 'У машины с данным номером нет доступа к этой проходной!' });
+                                    res.send({ log: log, err: 'У автомобиля с данным номером нет доступа к этой проходной!' });
                                     warning = true;
                                 }
                                 return resolve(result);
@@ -156,16 +156,16 @@ module.exports = function (app, db) {
                                     console.log(err);
                                     return reject(err);
                                 } else {
-                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' въехал');
+                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' ' + plate[1] + ' въехал');
                                     req.session.log = log;
-                                    res.send({ log: log, message: 'Машина может быть пропущена!' });
+                                    res.send({ log: log, message: 'Автомобиль может быть пропущен!' });
                                     return resolve(result);
                                 }
                             });
                     }
                     else {
                         db.query(
-                            "UPDATE arriving_date SET departure_time=CURTIME() WHERE id_date=? AND id_car=?",
+                            "UPDATE arriving_date SET departure_time=CURTIME() WHERE id_date = ? AND id_car = ?",
                             [idDate, idCar], (err, result) => {
 
                                 if (err) {
@@ -173,7 +173,7 @@ module.exports = function (app, db) {
                                     return reject(err);
                                 }
                                 else {
-                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' выехал');
+                                    log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' ' + plate[1] + ' выехал');
                                     req.session.log = log;
                                     res.send({ log: log });
                                     return resolve(result);

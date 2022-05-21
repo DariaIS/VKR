@@ -1,6 +1,6 @@
 module.exports = function (app, db) {
 
-    app.get('/carTable', (req, res) => {
+    app.get('/allCars', (req, res) => {
         db.query(
             "SELECT id_car, license_plate, region, car_brand, last_name, middle_name, name, start_date, expiration_date FROM car LEFT JOIN person ON person.id_person=car.id_person WHERE expiration_date > CURDATE()",
             (err, result) => {

@@ -3,30 +3,23 @@ import Axios from 'axios';
 
 export const useByDate = () => {
 
-    const [dateTable, setDateTable] = useState('');
+    const [table, setTable] = useState([]);
     const [pickedDate, setPickedDate] = useState(new Date());
-    const [carNumber, setCarNumber] = useState('');
 
+    const byDate = useCallback(() => {
+        const newDate = pickedDate.getFullYear() + "-" + ("0" + (pickedDate.getMonth() + 1)).slice(-2) + "-" + ("0" + pickedDate.getDate()).slice(-2);
 
-    const byDate = useCallback((newDate) => {
-        console.log(pickedDate);
-        if (!newDate)
-            newDate = pickedDate;
-        newDate = newDate.getFullYear() + "-" + ("0" + (newDate.getMonth() + 1)).slice(-2) + "-" + ("0" + newDate.getDate()).slice(-2);
-
-        Axios.post('http://localhost:3001/dateTable', {
+        Axios.post('http://localhost:3001/byDate', {
             date: newDate,
         }).then((response) => {
-            setCarNumber(response.data.result.length);
-            setDateTable(response.data.result);
+            setTable(response.data.result);
         });
     }, [pickedDate]);
 
     return {
-        dateTable,
+        table,
         pickedDate,
         setPickedDate,
-        carNumber,
         byDate
     };
 }

@@ -18,7 +18,7 @@ module.exports = function (app, db) {
                     "SELECT id_user FROM user WHERE user_name=?",
                     [userName], (err, result) => {
                         if (err) {
-                            res.send({ err: 'Не удалось добавить запись!' });
+                            res.send({ err: 'Не удалось добавить пользователя!' });
                             return reject(err);
                         }
 
@@ -40,7 +40,7 @@ module.exports = function (app, db) {
                     "INSERT INTO user (user_name, password, role) VALUES (?, ?, ?)",
                     [userName, password, role], (err, result) => {
                         if (err) {
-                            res.send({ err: 'Не удалось добавить запись!' });
+                            res.send({ err: 'Не удалось добавить пользователя!' });
                             return reject(err);
                         }
                         res.send({ message: 'Пользователь успешно добавлен!' });
