@@ -14,7 +14,7 @@ export const PlateModal = ({ closeModal, accept }) => {
     } = usePlateModal(accept, closeModal);
 
     useEffect(() => {
-        console.log('PlateModal')
+        console.log('PlateModal');
         getPlates();
     }, [getPlates]);
 
@@ -22,12 +22,13 @@ export const PlateModal = ({ closeModal, accept }) => {
         <>
             <p className='plateModal__text'>
                 Номер не распознан! Пожалуйста, введите номер вручную.
-                {/* {'\n'} */}
             </p>
             <div className='plateModal__elems'>
                 <Select className="select"
                     onChange={(e) => handleSelectChange(e.value)}
                     options={plateList}
+                    placeholder='Номер и регион'
+                    noOptionsMessage={() => 'Номер не найден'}
                 />
                 <button type='button' className="plateModal__button button button--whit" onClick={closeModal}>Отмена</button>
                 <button id='in' type='button' className="plateModal__button button button--blue" onClick={(e) => handleAcceptClick(e.target.id)}>Подтвердить</button>

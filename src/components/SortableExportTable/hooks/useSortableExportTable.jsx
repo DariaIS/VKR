@@ -5,7 +5,9 @@ import "jspdf-autotable";
 
 import ReactExport from "react-export-excel";
 
-export const useCarsTable = (items) => {
+import '../../../fonts/Roboto-Regular';
+
+export const useSortableExportTable = (headers, items, fileName, count) => {
     const [sortConfig, setSortConfig] = useState(null);
 
     const ExcelFile = ReactExport.ExcelFile;
@@ -19,25 +21,19 @@ export const useCarsTable = (items) => {
 
         const doc = new jsPDF(orientation, unit, size);
 
-        const headers = [['Номер автомобиля', 'Марка автомобиля', 'ФИО владельца', 'Дата предоставления доступа', 'Дата истечения прав доступа']];
-
-        console.log(table)
-        const data = table.map(elem => [
-            elem.license_plate,
-            elem.car_brand,
-            elem.name,
-            elem.start_date,
-            elem.expiration_date
-        ]);
+        const headersPDF = [headers.map(elem => elem[0])];
+        const data = table.map(elem => Object.values(elem));
 
         doc.addFont('Roboto-Regular.ttf', 'Roboto-Regular', 'normal')
         doc.setFont('Roboto-Regular');
         doc.setFontSize(16);
-        doc.text('Все автомобили на ' + new Date().toLocaleDateString(), 40, 50)
+        doc.text(fileName, 40, 50);
+        if (count)
+            doc.text(count, 40, 75);
 
         const content = {
-            startY: 70,
-            head: headers,
+            startY: 100,
+            head: headersPDF,
             body: data,
             theme: 'plain',
             headStyles: {
@@ -50,14 +46,27 @@ export const useCarsTable = (items) => {
             }
         };
 
-        doc.autoTable(content)
-        doc.save('Все автомобили на ' + new Date().toLocaleDateString() + '.pdf');
+        doc.autoTable(content);
+        doc.save(fileName + '.pdf');
     }
 
     const sortedItems = useMemo(() => {
         let sortableItems = [...items];
         if (sortConfig !== null) {
             sortableItems.sort((a, b) => {
+
+                if (sortConfig.key.split('_')[0] === 'date' || sortConfig.key.split('_')[1] === 'date') {
+                    const aDate = new Date(a[sortConfig.key].split('.')[2] + '-' + a[sortConfig.key].split('.')[1] + '-' + a[sortConfig.key].split('.')[0]);
+                    const bDate = new Date(b[sortConfig.key].split('.')[2] + '-' + b[sortConfig.key].split('.')[1] + '-' + b[sortConfig.key].split('.')[0]);
+
+                    if (aDate < bDate) {
+                        return sortConfig.direction === 'ascending' ? -1 : 1;
+                    }
+                    if (aDate > bDate) {
+                        return sortConfig.direction === 'ascending' ? 1 : -1;
+                    }
+                }
+
                 if (a[sortConfig.key] < b[sortConfig.key]) {
                     return sortConfig.direction === 'ascending' ? -1 : 1;
                 }

@@ -19,7 +19,7 @@ export const SecurityContent = () => {
 
     useEffect(() => {
         Axios.get('http://localhost:3001/inOutLog').then((response) => {
-            // console.log(response.data)
+            console.log(response.data)
             setInOutLog(response.data.log);
 
             let logBlock = document.getElementsByClassName('security__log')[0];

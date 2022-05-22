@@ -27,7 +27,7 @@ export const ChangeModal = ({ plate, closeModal }) => {
     return (
         <>
             <p className='changeModal__text'>
-                Просмотр и изменение данных об автомобиле {plate.label.split(' ')[0]} с регионом {plate.label.split(' ')[1]}
+                Просмотр и изменение данных об автомобиле {plate.label.split(' ')[0]} {plate.label.split(' ')[1]}
                 {/* {'\n'} */}
             </p>
             <form className='changeModal__form'>
@@ -47,12 +47,16 @@ export const ChangeModal = ({ plate, closeModal }) => {
                     value={selectedPerson}
                     onChange={(e) => handlePersonSelect(e)}
                     options={peopleList}
+                    placeholder='Владелец'
+                    noOptionsMessage={() => 'Владелец не найден'}
                 />
                 <Select className="changeModal__select"
                     isMulti='true'
                     value={selectedGates}
                     onChange={(e) => handleGatesSelect(e)}
                     options={gatesList}
+                    placeholder='Пропускной пункт'
+                    noOptionsMessage={() => 'Пропускной пункт не найден'}
                 />
                 <button type='button' className="changeModal__button button button--whit" onClick={closeModal}>Отмена</button>
                 <button type='button' className="changeModal__button button button--blue" onClick={(e) => handleAcceptClick(e)}>Изменить</button>

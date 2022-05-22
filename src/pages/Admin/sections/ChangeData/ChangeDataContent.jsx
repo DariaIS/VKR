@@ -34,6 +34,8 @@ export const ChangeDataContent = () => {
                         <Select className="changeData__select select"
                             onChange={(e) => handleSelectChange(e)}
                             options={plateList}
+                            placeholder='Номер и регион'
+                            noOptionsMessage={() => 'Номер не найден'}
                         />
                         <button type='button' className="changeData__button button button--blue" onClick={handleAcceptClick}>Изменить</button>
                         {error !== '' && <span className="status status--warning status--center">{error}</span>}

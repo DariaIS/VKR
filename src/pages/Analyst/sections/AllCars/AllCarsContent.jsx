@@ -1,40 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
-import { CarsTable } from './components/CarsTable';
+import { SortableExportTable } from '../../../../components/SortableExportTable';
 
 export const AllCarsContent = () => {
 
-    const [cars, setCars] = useState('');
+    const [table, setTable] = useState([]);
 
     useEffect(() => {
-        let isMounted = true;
-        if (isMounted) {
-            console.log('car')
-            Axios.get('http://localhost:3001/carTable').then((response) => {
-                if (response.data.result)
-                    setCars(response.data.result);
-            });
-        }
-        return () => isMounted = false
+        console.log('car')
+        Axios.get('http://localhost:3001/allCars').then((response) => {
+            if (response.data.result) {
+                console.log('Axios')
+                setTable(response.data.result);
+            }
+        });
     }, []);
 
     return (
         <div className="allCars section container">
+            {console.log(table)}
             {
-                cars &&
+                table?.length !== 0 &&
                 <div className="table">
-                    <span className="table__title title title--medium">Все машины, присутствующие в базе данных</span>
-                    <CarsTable
+                    <span className="table__title title title--medium">Все автомобили с правом доступа</span>
+                    <span className="table__title title title--medium">Количество автомобилей  - {table?.length}</span>
+                    <SortableExportTable
                         headers={
-                            [['Номер машины', 'license_plate'],
+                            [['Номер автомобиля', 'license_plate'],
                             ['Марка', 'car_brand'],
-                            ['ФИО владельца', 'name'],
                             ['Дата предоставления доступа', 'start_date'],
-                            ['Дата истечения прав доступа', 'expiration_date']]
+                            ['Дата истечения прав доступа', 'expiration_date'],
+                            ['Владелец', 'person']]
                         }
-                        data={cars}
-                        setData={setCars} />
+                        data={table}
+                        fileName={'Все автомобили с правом доступа на ' + new Date().toLocaleDateString()}
+                        count={'Количество автомобилей - ' + table?.length}
+                    />
                 </div>
             }
         </div>

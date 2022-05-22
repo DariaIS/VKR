@@ -1,15 +1,15 @@
-import { useCarsTable } from './hooks/useCarsTable';
+import { useSortableExportTable } from './hooks/useSortableExportTable';
 
-export const CarsTable = ({ headers, data }) => {
-    const { 
-        items, 
-        requestSort, 
+export const SortableExportTable = ({ headers, data, fileName, count }) => {
+    const {
+        items,
+        requestSort,
         sortConfig,
         exportPDF,
         ExcelFile,
         ExcelSheet,
         ExcelColumn
-    } = useCarsTable(data);
+    } = useSortableExportTable(headers, data, fileName, count);
 
     const getClassNamesFor = (name) => {
         if (!sortConfig) {
@@ -23,18 +23,15 @@ export const CarsTable = ({ headers, data }) => {
     return (
         <>
             <div className="allCars__export-buttons">
-                {<ExcelFile filename={"Все автомобили на " + new Date().toLocaleDateString()} element={<button type='button' className="button button--white signin__button">Экспорт Excel</button>}>
-                    <ExcelSheet data={items} name={"Все автомобили на " + new Date().toLocaleDateString()}>
-                        <ExcelColumn label="Номер автомобиля" value="license_plate" />
-                        <ExcelColumn label="Марка автомобиля" value="car_brand" />
-                        <ExcelColumn label="ФИО владельца" value="name" />
-                        <ExcelColumn label="Дата предоставления доступа" value="start_date" />
-                        <ExcelColumn label="Дата истечения прав доступа" value="expiration_date" />
+                {<ExcelFile filename={fileName} element={<button type='button' className="button button--white signin__button">Экспорт Excel</button>}>
+                    <ExcelSheet data={items} name={fileName}>
+                        {headers.map(elem => <ExcelColumn key={elem[1]} label={elem[0]} value={elem[1]} />)}
                     </ExcelSheet>
                 </ExcelFile>}
                 {<button className="button button--blue signin__button" onClick={() => exportPDF(items)}>Экспорт PDF</button>}
             </div>
             <table className='table__item'>
+                {/* {console.log(items)} */}
                 <thead className='table__thead'>
                     <tr className='table__tr'>
                         {headers.map(elem => (
@@ -47,9 +44,9 @@ export const CarsTable = ({ headers, data }) => {
                 </thead>
                 <tbody className='table__tbody'>
                     {items.map((obj) => (
-                        <tr key={obj.id_car} className='table__tr'>
+                        <tr key={obj.id} className='table__tr'>
                             {keys.map(elem => (
-                                elem !== 'id_car' && <td key={elem + obj.id_car} className='table__td'>{obj[elem]}</td>
+                                elem !== 'id' && <td key={elem + obj.id} className='table__td'>{obj[elem]}</td>
                             ))}
                         </tr>
                     ))

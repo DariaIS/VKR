@@ -1,18 +1,18 @@
 module.exports = function (app, db) {
     
-    app.post('/dateTable', (req, res) => {
-        const date = req.body.date;
-        // console.log(date)
+    app.get('/byNow', (req, res) => {
     
         db.query(
-            "SELECT * FROM arriving_date INNER JOIN date ON date.id_date INNER JOIN car ON car.id_car WHERE arriving_date.id_date=date.id_date AND arriving_date.id_car=car.id_car AND date.date=?",
-            [date],
+            "SELECT license_plate, region, car_brand, arrival_time FROM car INNER JOIN `date`, arriving_date WHERE `date`.`date` = CURDATE() AND `date`.`id_date` = arriving_date.id_date AND arriving_date.id_car = car.id_car AND departure_time IS NULL",
             (err, result) => {
                 // console.log(result)
-                if (err)
+                if (err) {
                     res.send({ err: err });
+                    throw err;
+                }
                 else {
                     result.forEach(elem => {
+                        elem.id = elem.license_plate + ' ' + elem.region;
                         elem.license_plate = elem.license_plate + ' ' + elem.region;
                         delete elem.region;
                     });

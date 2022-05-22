@@ -19,7 +19,7 @@ export const AddCarContent = () => {
                         <input className="input input--medium input--default" type="text" name="plate"
                             onChange={(e) => handleInput(e)}
                         />
-                        <span className="input__name">Номер машины</span>
+                        <span className="input__name">Номер автомобиля</span>
                     </label>
 
                     <label className="addCar__form-item form__item">
@@ -33,7 +33,7 @@ export const AddCarContent = () => {
                         <input className="input input--medium input--default" type="text" name="brand"
                             onChange={(e) => handleInput(e)}
                         />
-                        <span className="input__name">Марка машины</span>
+                        <span className="input__name">Марка автомобиля</span>
                     </label>
                 </form>
                 <div className="addCar__add-result">

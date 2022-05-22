@@ -18,16 +18,16 @@ module.exports = function (app, db) {
             [username],
             async (err, result) => {
                 if (err)
-                    res.send({ err: err });
+                    res.send({ err: 'Произошла ошибка. Пожалуйста, попробуйте снова позже!' });
 
-                if (result.length > 0) {
+                if (result.length > 0 && username === result[0].user_name) {
                     const comparison = await bcrypt.compare(password, result[0].password);
                     if (comparison) {
-                        req.session.user = result;
+                        req.session.user = {userName: result[0].user_name, role: result[0].role};
                         req.session.loggedIn = true;
                         res.send(result);
-                    } else res.send({ err: 'Неверный логин или пароль!' });
-                } else res.send({ err: 'Неверный логин или пароль!' });
+                    } else res.send({ err: 'Неверное имя пользователя или пароль!' });
+                } else res.send({ err: 'Неверное имя пользователя или пароль!' });
             }
         );
     });

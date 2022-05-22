@@ -1,11 +1,11 @@
-.addUser__title {
+.user__title {
 
     &:not(:last-child) {
         margin-bottom: 5rem;
     }
 }
 
-.addUser__form {
+.user__form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,11 +15,11 @@
     }
 }
 
-.addUser__add-result {
+.user__add-result {
     text-align: center;
 }
 
-.addUser__form-item {
+.user__form-item {
     width: fit-content;
 
     &:not(:last-child) {
@@ -27,7 +27,7 @@
     }
 }
 
-.addUser__radio {
+.user__radio {
     display: flex;
     flex-direction: column;
 }

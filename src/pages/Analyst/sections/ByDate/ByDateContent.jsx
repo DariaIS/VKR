@@ -1,73 +1,47 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+
+import { SortableExportTable } from '../../../../components/SortableExportTable';
 
 import { useByDate } from './hooks/useByDate';
 
 export const ByDateContent = () => {
     const {
-        dateTable,
+        table,
         pickedDate,
-        byDate,
-        exportPDF,
-        ExcelFile,
-        ExcelSheet,
-        ExcelColumn
+        setPickedDate,
+        byDate
     } = useByDate();
+
+    useEffect(() => {
+        console.log('byDateEffect');
+        byDate();
+    }, [byDate]);
 
     return (
         <div className="byDate section container">
             <div className="table">
                 <span className="table__title title title--medium">Выберите дату для формирования отчета</span>
-                <Calendar onClickDay={byDate} value={pickedDate} minDetail="year" />
+                <Calendar onClickDay={(e) => setPickedDate(e)} value={pickedDate} minDetail="year" />
                 {
-                    dateTable.length !== 0 ?
+                    table?.length !== 0 ?
                         <div>
                             <span className="table__title title title--medium">Отчет о въездах и выездах на {pickedDate.toLocaleDateString()}</span>
-                            <table className="table__item">
-                                <thead className="table__thead">
-                                    <tr className="table__tr">
-                                        <th className="table__th">
-                                            Номер автомобиля
-                                        </th>
-                                        <th className="table__th">
-                                            Марка автомобиля
-                                        </th>
-                                        <th className="table__th">
-                                            Время въезда
-                                        </th>
-                                        <th className="table__th">
-                                            Время выезда
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="table__tbody">
-                                    {Object.values(dateTable).map(val => {
-                                        return (
-                                            <tr className="table__tr" key={val.id_car}>
-                                                <td className="table__td">{val.license_plate}</td>
-                                                <td className="table__td">{val.car_brand}</td>
-                                                <td className="table__td">{val.arrival_time}</td>
-                                                <td className="table__td">{val.departure_time}</td>
-                                            </tr>
-                                        )
-                                    })}
-                                </tbody>
-                            </table>
-                            <div className="byDate__export-buttons">
-                                {<ExcelFile filename={"Отчет " + pickedDate.toLocaleDateString()} element={<button type='button' className="button button--white signin__button">Экспорт Excel</button>}>
-                                    <ExcelSheet data={dateTable} name={"Отчет " + pickedDate.toLocaleDateString()}>
-                                        <ExcelColumn label="Номер автомобиля" value="license_plate" />
-                                        <ExcelColumn label="Регион" value="region" />
-                                        <ExcelColumn label="Марка автомобиля" value="car_brand" />
-                                        <ExcelColumn label="Время въезда" value="arrival_time" />
-                                        <ExcelColumn label="Время выезда" value="departure_time" />
-                                    </ExcelSheet>
-                                </ExcelFile>}
-                                {<button className="button button--blue signin__button" onClick={exportPDF}>Экспорт PDF</button>}
-                            </div>
+                            <span className="table__title title title--small">Количество въежавших автомобилей - {table?.length}</span>
+                            <SortableExportTable
+                                headers={
+                                    [['Номер автомобиля', 'license_plate'],
+                                    ['Марка', 'car_brand'],
+                                    ['Время въезда', 'arrival_time'],
+                                    ['Время выезда', 'departure_time']]
+                                }
+                                data={table}
+                                fileName={'Въезды и выезды ' + pickedDate.toLocaleDateString()}
+                                count={'Количество въежавших автомобилей - ' + table?.length}
+                            />
                         </div>
-                        : <div className="title title--small">Нет данных о въездах и выездах в этот день</div>
+                        : <div className="title title--medium">Нет данных о въездах и выездах в этот день</div>
                 }
             </div>
         </div>

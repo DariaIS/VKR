@@ -4,16 +4,16 @@ import { Header } from '../../../../components';
 import { AdminNavigation } from '../../AdminNavigation';
 
 import { ProtectedRoute } from '../../../../components/ProtectedRoute';
-import { AddUserContent } from './AddUserContent';
+import { AddPersonContent } from './AddPersonContent';
 
-export const AddUser = () => {
+export const AddPerson = () => {
 
     return (
         <ProtectedRoute role='admin' setNewRole={null}>
             <Header>
                 <AdminNavigation />
             </Header>
-                <AddUserContent />
+                <AddPersonContent />
         </ProtectedRoute>
     )
 }
