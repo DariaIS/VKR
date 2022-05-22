@@ -71,10 +71,14 @@
 
 .nav__link {
 
+    @media (max-width: $screen-xl) { 
+        font-size: 1.5rem;
+    }
+
     @media (min-width: $screen-lg) {
 
         display: block;
-        padding: 2.6rem;
+        padding: 2.6rem 1rem;
         transition: 0.2s;
 
         &--white {

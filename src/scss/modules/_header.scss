@@ -1,8 +1,5 @@
 .header {
-
-    @media (min-width: $screen-lg) {
-        border-bottom: 1px solid $color-main;
-    }
+    border-bottom: 1px solid $color-main;
 }
 
 .header__content {
@@ -13,22 +10,30 @@
 
 .header__logo-link {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     text-align: center;
     color: $color-main;
-    font-size: 3rem;
     font-weight: bold;
     line-height: 1.1;
     padding: 0.7rem 0;
     text-transform: uppercase;
+    white-space: nowrap;
 
-}
+    @media (min-width: $screen-xl) {
+        font-size: 3rem;
 
-.header__nav-trigger {
-    background: none;
+    }
 
-    @media (min-width: $screen-lg) {
+    @media (max-width: ($screen-xl - 1)) {
+        font-size: 2rem;
+    }
 
-        display: none;
+    .header__nav-trigger {
+        background: none;
+
+        @media (min-width: $screen-lg) {
+
+            display: none;
+        }
     }
 }

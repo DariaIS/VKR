@@ -1,3 +1,11 @@
-.admin__expired {
-    margin: 5rem 0;
+.admin__title {
+
+    @media (min-width: $screen-lg) {
+        margin-bottom: 5rem;
+    }
+
+    @media (max-width: ($screen-lg - 1)) {
+        margin-bottom: 3rem;
+
+    }
 }
