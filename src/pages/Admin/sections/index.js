@@ -1,5 +1,4 @@
-export { AddCar } from './AddCar/AddCar';
-export { AddUser } from './AddUser/AddUser';
+export { User } from './User/User';
 export { ChangeData } from './ChangeData/ChangeData';
-export { DeleteUser } from './DeleteUser/DeleteUser';
 export { AddPerson } from './AddPerson/AddPerson';
+export { AddCar } from './AddCar/AddCar';

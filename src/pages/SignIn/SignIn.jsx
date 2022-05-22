@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Axios from 'axios';
 
-import { ReactComponent as Show } from './icons/eye.svg';
-import { ReactComponent as Hide } from './icons/eye-blind.svg';
+import { ReactComponent as Show } from '../../assets/img/icons/eye.svg';
+import { ReactComponent as Hide } from '../../assets/img/icons/eye-blind.svg';
 
 import { useSignIn } from './hooks/useSignIn';
 

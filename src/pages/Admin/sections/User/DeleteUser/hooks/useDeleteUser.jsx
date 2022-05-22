@@ -5,8 +5,18 @@ export const useDeleteUser = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const handleInput = (e) => {
         setError('');
@@ -46,6 +56,9 @@ export const useDeleteUser = () => {
     return {
         handleInput,
         handleAcceptClick,
+        showPassword,
+        handleClickShowPassword,
+        handleMouseDownPassword,
         error,
         success
     };

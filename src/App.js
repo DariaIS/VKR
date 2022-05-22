@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from 'react-router-dom';
 
 import { SignIn, Home } from './pages';
-import { AddCar, AddUser, ChangeData, DeleteUser, AddPerson } from './pages/Admin/sections';
+import { AddCar, ChangeData, AddPerson, User } from './pages/Admin/sections';
 import { ByDate, AllCars, ByPlate, ByPerson } from './pages/Analyst/sections';
 
 export const App = () => {
@@ -15,9 +15,10 @@ export const App = () => {
 
                     <Route path="/addCar" element={<AddCar />} exact />
                     <Route path="/addPerson" element={<AddPerson />} exact />
-                    <Route path="/addUser" element={<AddUser />} exact />
+                    {/* <Route path="/addUser" element={<AddUser />} exact /> */}
+                    <Route path="/User" element={<User />} exact />
                     <Route path="/changeData" element={<ChangeData />} exact />
-                    <Route path="/deleteUser" element={<DeleteUser />} exact />
+                    {/* <Route path="/deleteUser" element={<DeleteUser />} exact /> */}
 
                     <Route path="/byDate" element={<ByDate />} exact />
                     <Route path="/allCars" element={<AllCars />} exact />

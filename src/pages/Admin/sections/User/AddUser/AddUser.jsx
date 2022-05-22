@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useAddUser } from './hooks/useAddUser';
 
-export const AddUserContent = () => {
+export const AddUser = () => {
     const {
         handleInput,
         handleAcceptClick,
@@ -11,7 +11,7 @@ export const AddUserContent = () => {
     } = useAddUser();
 
     return (
-        <div className="user container section">
+        <>
             <span className="user__title admin__title--section title title--medium">Добавление нового пользователя</span>
             <form className='user__form'>
                 <label className="user__form-item form__item">
@@ -46,7 +46,8 @@ export const AddUserContent = () => {
                 <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Добавить пользователя</button>
                 {error !== '' && <span className="status status--warning status--center">{error}</span>}
                 {success !== '' && <span className="status status--success status--center">{success}</span>}
+                {(error === '' && success === '') && <span className="status">&nbsp;</span>}
             </div>
-        </div>
+        </>
     )
 }
