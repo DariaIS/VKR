@@ -18,8 +18,8 @@ module.exports = function (app, db) {
                     "SELECT id_user FROM user WHERE user_name=?",
                     [userName], (err, result) => {
                         if (err) {
-                            res.send({ err: 'Не удалось добавить пользователя!' });
-                            return reject(err);
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
                         }
 
                         if (result.length !== 0) {
@@ -35,16 +35,15 @@ module.exports = function (app, db) {
 
         const addUser = () => {
             return new Promise((resolve, reject) => {
-                // console.log("AddUser");
                 db.query(
                     "INSERT INTO user (user_name, password, role) VALUES (?, ?, ?)",
                     [userName, password, role], (err, result) => {
                         if (err) {
-                            res.send({ err: 'Не удалось добавить пользователя!' });
-                            return reject(err);
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
                         }
+
                         res.send({ message: 'Пользователь успешно добавлен!' });
-                        // console.log(result + " пользователь добавлен")
                         return resolve(result);
                     }
                 );
@@ -56,8 +55,8 @@ module.exports = function (app, db) {
                 await checkUser();
                 if (!warning)
                     await addUser();
-            } catch (error) {
-                console.log(error)
+            } catch (err) {
+                res.send({ err: err });
             }
         }
 

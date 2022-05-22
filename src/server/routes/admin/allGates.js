@@ -5,7 +5,7 @@ module.exports = function (app, db) {
             "SELECT id_gates, gates_name FROM gates",
             (err, result) => {
                 if (err)
-                    throw err;
+                    res.send({ err: err });
                 else {
                     result.forEach(elem => {
                         elem.label = elem.gates_name;

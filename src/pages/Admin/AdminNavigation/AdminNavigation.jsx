@@ -17,6 +17,9 @@ export const AdminNavigation = () => {
             <li className="nav__item">
                 <Link to='/deleteUser' className="nav__link nav__link--white">Удаление пользователя</Link>
             </li>
+            <li className="nav__item">
+                <Link to='/addPerson' className="nav__link nav__link--white">Добавление владельца</Link>
+            </li>
         </>
     );
 }

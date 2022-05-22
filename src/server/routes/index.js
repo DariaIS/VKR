@@ -3,12 +3,14 @@ const logoutRoutes = require('./authorize/logout');
 
 const allCarPlatesRoutes = require('./allCarPlates');
 const allPeopleRoutes = require('./allPeople');
+const allChairsRoutes = require('./allChairs');
 
 const addCarRoutes = require('./admin/addCar');
 const addUserRoutes = require('./admin/addUser');
 const expiredCarsRoutes = require('./admin/expiredCars');
 const changeCarDataRoutes = require('./admin/changeCarData');
 const deleteUserRoutes = require('./admin/deleteUser');
+const addPersonRoutes = require('./admin/addPerson');
 
 const inOutCarRoutes = require('./security/inOutCar');
 const inOutLogRoutes = require('./security/inOutLog');
@@ -26,12 +28,14 @@ module.exports = function(app, db) {
 
     allCarPlatesRoutes(app, db);
     allPeopleRoutes(app, db);
+    allChairsRoutes(app, db);
     
     addCarRoutes(app, db);
     addUserRoutes(app, db);
     expiredCarsRoutes(app, db);
     changeCarDataRoutes(app, db);
     deleteUserRoutes(app, db);
+    addPersonRoutes(app, db);
     
     inOutCarRoutes(app, db);
     inOutLogRoutes(app);

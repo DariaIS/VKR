@@ -1,0 +1,39 @@
+.addPerson__title {
+
+    &:not(:last-child) {
+        margin-bottom: 5rem;
+    }
+}
+
+.addPerson__form {
+    display: flex;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}
+
+.addPerson__dinamic-inputs {
+    display: flex;
+    justify-content: space-around;
+
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
+}
+
+.addPerson__add-result {
+    text-align: center;
+}
+
+.addPerson__form-item {
+    width: fit-content;
+
+
+}
+
+.addPerson__radio {
+    display: flex;
+    flex-direction: column;
+}

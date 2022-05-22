@@ -1,43 +1,57 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Axios from 'axios';
 
 export const useAddPerson = () => {
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [role, setRole] = useState('');
+    // const [name, setName] = useState('');
+    // const [lastName, setLastName] = useState('');
+    // const [middleName, setMiddleName] = useState('');
+    // const [position, setPosition] = useState('');
+    // const [chair, setChair] = useState('');
+
+    const [chairList, setChairList] = useState([]);
+    const [personData, setPersonData] = useState({
+        name: '',
+        lastName: '',
+        middleName: '',
+        position: '',
+        idChair: ''
+    });
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+
+    const getChairs = useCallback(() => {
+        console.log('getChairs')
+        Axios.get('http://localhost:3001/allChairs').then((response) => {
+            if (response.data.result)
+                setChairList(response.data.result);
+        });
+    }, []);
+
+    const handleChairSelect = (e) => {
+        setError('');
+        setSuccess('');
+
+        setPersonData(personData => ({...personData, [e.name]: e.value}))
+    };
 
     const handleInput = (e) => {
         setError('');
         setSuccess('');
 
-        switch (e.target.name) {
-            case 'name':
-                setUserName(e.target.value.trim());
-                break;
-            case 'lastName':
-                setPassword(e.target.value);
-                break;
-            case 'middleName':
-                setRole(e.target.value);
-                break;
-            case 'chair':
-                setRole(e.target.value);
-                break;
-            default:
-                break;
-        }
+        setPersonData(personData => ({...personData, [e.target.name]: e.target.value.trim()}));
     };
 
     const handleAcceptClick = (e) => {
         setError('');
-        if (userName !== '' && password !== '' && role !== '') {
-            Axios.post('http://localhost:3001/addUser', {
-                userName: userName,
-                password: password,
-                role: role
+        console.log(personData)
+        if (Object.values(personData).every(x => x !== '')) {
+            Axios.post('http://localhost:3001/addPerson', {
+                name: personData.name,
+                lastName: personData.lastName,
+                middleName: personData.middleName,
+                idChair: personData.idChair,
+                position: personData.position
             }).then((response) => {
                 if (response.data.message) {
                     setSuccess(response.data.message);
@@ -52,7 +66,10 @@ export const useAddPerson = () => {
     };
 
     return {
+        getChairs,
+        chairList,
         handleInput,
+        handleChairSelect,
         handleAcceptClick,
         error,
         success

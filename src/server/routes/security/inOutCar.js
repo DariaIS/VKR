@@ -27,7 +27,7 @@ module.exports = function (app, db) {
         if (plate[0].trim() === '404') {
             log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Номер автомобиля не распознан');
             req.session.log = log;
-            res.send({ log: log, carPlateErr: 'Номер машины не распознан!' });
+            res.send({ log: log, carPlateErr: 'Номер автомобиля не распознан!' });
         }
         else {
             let warning = false;
@@ -49,7 +49,7 @@ module.exports = function (app, db) {
                                 if (result.length === 0) {
                                     log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' ' + plate[1] + ' отсутствует в базе данных');
                                     req.session.log = log;
-                                    res.send({ log: log, err: 'Машины с данным номером нет в базе данных!' });
+                                    res.send({ log: log, err: 'Автомобиля с данным номером нет в базе данных!' });
                                     warning = true;
                                 }
                                 else {

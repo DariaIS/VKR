@@ -6,39 +6,21 @@ module.exports = function (app, db) {
         let plate = req.body.plate;
         const region = req.body.region;
         const brand = req.body.brand;
-        const gates = '7 корпус';
+        const idGates = '1';
 
-        let idCar, idGates;
-        let warning = false;
-        let isCarExist = false;
-        let isCarExpired = true;
-
-        const getIdGates = () => {
-            return new Promise((resolve, reject) => {
-                db.query(
-                    "SELECT id_gates FROM gates WHERE gates_name=?",
-                    [gates], (err, result) => {
-
-                        if (err) {
-                            warning = true;
-                            return reject(err);
-                        }
-
-                        idGates = result[0].id_gates;
-                        return resolve(result);
-                    });
-            });
-        }
+        let idCar;
+        let isCarAlreadyExist = false;
+        let isCarExpired = false;
+        let hasGates = false;
 
         const fixPlate = () => {
             return new Promise((resolve, reject) => {
                 plate = translit(plate);
-
                 if (!plate) {
-                    warning = true;
-                    res.send({ err: 'Не верный формат номера!' });
-                    return reject(false);
+
+                    return reject('Неверный формат номера!');
                 }
+
                 return resolve(plate);
             });
         }
@@ -48,57 +30,35 @@ module.exports = function (app, db) {
                 db.query(
                     "SELECT id_car FROM car WHERE license_plate=? AND region=?",
                     [plate, region], (err, result) => {
-
                         if (err) {
-                            warning = true;
-                            res.send({ err: 'Не удалось добавить запись!' });
-                            return reject(err);
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
                         }
 
                         if (result.length !== 0) {
-                            isCarExist = true;
+                            isCarAlreadyExist = true;
                             idCar = result[0].id_car;
                         }
+
                         return resolve(result);
                     }
                 );
             });
         }
 
-        const CheckDateExpired = () => {
+        const checkDateExpired = () => {
             return new Promise((resolve, reject) => {
                 db.query(
-                    "SELECT id_car FROM car WHERE id_car=? AND expiration_date < CURDATE()",
+                    "SELECT id_car FROM car WHERE id_car = ? AND expiration_date < CURDATE()",
                     [idCar], (err, result) => {
-
                         if (err) {
-                            warning = true;
-                            res.send({ err: 'Не удалось добавить запись!' });
-                            return reject(err);
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
                         }
 
-                        if (result.length === 0) {
-                            isCarExpired = false;
-                            res.send({ err: 'У автомобиля уже есть доступ к данной проходной!' });
-                        }
-                        return resolve(result);
-                    });
-            });
-        }
+                        if (result.length !== 0)
+                            isCarExpired = true;
 
-        const updateDate = () => {
-            return new Promise((resolve, reject) => {
-                db.query(
-                    "UPDATE car SET expiration_date = DATE_ADD(CURDATE(), INTERVAL 1 YEAR) WHERE id_car=?",
-                    [idCar], (err, result) => {
-
-                        if (err) {
-                            warning = true;
-                            res.send({ err: 'Не удалось добавить запись!' });
-                            return reject(err);
-                        }
-
-                        res.send({ message: 'Данные о правах доступа успешно обновлены!' });
                         return resolve(result);
                     });
             });
@@ -109,11 +69,9 @@ module.exports = function (app, db) {
                 db.query(
                     "INSERT INTO car (car_brand, license_plate, region, start_date, expiration_date) VALUES (?, ?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 1 YEAR))",
                     [brand, plate, region], (err, result) => {
-
                         if (err) {
-                            warning = true;
-                            res.send({ err: 'Не удалось добавить запись!' });
-                            return reject(err);
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
                         }
 
                         idCar = result.insertId;
@@ -122,40 +80,82 @@ module.exports = function (app, db) {
             });
         }
 
-        let addGates = () => {
+        const checkGates = () => {
             return new Promise((resolve, reject) => {
                 db.query(
-                    "INSERT INTO gates_allowed (id_car, id_gates) VALUES (?, ?)",
+                    "SELECT * FROM gates_allowed WHERE id_car = ? AND id_gates = ? ",
                     [idCar, idGates], (err, result) => {
                         if (err) {
-                            return reject(err);
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
                         }
 
-                        res.send({ message: 'Запись успешно добавлена!' });
+                        if (result.length !== 0) {
+                            hasGates = true;
+                            if (!isCarExpired)
+                                res.send({ err: 'У автомобиля уже есть доступ к данной проходной!' });
+                        }
                         return resolve(result);
                     });
             });
         }
 
+        const addGates = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "INSERT INTO gates_allowed (id_car, id_gates) VALUES (?, ?)",
+                    [idCar, idGates], (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
+                        }
+
+                        if (isCarAlreadyExist) {
+                            if (!isCarExpired)
+                                res.send({ message: 'Автомобилю предоставлен доступ к данной проходной!' });
+                        } else res.send({ message: 'Запись успешно добавлена!' });
+                        return resolve(result);
+                    });
+            });
+        }
+
+        const updateDate = () => {
+            return new Promise((resolve, reject) => {
+                db.query(
+                    "UPDATE car SET expiration_date = DATE_ADD(CURDATE(), INTERVAL 1 YEAR) WHERE id_car=?",
+                    [idCar], (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            return reject('Произошла ошибка. Пожалуйста, попробуйте снова позже!');
+                        }
+
+                        if (!hasGates)
+                            res.send({ message: 'Дата истечения прав доступа обновлена, автомобилю предоставлен доступ к данной проходной!' });
+                        else res.send({ message: 'Дата истечения прав доступа успешно обновлена!' });
+                        return resolve(result);
+                    });
+            });
+        }
+
+
         async function CarAdding() {
 
             try {
-                await getIdGates();
-                if (!warning)
-                    await fixPlate();
-                if (!warning)
-                    await checkCarExist();
-                if (!warning && isCarExist)
-                    await CheckDateExpired();
-                if (!warning && isCarExist && isCarExpired)
-                    await updateDate();
-                if (!warning && !isCarExist)
+                await fixPlate();
+                await checkCarExist();
+                if (isCarAlreadyExist) {
+                    await checkDateExpired();
+                    await checkGates();
+                }
+                if (!isCarAlreadyExist)
                     await addCar();
-                if (!warning && !isCarExist)
+                if (!hasGates)
                     await addGates();
+                if (isCarExpired)
+                    await updateDate();
 
             } catch (error) {
-                res.send({ err: 'Не удалось добавить запись!' });
+                res.send({ err: error });
             }
         }
         CarAdding();

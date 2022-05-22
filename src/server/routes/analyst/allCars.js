@@ -5,7 +5,7 @@ module.exports = function (app, db) {
             "SELECT id_car, license_plate, region, car_brand, last_name, middle_name, name, chair, start_date, expiration_date, position FROM car LEFT JOIN (person INNER JOIN chair ON person.id_chair = chair.id_chair) ON person.id_person=car.id_person WHERE expiration_date > CURDATE()",
             (err, result) => {
                 if (err)
-                    res.send({ err: err });
+                    res.send({ err: 'Ошибка! Нет данных' });
                 else {
                     result.forEach(elem => {
                         if (elem.position === 'student')

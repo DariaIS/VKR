@@ -27,7 +27,7 @@ export const ChangeModal = ({ plate, closeModal }) => {
     return (
         <>
             <p className='changeModal__text'>
-                Просмотр и изменение данных об автомобиле {plate.label.split(' ')[0]} с регионом {plate.label.split(' ')[1]}
+                Просмотр и изменение данных об автомобиле {plate.label.split(' ')[0]} {plate.label.split(' ')[1]}
                 {/* {'\n'} */}
             </p>
             <form className='changeModal__form'>

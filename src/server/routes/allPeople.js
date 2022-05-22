@@ -5,7 +5,7 @@ module.exports = function (app, db) {
             "SELECT * FROM person INNER JOIN chair ON person.id_chair = chair.id_chair",
             (err, result) => {
                 if (err)
-                    res.send({ err: err });
+                    res.send({ err: 'Произошла ошибка. Пожалуйста, попробуйте снова позже!' });
                 else {
                     result.forEach(elem => {
                         if (elem.position === 'student')

@@ -5,7 +5,7 @@ module.exports = function (app, db) {
             "SELECT id_car, license_plate, region FROM car",
             (err, result) => {
                 if (err)
-                    res.send({ err: err });
+                    res.send({ err: 'Произошла ошибка. Пожалуйста, попробуйте снова позже!' });
                 else {
                     result.forEach(elem => {
                         elem.label = elem.license_plate + ' ' + elem.region;
