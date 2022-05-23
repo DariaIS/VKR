@@ -38,11 +38,11 @@ export const ChangeDataContent = () => {
                             noOptionsMessage={() => 'Номер не найден'}
                         />
                         <button type='button' className="changeData__button button button--blue" onClick={handleAcceptClick}>Изменить</button>
-                        {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     </div>
+                    {error !== '' && <span className="status status--warning status--left">{error}</span>}
                 </div>
             </div>
-            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{modalType: 'change', plate: plate}}/>}
+            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{ modalType: 'change', plate: plate }} />}
         </>
     )
 }

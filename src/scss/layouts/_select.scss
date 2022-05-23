@@ -1,5 +1,6 @@
 .select {
     display: inline-block;
+    box-sizing: border-box;
 
     &--small {
 
@@ -18,18 +19,18 @@
 
     &--medium {
 
-        @media (min-width: $screen-lg) {
-            width: 420px;
+        @media (min-width: $screen-xxl) {
+            width: 440px;
             font-size: 2rem;
         }
 
-        @media (min-width: $screen-md) and (max-width: ($screen-lg - 1)) {
+        @media (min-width: $screen-sm) and (max-width: ($screen-xxl - 1)) {
             width: 365px;
             font-size: 1.8rem;
         }
 
-        @media (max-width: ($screen-md - 1)) {
-            width: 290px;
+        @media (max-width: ($screen-sm - 1)) {
+            width: 100%;
             font-size: 16px;
         }
     }

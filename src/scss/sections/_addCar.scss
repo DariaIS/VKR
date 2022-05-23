@@ -24,10 +24,17 @@
 }
 
 .addCar__form-item {
-    width: fit-content;
 
     @media (max-width: ($screen-xl - 1)) {
         margin-bottom: 3rem;
+    }
+
+    @media (min-width: $screen-sm) {
+        width: fit-content;
+    }
+
+    @media (max-width: ($screen-sm - 1)) {
+        width: 100%;
     }
 }
 

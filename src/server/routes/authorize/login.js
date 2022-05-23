@@ -26,8 +26,8 @@ module.exports = function (app, db) {
                         req.session.user = {userName: result[0].user_name, role: result[0].role};
                         req.session.loggedIn = true;
                         res.send(result);
-                    } else res.send({ err: 'Неверное имя пользователя или пароль!' });
-                } else res.send({ err: 'Неверное имя пользователя или пароль!' });
+                    } else res.send({ err: 'Неверный логин или пароль!' });
+                } else res.send({ err: 'Неверный логин или пароль!' });
             }
         );
     });

@@ -81,6 +81,13 @@
     }
 
     &--left {
-        text-align: left;
+
+        @media (min-width: $screen-md) {
+            text-align: left;
+        }
+
+        @media (max-width: ($screen-md - 1)) {
+            text-align: center;
+        }
     }
 }
