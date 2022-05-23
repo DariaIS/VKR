@@ -1,0 +1,19 @@
+.changeData__elems {
+    display: flex;
+    align-items: center;
+
+    @media (max-width: ($screen-sm - 1)) {
+        flex-direction: column;
+    }
+
+}
+
+.changeData__select {
+    @media (max-width: ($screen-sm - 1)) {
+        margin-bottom: 3rem;
+    }
+
+    @media (min-width: $screen-sm) {
+        margin-right: 3rem;
+    }
+}

@@ -51,14 +51,15 @@ export const SignIn = () => {
                                 onChange={(e) => handleInputChange(e)}
                             />
                             <span onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
-                                {showPassword ? <Show className="signin__eye-icon" /> : <Hide className="signin__eye-icon" />}
+                                {showPassword ? <Show className="eye-icon" /> : <Hide className="eye-icon" />}
                             </span>
                         </label>
                         <button type='button' className="button button--blue signin__button" onClick={(e) => login(e)}>Войти</button>
-                        {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     </form>
+                        {error === '' && <span className="status">&nbsp;</span>}
+                        {error !== '' && <span className="status status--warning status--center">{error}</span>}
                 </div>
-            </div> 
+            </div>
             : <div></div>
     );
 }

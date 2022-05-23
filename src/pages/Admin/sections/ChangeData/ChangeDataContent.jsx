@@ -31,7 +31,7 @@ export const ChangeDataContent = () => {
                         Просмотр и изменение сведений об автомобиле
                     </span>
                     <div className='changeData__elems'>
-                        <Select className="changeData__select select"
+                        <Select className="changeData__select select select--medium"
                             onChange={(e) => handleSelectChange(e)}
                             options={plateList}
                             placeholder='Номер и регион'

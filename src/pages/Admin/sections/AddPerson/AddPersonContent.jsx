@@ -55,7 +55,7 @@ export const AddPersonContent = () => {
                             Сотрудник
                         </label>
                     </div>
-                    <Select className="byPerson__select select"
+                    <Select className="byPerson__select select select--medium"
                         onChange={(e) => handleChairSelect(e)}
                         options={chairList}
                         placeholder='Кафедра'

@@ -11,11 +11,11 @@
     cursor: pointer;
 
     @media (min-width: $screen-lg) {
-        font-size: 20px;
+        font-size: 2rem;
     }
 
     @media (max-width: ($screen-lg - 1)) {
-        font-size: 12px;
+        font-size: 1.8rem;
     }
 
     &:focus {

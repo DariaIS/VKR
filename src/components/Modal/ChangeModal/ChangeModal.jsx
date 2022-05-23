@@ -43,14 +43,14 @@ export const ChangeModal = ({ plate, closeModal }) => {
                         onChange={(e) => handleInput(e)} />
                     <span className="input__name">Дата истечения прав доступа</span>
                 </label>
-                <Select className="changeModal__select"
+                <Select className="changeModal__select select select--medium"
                     value={selectedPerson}
                     onChange={(e) => handlePersonSelect(e)}
                     options={peopleList}
                     placeholder='Владелец'
                     noOptionsMessage={() => 'Владелец не найден'}
                 />
-                <Select className="changeModal__select"
+                <Select className="changeModal__select select select--medium"
                     isMulti='true'
                     value={selectedGates}
                     onChange={(e) => handleGatesSelect(e)}

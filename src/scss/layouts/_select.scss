@@ -1,11 +1,36 @@
 .select {
     display: inline-block;
 
-    @media (min-width: $screen-lg) {
-        width: 452px;
+    &--small {
+
+        @media (min-width: $screen-lg) {
+            width: 370px;
+        }
+
+        @media (min-width: $screen-md) and (max-width: ($screen-lg - 1)) {
+            width: 320px;
+        }
+
+        @media (max-width: ($screen-md - 1)) {
+            width: 290px;
+        }
     }
 
-    @media (max-width: ($screen-lg - 1)) {
-        width: 320px;
+    &--medium {
+
+        @media (min-width: $screen-lg) {
+            width: 420px;
+            font-size: 2rem;
+        }
+
+        @media (min-width: $screen-md) and (max-width: ($screen-lg - 1)) {
+            width: 365px;
+            font-size: 1.8rem;
+        }
+
+        @media (max-width: ($screen-md - 1)) {
+            width: 290px;
+            font-size: 16px;
+        }
     }
 }

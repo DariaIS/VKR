@@ -1,0 +1,15 @@
+.eye-icon {
+    color: $color-main;
+    position: absolute;
+    right: 0;
+    transform: translate(-50%, -50%);
+    top: 50%;
+
+    @media (max-width: ($screen-md - 1)) {
+        width: 25px;
+    }
+
+    @media (min-width: $screen-md) {
+        width: 28px;
+    }
+}

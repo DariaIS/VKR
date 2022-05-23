@@ -31,40 +31,38 @@ export const Admin = () => {
                         <span className='title title--medium'>
                             Внимание! Cкоро истечет (или недавно истек) срок предоставления доступа для данных автомобилей
                         </span>
-                        <table className="table__item">
-                            <thead className="table__thead">
-                                <tr className="table__tr">
-                                    <th className="table__th">
-                                        Номер автомобиля
-                                    </th>
-                                    <th className="table__th">
-                                        Марка автомобиля
-                                    </th>
-                                    <th className="table__th">
-                                        Дата истечения прав доступа
-                                    </th>
-                                    <th className="table__th">
-                                        Обновление прав доступа
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="table__tbody">
-                                {Object.values(expiredCars).map(val => {
-                                    return (
-                                        <tr className="table__tr" key={val.id_car}>
-                                            <td className="table__td">{val.license_plate}</td>
-                                            <td className="table__td">{val.car_brand}</td>
-                                            <td className="table__td">{val.expiration_date}</td>
-                                            <td className="table__td">
-                                                <a href='/home' className='table__link' onClick={(e) => updateDate(e, val.id_car)}>
-                                                    Обновить
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
+                        <div className='table'>
+                            <table className="table__table">
+                                <thead className="table__thead">
+                                    <tr className="table__tr">
+                                        <th className="table__th">
+                                            Номер автомобиля
+                                        </th>
+                                        <th className="table__th">
+                                            Дата истечения прав доступа
+                                        </th>
+                                        <th className="table__th">
+                                            Обновление прав доступа
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table__tbody">
+                                    {Object.values(expiredCars).map(val => {
+                                        return (
+                                            <tr className="table__tr" key={val.id_car}>
+                                                <td className="table__td">{val.license_plate}</td>
+                                                <td className="table__td">{val.expiration_date}</td>
+                                                <td className="table__td">
+                                                    <a href='/home' className='table__link' onClick={(e) => updateDate(e, val.id_car)}>
+                                                        Обновить
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                         {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     </div>
                 }
