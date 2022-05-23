@@ -5,12 +5,12 @@
         left: -100vw;
     }
 
-    @media (min-width: $screen-sm) and (max-width: ($screen-lg - 1)) {
+    @media (min-width: $screen-sm) and (max-width: ($screen-xl - 1)) {
         width: 300px;
         left: -300px;
     }
 
-    @media (max-width: ($screen-lg - 1)) {
+    @media (max-width: ($screen-xl - 1)) {
         position: fixed;
         overflow-y: auto;
         z-index: 999;
@@ -19,8 +19,6 @@
         min-height: 100vh;
         transition: left 0.6s;
         background-color: $white;
-        padding-left: 2rem;
-        padding-right: 2rem;
         padding-top: 2rem;
         box-sizing: border-box;
 
@@ -29,19 +27,24 @@
         }
     }
 
-    @media (min-width: $screen-lg) {
+    @media (min-width: $screen-xl) {
         position: relative;
     }
 }
 
 .nav__list {
-    
-    @media (min-width: $screen-lg) {
-        display: flex;
+    display: flex;
+
+    @media (max-width: ($screen-xl - 1)) {
+        flex-direction: column;
     }
 }
 
 .nav__item {
+
+    @media (max-width: ($screen-xl - 1)) {
+        text-align: center;
+    }
 
     &--menu {
         position: relative;
@@ -51,53 +54,62 @@
         }
     }
 
-    @media (max-width: ($screen-lg - 1)) {
-
-        &--s {
-            height: 40px;
-            position: relative;
+    &--close {
+        svg {
+            width: 30px;
+            height: 30px;
+            path {
+                fill: $color-main;
+            }
         }
 
-        &--search {
+        @media (min-width: $screen-xl) {
             display: none;
         }
-    }
 
-    @media (min-width: $screen-lg) {
-        display: block;
-        font-weight: 500;
+        @media (max-width: ($screen-xl - 1)) {
+            align-self: end;
+            margin-right: 2rem;
+        }
     }
 }
 
 .nav__link {
+    font-weight: 500;
+    transition: 0.2s;
+    display: block;
 
-    @media (max-width: $screen-xl) { 
-        font-size: 1.5rem;
-    }
+    &--white {
+        color: $color-main;
 
-    @media (min-width: $screen-lg) {
-
-        display: block;
-        padding: 2.6rem 1rem;
-        transition: 0.2s;
-
-        &--white {
-            color: $color-main;
-
-            &:hover {
-                background-color: $color-main;
-                color: $white;
-            }
-        }
-
-        &--blue {
-            color: $white;
+        &:hover {
             background-color: $color-main;
-            opacity: 0.7;
-
-            &:hover {
-                opacity: 1;
-            }
+            color: $white;
         }
     }
+
+    &--blue {
+        color: $white;
+        background-color: $color-main;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    @media (max-width: $screen-xl) {
+        font-size: 2rem;
+        padding: 2rem;
+    }
+
+    @media (min-width: $screen-xl) {
+        padding: 2.6rem 1rem;
+    }
+}
+
+.nav__close {
+    width: 30px;
+    height: 30px;
+    color: $color-main;
 }

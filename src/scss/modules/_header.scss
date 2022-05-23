@@ -19,21 +19,47 @@
     text-transform: uppercase;
     white-space: nowrap;
 
-    @media (min-width: $screen-xl) {
+    @media (min-width: $screen-lg) {
         font-size: 3rem;
 
     }
 
-    @media (max-width: ($screen-xl - 1)) {
+    @media (max-width: ($screen-lg - 1)) {
         font-size: 2rem;
     }
+}
 
-    .header__nav-trigger {
-        background: none;
+.header__nav {
+    @media (max-width: ($screen-xl - 1)) {
+        display: flex;
+    }
+}
 
-        @media (min-width: $screen-lg) {
+.overflow {
+    -webkit-tap-highlight-color: transparent;
+    background: rgba(255, 255, 255, .8);
+    bottom: 0;
+    display: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 15;
 
-            display: none;
+
+    &--visible {
+        @media (max-width: ($screen-xl - 1)) {
+            display: block;
         }
+    }
+}
+
+.header__open-nav {
+    width: 30px;
+    height: 30px;
+    color: $color-main;
+
+    @media (min-width: $screen-xl) {
+        display: none;
     }
 }
