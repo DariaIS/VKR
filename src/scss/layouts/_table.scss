@@ -31,8 +31,6 @@
 
 .table__th {
     font-weight: 400;
-    // white-space: nowrap;
-    word-break: normal;
 }
 
 .table__th:first-child {
@@ -62,10 +60,11 @@
 .table__td {
     border: none;
     text-align: left;
+    word-break: normal;
 
     @media (max-width: ($screen-lg - 1)) {
         padding: 15px;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
     }
 
     @media (min-width: $screen-lg) {

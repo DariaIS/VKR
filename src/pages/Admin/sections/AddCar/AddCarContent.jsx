@@ -13,7 +13,8 @@ export const AddCarContent = () => {
     return (
         <div className="addCar container">
             <div className="addCar__forms section">
-                <span className="addCar__title title title--medium">Добавление новой записи</span>
+                <span className="addCar__title title title--medium">Добавление записи об автомобиле</span>
+                <span className="addCar__small-title title title--small">Обновление прав доступа и предоставление доступа к проходной седьмого корпуса</span>
                 <form className='addCar__form'>
                     <label className="addCar__form-item form__item">
                         <input className="input input--medium input--default" type="text" name="plate"

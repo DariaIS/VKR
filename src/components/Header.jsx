@@ -17,7 +17,6 @@ export const Header = ({ children, isSecurity }) => {
 
     return (
         <header className="header">
-            {console.log(isSecurity)}
             {!isSecurity && <div className={`overflow ${isOpen ? `overflow--visible` : ``}`} onClick={() => setIsOpen(false)}></div>}
             <div className="header__content container">
                 <h1 className="header__logo">

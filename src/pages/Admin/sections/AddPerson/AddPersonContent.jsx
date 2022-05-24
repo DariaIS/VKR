@@ -22,7 +22,7 @@ export const AddPersonContent = () => {
     return (
         <div className="addPerson container">
             <div className="addPerson__forms section">
-                <span className="addPerson__title admin__title--section title title--medium">Добавление нового пользователя</span>
+                <span className="addPerson__title admin__title--section title title--medium">Добавление записи о владельце</span>
                 <form className='addPerson__form'>
                     <label className="addPerson__form-item form__item">
                         <input className="input input--medium input--default" type="text" name="lastName"

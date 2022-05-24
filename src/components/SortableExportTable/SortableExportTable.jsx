@@ -31,7 +31,7 @@ export const SortableExportTable = ({ headers, data, fileName, count }) => {
                 {<button className="button button--blue signin__button" onClick={() => exportPDF(items)}>Экспорт PDF</button>}
             </div>
 
-            <div>
+            <div className='table'>
                 <table className='table__table'>
                     {/* {console.log(items)} */}
                     <thead className='table__thead'>

@@ -26,7 +26,7 @@ export const ByPersonContent = () => {
             <span className="byPerson__title admin__title--section title title--medium">
                 Отчет о въездах и выездах автомобиля на основе владельца
             </span>
-            <Select className="byPerson__select select"
+            <Select className="byPerson__select select select--medium select--margin"
                 onChange={(e) => getinOutData(e)}
                 options={personList}
                 placeholder='Владелец'

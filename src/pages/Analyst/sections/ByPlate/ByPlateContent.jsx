@@ -26,7 +26,7 @@ export const ByPlateContent = () => {
             <span className="byPlate__title admin__title--section title title--medium">
                 Отчет о въездах и выездах на основе автомобильного номера
             </span>
-            <Select className="byPlate__select select"
+            <Select className="byPlate__select select select--medium select--margin"
                 onChange={(e) => getinOutData(e)}
                 options={plateList}
                 placeholder='Номер и регион'
