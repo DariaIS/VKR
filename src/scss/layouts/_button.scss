@@ -9,6 +9,7 @@
     opacity: 0.7;
     transition: 0.3s;
     cursor: pointer;
+    word-break: normal;
 
     @media (min-width: $screen-lg) {
         font-size: 2rem;

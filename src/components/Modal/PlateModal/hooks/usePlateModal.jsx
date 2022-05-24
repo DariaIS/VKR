@@ -15,7 +15,7 @@ export const usePlateModal = (accept, closeModal) => {
 
     const handleAcceptClick = (direction) => {
         if (plate) {
-            // console.log(plate);
+            console.log(direction);
             accept(direction, plate);
             closeModal();
         }

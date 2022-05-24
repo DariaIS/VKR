@@ -11,17 +11,17 @@ module.exports = function (app, db) {
         let plate = req.query.plate;
         if (!plate) {
             execFileSync('tempExe.exe', []);
-            console.log('fine');
+            // console.log('fine');
             plate = fs.readFileSync('car.txt', 'utf8').toString().split("\n");
         }
         else {
             plate = plate.split(',');
         }
-        // console.log(plate);
+        console.log(direction);
         let log = [];
         if (req.session.log)
             log = req.session.log;
-            
+
         console.log(plate);
 
         if (plate[0].trim() === '404') {
@@ -49,8 +49,10 @@ module.exports = function (app, db) {
                                 if (result.length === 0) {
                                     log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' ' + plate[1] + ' отсутствует в базе данных');
                                     req.session.log = log;
-                                    res.send({ log: log, err: 'Автомобиля с данным номером нет в базе данных!' });
                                     warning = true;
+                                    if (direction === 'in') {
+                                        res.send({ log: log, err: 'Автомобиля с данным номером нет в базе данных!' });
+                                    } else res.send({ log: log });
                                 }
                                 else {
                                     let expDate = new Date(result[0].expiration_date);
@@ -62,7 +64,9 @@ module.exports = function (app, db) {
                                         warning = true;
                                         log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' У автомобиля с номером ' + plate[0] + ' ' + plate[1] + ' истекли права доступа');
                                         req.session.log = log;
-                                        res.send({ log: log, err: 'У данного автомобиля истекли права доступа!' });
+                                        if (direction === 'in') {
+                                            res.send({ log: log, err: 'У данного автомобиля истекли права доступа!' });
+                                        } else res.send({ log: log });
                                     }
                                 }
                                 return resolve(result);
@@ -82,10 +86,12 @@ module.exports = function (app, db) {
                                 return reject(err);
                             } else {
                                 if (result.length === 0) {
+                                    warning = true;
                                     log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль с номером ' + plate[0] + ' ' + plate[1] + ' не имеет доступа к данной проходной');
                                     req.session.log = log;
-                                    res.send({ log: log, err: 'У автомобиля с данным номером нет доступа к этой проходной!' });
-                                    warning = true;
+                                    if (direction === 'in') {
+                                        res.send({ log: log, err: 'У автомобиля с данным номером нет доступа к этой проходной!' });
+                                    } else res.send({ log: log });
                                 }
                                 return resolve(result);
                             }
@@ -125,7 +131,7 @@ module.exports = function (app, db) {
             let CheckAddArrDate = () => {
                 return new Promise((resolve, reject) => {
                     db.query(
-                        "SELECT * FROM arriving_date WHERE id_date=? AND id_car=?",
+                        "SELECT * FROM arriving_date WHERE id_date = ? AND id_car = ?",
                         [idDate, idCar], (err, result) => {
                             if (err) {
                                 console.log(err);
@@ -135,7 +141,8 @@ module.exports = function (app, db) {
                                 if (result.length === 0) {
                                     db.query(
                                         "INSERT INTO arriving_date (id_date, id_car) VALUES (?, ?)",
-                                        [idDate, idCar]);
+                                        [idDate, idCar]
+                                    );
                                 }
                                 return resolve(result);
                             }
@@ -156,12 +163,14 @@ module.exports = function (app, db) {
                                     console.log(err);
                                     return reject(err);
                                 } else {
+                                    console.log(direction);
                                     log.push(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' Автомобиль c номером ' + plate[0] + ' ' + plate[1] + ' въехал');
                                     req.session.log = log;
                                     res.send({ log: log, message: 'Автомобиль может быть пропущен!' });
                                     return resolve(result);
                                 }
-                            });
+                            }
+                        );
                     }
                     else {
                         db.query(
@@ -178,7 +187,8 @@ module.exports = function (app, db) {
                                     res.send({ log: log });
                                     return resolve(result);
                                 }
-                            })
+                            }
+                        )
                     }
                 });
             }

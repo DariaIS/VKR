@@ -28,7 +28,7 @@ export const ChangeDataContent = () => {
             <div className="changeData container">
                 <div className="changeData__forms section">
                     <span className="changeData__title admin__title--section title title--medium">
-                        Просмотр и изменение сведений об автомобиле
+                        Изменение сведений об автомобиле
                     </span>
                     <div className='changeData__elems'>
                         <Select className="changeData__select select select--medium"

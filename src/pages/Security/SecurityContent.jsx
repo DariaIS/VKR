@@ -10,6 +10,7 @@ export const SecurityContent = () => {
         inOutLog,
         setInOutLog,
         setLogScroll,
+        direction,
         isModalOpen,
         clickCloseModal,
         inOut,
@@ -18,13 +19,13 @@ export const SecurityContent = () => {
     } = useSecurity();
 
     useEffect(() => {
+        console.log('SecurityContent');
         Axios.get('http://localhost:3001/inOutLog').then((response) => {
             console.log(response.data)
             setInOutLog(response.data.log);
 
             let logBlock = document.getElementsByClassName('security__log')[0];
             logBlock.scrollTop = logBlock.scrollHeight;
-            console.log('sc')
             setLogScroll(logBlock);
         });
     }, [setInOutLog, setLogScroll]);
@@ -44,6 +45,7 @@ export const SecurityContent = () => {
                         Автомобиль выезжает
                     </button>
                     {(error === '' && success === '') && <span className="status">&nbsp;</span>}
+                    {(error === '' && success === '') && <span className="status">&nbsp;</span>}
                     {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     {success !== '' && <span className="status status--success status--center">{success}</span>}
                 </div>
@@ -57,7 +59,7 @@ export const SecurityContent = () => {
                     }
                 </div>
             </div>
-            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{modalType: 'plate', accept: inOut}}/>}
+            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{modalType: 'plate', accept: inOut, direction: direction}}/>}
         </>
     );
 }

@@ -4,7 +4,7 @@ import Select from 'react-select';
 
 import { usePlateModal } from './hooks/usePlateModal';
 
-export const PlateModal = ({ closeModal, accept }) => {
+export const PlateModal = ({ closeModal, accept, direction }) => {
     const {
         plateList,
         handleSelectChange,
@@ -24,14 +24,13 @@ export const PlateModal = ({ closeModal, accept }) => {
                 Номер не распознан! Пожалуйста, введите номер вручную.
             </p>
             <div className='plateModal__elems'>
-                <Select className="select"
-                    onChange={(e) => handleSelectChange(e.value)}
+                <Select className='plateModal__select select select--medium'                    onChange={(e) => handleSelectChange(e.value)}
                     options={plateList}
                     placeholder='Номер и регион'
                     noOptionsMessage={() => 'Номер не найден'}
                 />
                 <button type='button' className="plateModal__button button button--whit" onClick={closeModal}>Отмена</button>
-                <button id='in' type='button' className="plateModal__button button button--blue" onClick={(e) => handleAcceptClick(e.target.id)}>Подтвердить</button>
+                <button type='button' className="plateModal__button button button--blue" onClick={() => handleAcceptClick(direction)}>Подтвердить</button>
             </div>
             {/* {error && <div>{error}</div>} */}
             {error === '' && <span className="status">&nbsp;</span>}
