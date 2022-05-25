@@ -17,21 +17,19 @@
     line-height: 1.1;
     text-transform: uppercase;
     white-space: nowrap;
+    margin-bottom: 3rem;
 
     @media (min-width: $screen-lg) {
         font-size: 6rem;
-        margin-bottom: 3rem;
     }
 
 
     @media (min-width: $screen-md) and (max-width: ($screen-xl - 1)) {
         font-size: 5rem;
-        margin-bottom: 3rem;
     }
 
     @media (max-width: ($screen-md - 1)) {
         font-size: 4.5rem;
-        margin-bottom: 3rem;
     }
 }
 

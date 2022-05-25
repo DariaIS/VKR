@@ -45,7 +45,7 @@ export const SecurityContent = () => {
                         Автомобиль выезжает
                     </button>
                     {(error === '' && success === '') && <span className="status">&nbsp;</span>}
-                    {(error === '' && success === '') && <span className="status">&nbsp;</span>}
+                    {/* {(error === '' && success === '') && <span className="status">&nbsp;</span>} */}
                     {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     {success !== '' && <span className="status status--success status--center">{success}</span>}
                 </div>

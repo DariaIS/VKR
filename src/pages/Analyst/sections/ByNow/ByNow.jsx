@@ -28,7 +28,7 @@ export const ByNow = () => {
                     }
                     data={table}
                     fileName={'Автомобили на территории на ' + new Date().toLocaleDateString() + ' ' + new Date().getHours() + ":" + new Date().getMinutes()}
-                    count={'Количество автомобилей - ' + table?.length}
+                    count={'Количество автомобилей на территории- ' + table?.length}
                 />}
         </>
     )
