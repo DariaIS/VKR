@@ -63,7 +63,7 @@ export const AddPersonContent = () => {
                     />
                 </div>
                 <div className="addPerson__add-result">
-                    <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Добавить пользователя</button>
+                    <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Добавить владельца</button>
                     {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     {success !== '' && <span className="status status--success status--center">{success}</span>}
                 </div>

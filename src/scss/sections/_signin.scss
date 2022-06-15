@@ -19,15 +19,15 @@
     white-space: nowrap;
     margin-bottom: 3rem;
 
-    @media (min-width: $screen-lg) {
+    // определие размера шрифта для каждого
+    // из приведенных разрешений экрана
+    // $screen-md и $screen-xl  - переменные, значение которых равно ширине экрана
+    @media (min-width: $screen-xl) {
         font-size: 6rem;
     }
-
-
     @media (min-width: $screen-md) and (max-width: ($screen-xl - 1)) {
         font-size: 5rem;
     }
-
     @media (max-width: ($screen-md - 1)) {
         font-size: 4.5rem;
     }
