@@ -17,7 +17,9 @@ module.exports = function (app, db) {
                         elem.id = elem.date;
                         elem.date = new Date(elem.date).toLocaleDateString();
                         if (!elem.departure_time)
-                            elem.departure_time = 'Нет данных'
+                            elem.departure_time = 'Нет данных';
+                        if (!elem.arrival_time)
+                            elem.arrival_time = 'Нет данных';
                     });
                     res.send({ result });
                 }
