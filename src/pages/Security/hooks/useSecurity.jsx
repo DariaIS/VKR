@@ -5,13 +5,14 @@ export const useSecurity = () => {
 
     const [inOutLog, setInOutLog] = useState('');
     const [logScroll, setLogScroll] = useState('');
+    const [direction, SetDirection] = useState('');
 
     const [isModalOpen, SetIsModalOpen] = useState(false);
     
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const clickOpenModal = (data) => {
+    const clickOpenModal = () => {
         SetIsModalOpen(true);
     }
 
@@ -19,11 +20,12 @@ export const useSecurity = () => {
         SetIsModalOpen(false);
     }
 
-    const inOut = (direction, plate) => {
+    const inOut = (dir, plate) => {
+        SetDirection(dir);
         setError('');
         setSuccess('');
         Axios.post(`http://localhost:3001/inOutCar?plate=${plate}`, {
-            direction: direction
+            direction: dir
         }).then((response) => {
             setInOutLog(response.data.log)
             if (response.data.message) {
@@ -46,6 +48,7 @@ export const useSecurity = () => {
         inOutLog,
         setInOutLog,
         setLogScroll,
+        direction,
         isModalOpen,
         clickCloseModal,
         inOut,

@@ -18,7 +18,9 @@ module.exports = function (app, db) {
                         elem.license_plate = elem.license_plate + ' ' + elem.region;
                         delete elem.region;
                         if (!elem.departure_time)
-                            elem.departure_time = 'Нет данных'
+                            elem.departure_time = 'Нет данных';
+                        if (!elem.arrival_time)
+                            elem.arrival_time = 'Нет данных';
                     });
                     res.send({ result });
                 }

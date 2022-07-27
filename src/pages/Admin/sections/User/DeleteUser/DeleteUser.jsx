@@ -31,12 +31,12 @@ export const DeleteUser = () => {
                         onChange={(e) => handleInput(e)} />
                     <span className="input__name">Пароль вашей учетной записи</span>
                     <span onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
-                        {showPassword ? <Show className="signin__eye-icon" /> : <Hide className="signin__eye-icon" />}
+                        {showPassword ? <Show className="eye-icon" /> : <Hide className="eye-icon" />}
                     </span>
                 </label>
             </form>
             <div className="user__add-result">
-                <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Удалить пользователя</button>
+                <button type='button' className="button button--white signin__button" onClick={handleAcceptClick}>Удалить пользователя</button>
                 {error !== '' && <span className="status status--warning status--center">{error}</span>}
                 {success !== '' && <span className="status status--success status--center">{success}</span>}
                 {(error === '' && success === '') && <span className="status">&nbsp;</span>}

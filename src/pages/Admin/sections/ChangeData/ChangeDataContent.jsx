@@ -28,21 +28,21 @@ export const ChangeDataContent = () => {
             <div className="changeData container">
                 <div className="changeData__forms section">
                     <span className="changeData__title admin__title--section title title--medium">
-                        Просмотр и изменение сведений об автомобиле
+                        Изменение сведений об автомобиле
                     </span>
                     <div className='changeData__elems'>
-                        <Select className="changeData__select select"
+                        <Select className="changeData__select select select--medium"
                             onChange={(e) => handleSelectChange(e)}
                             options={plateList}
                             placeholder='Номер и регион'
                             noOptionsMessage={() => 'Номер не найден'}
                         />
                         <button type='button' className="changeData__button button button--blue" onClick={handleAcceptClick}>Изменить</button>
-                        {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     </div>
+                    {error !== '' && <span className="status status--warning status--left">{error}</span>}
                 </div>
             </div>
-            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{modalType: 'change', plate: plate}}/>}
+            {isModalOpen && <Modal isModalOpen={isModalOpen} clickCloseModal={clickCloseModal} modalData={{ modalType: 'change', plate: plate }} />}
         </>
     )
 }

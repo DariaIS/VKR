@@ -1,11 +1,25 @@
 .changeModal__form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    margin-bottom: 1rem;
 
-    &:not(:last-child){
-        margin-right: 15px;
+    @media (min-width: $screen-lg) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+
+        &:not(:last-child) {
+            margin-right: 1.5rem;
+        }
     }
+
+    @media (max-width: ($screen-lg - 1)) {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media (min-width: $screen-sm) and (max-width: ($screen-lg - 1)) {
+        align-items: center;
+    }
+
 }
 
 .changeModal__text {
@@ -27,11 +41,29 @@
     }
 }
 
-.changeModal__elems {
-    display: flex;
-    align-items: center;
+.changeModal__form-item {
+    @media (max-width: ($screen-lg - 1)) {
+
+        &:not(:last-child) {
+            margin-bottom: 2.5rem;
+        }
+    }
 }
 
-.changeModal__select {
-    width: 452px;
+.changeModal__button {
+    box-sizing: border-box;
+
+    @media (max-width: ($screen-lg - 1)) {
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    @media (min-width: $screen-sm) and (max-width: ($screen-lg - 1)) {
+        width: 365px;
+    }
+
+    @media (max-width: ($screen-sm - 1)) {
+        width: 100%;
+    }
 }

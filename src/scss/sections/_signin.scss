@@ -2,11 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    @media (min-width: $screen-lg) {
-        padding-top: 15rem;
-        padding-bottom: 15rem;
-    }
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .signin__logo {
@@ -17,17 +16,20 @@
     font-weight: bold;
     line-height: 1.1;
     text-transform: uppercase;
+    white-space: nowrap;
+    margin-bottom: 3rem;
 
-    @media (min-width: $screen-lg) {
+    // определие размера шрифта для каждого
+    // из приведенных разрешений экрана
+    // $screen-md и $screen-xl  - переменные, значение которых равно ширине экрана
+    @media (min-width: $screen-xl) {
         font-size: 6rem;
-        margin-bottom: 3rem;
     }
-}
-
-.signin__forms {
-
-    @media (min-width: $screen-lg) {
-        display: flex;
+    @media (min-width: $screen-md) and (max-width: ($screen-xl - 1)) {
+        font-size: 5rem;
+    }
+    @media (max-width: ($screen-md - 1)) {
+        font-size: 4.5rem;
     }
 }
 
@@ -35,23 +37,17 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-
-    @media (min-width: $screen-lg) {
-        &:not(:last-child) {
-            margin-right: 10rem;
-        }
-    }
 }
 
 .signin__form-item {
-    
+
     &:not(:last-child) {
         margin-bottom: 2rem;
     }
 }
 
 .signin__button {
-    
+
     &:not(:last-child) {
         margin-bottom: 1rem;
     }
@@ -60,13 +56,4 @@
         display: block;
         margin: auto;
     }
-}
-
-.signin__eye-icon {
-    width: 28px;
-    color: $color-main;
-    position: absolute;
-    right: 0;
-    transform: translate(-50%, -50%);
-    top: 50%;
 }

@@ -30,29 +30,32 @@ export const SortableExportTable = ({ headers, data, fileName, count }) => {
                 </ExcelFile>}
                 {<button className="button button--blue signin__button" onClick={() => exportPDF(items)}>Экспорт PDF</button>}
             </div>
-            <table className='table__item'>
-                {/* {console.log(items)} */}
-                <thead className='table__thead'>
-                    <tr className='table__tr'>
-                        {headers.map(elem => (
-                            // console.log(elem) 
-                            <th key={elem[1]}
-                                onClick={() => requestSort(elem[1])}
-                                className={'table__th table__th-sortable ' + getClassNamesFor(elem[1])}>{elem[0]}</th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody className='table__tbody'>
-                    {items.map((obj) => (
-                        <tr key={obj.id} className='table__tr'>
-                            {keys.map(elem => (
-                                elem !== 'id' && <td key={elem + obj.id} className='table__td'>{obj[elem]}</td>
+
+            <div className='table'>
+                <table className='table__table'>
+                    {/* {console.log(items)} */}
+                    <thead className='table__thead'>
+                        <tr className='table__tr'>
+                            {headers.map(elem => (
+                                // console.log(elem) 
+                                <th key={elem[1]}
+                                    onClick={() => requestSort(elem[1])}
+                                    className={'table__th table__th-sortable ' + getClassNamesFor(elem[1])}>{elem[0]}</th>
                             ))}
                         </tr>
-                    ))
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className='table__tbody'>
+                        {items.map((obj) => (
+                            <tr key={obj.id} className='table__tr'>
+                                {keys.map(elem => (
+                                    elem !== 'id' && <td key={elem + obj.id} className='table__td'>{obj[elem]}</td>
+                                ))}
+                            </tr>
+                        ))
+                        }
+                    </tbody>
+                </table>
+            </div>
         </>
     )
 }

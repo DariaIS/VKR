@@ -1,5 +1,6 @@
 .container {
-
+    box-sizing: border-box;
+    
     @media (min-width: $screen-xxl) {
 
         margin-right: auto;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from 'react-router-dom';
 
-import { SignIn, Home } from './pages';
+import { SignIn, Home, NotFound } from './pages';
 import { AddCar, ChangeData, AddPerson, User } from './pages/Admin/sections';
 import { ByDate, AllCars, ByPlate, ByPerson } from './pages/Analyst/sections';
 
@@ -10,6 +10,7 @@ export const App = () => {
         <div className="wrapper">
             <div className="content">
                 <Routes>
+                    <Route path="*" element={<NotFound />} />
                     <Route path="/" element={<SignIn />} exact />
                     <Route path="/home" element={<Home />} exact />
 

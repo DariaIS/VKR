@@ -1,25 +1,19 @@
 .table {
+    overflow-x: auto;
+}
+
+.table__table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow-x: auto;
 
     &:not(:last-child) {
-        margin-bottom: 10rem;
+        margin-bottom: 5rem;
     }
 }
 
 .table__title {
     margin-bottom: 2rem;
-}
-
-
-.table__item {
-    border-collapse: collapse;
-    width: 100%;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    overflow: hidden;
-
-    &:not(:last-child) {
-        margin-bottom: 5rem;
-    }
 }
 
 .table__thead {
@@ -39,11 +33,43 @@
     font-weight: 400;
 }
 
+.table__th:first-child {
+
+    @media (max-width: ($screen-lg - 1)) {
+        border-top-left-radius: 10px;
+    }
+
+    @media (min-width: $screen-lg) {
+        border-top-left-radius: 20px;
+    }
+}
+
+.table__th:last-child {
+
+    @media (max-width: ($screen-lg - 1)) {
+        border-top-right-radius: 10px;
+    }
+
+    @media (min-width: $screen-lg) {
+        border-top-right-radius: 20px;
+
+    }
+}
+
 .table__th,
 .table__td {
     border: none;
-    padding: 20px 20px 20px 30px;
     text-align: left;
+    word-break: normal;
+
+    @media (max-width: ($screen-lg - 1)) {
+        padding: 15px;
+        font-size: 1.8rem;
+    }
+
+    @media (min-width: $screen-lg) {
+        padding: 30px;
+    }
 }
 
 .table__th-sortable {

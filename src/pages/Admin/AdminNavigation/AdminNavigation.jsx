@@ -9,10 +9,10 @@ export const AdminNavigation = () => {
                 <Link to='/addCar' className="nav__link nav__link--white">Добавить автомобиль</Link>
             </li>
             <li className="nav__item">
-                <Link to='/changeData' className="nav__link nav__link--white">Просмотр и изменение записи</Link>
+                <Link to='/changeData' className="nav__link nav__link--white">Изменение записи</Link>
             </li>
             <li className="nav__item">
-                <Link to='/user' className="nav__link nav__link--white">Добавить и удалить пользователя</Link>
+                <Link to='/user' className="nav__link nav__link--white">Создать/удалить пользователя</Link>
             </li>
             <li className="nav__item">
                 <Link to='/addPerson' className="nav__link nav__link--white">Добавить владельца</Link>

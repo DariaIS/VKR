@@ -1,14 +1,29 @@
 .addCar__title {
 
     &:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
+
+.addCar__small-title {
+
+    &:not(:last-child) {
         margin-bottom: 5rem;
     }
 }
 
 .addCar__form {
     display: flex;
-    justify-items: center;
-    justify-content: space-between;
+
+    @media (max-width: ($screen-xl - 1)) {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @media (min-width: $screen-xl) {
+        justify-content: space-between;
+        margin-bottom: 3rem;
+    }
 }
 
 .addCar__add-result {
@@ -16,10 +31,17 @@
 }
 
 .addCar__form-item {
-    width: fit-content;
 
-    &:not(:last-child) {
+    @media (max-width: ($screen-xl - 1)) {
         margin-bottom: 3rem;
+    }
+
+    @media (min-width: $screen-sm) {
+        width: fit-content;
+    }
+
+    @media (max-width: ($screen-sm - 1)) {
+        width: 100%;
     }
 }
 

@@ -1,0 +1,72 @@
+.addPerson__title {
+
+    &:not(:last-child) {
+        margin-bottom: 5rem;
+    }
+}
+
+.addPerson__form {
+    display: flex;
+
+    @media (min-width: $screen-xl) {
+        justify-content: space-between;
+
+        &:not(:last-child) {
+            margin-bottom: 3rem;
+        }
+    }
+
+    @media (max-width: ($screen-xl - 1)) {
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+}
+
+.addPerson__dinamic-inputs {
+    display: flex;
+    margin-bottom: 5rem;
+
+    @media (min-width: $screen-xl) {
+        justify-content: space-around;
+    }
+
+    @media (max-width: ($screen-xl - 1)) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.addPerson__add-result {
+    text-align: center;
+}
+
+.addPerson__form-item {
+
+    @media (min-width: $screen-xl) {
+        justify-content: space-around;
+
+    }
+
+    @media (max-width: ($screen-xl - 1)) {
+        margin-bottom: 3rem;
+    }
+
+    @media (min-width: $screen-sm) {
+        width: fit-content;
+    }
+
+    @media (max-width: ($screen-sm - 1)) {
+        width: 100%;
+    }
+}
+
+.addPerson__radio {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: ($screen-xl - 1)) {
+        margin-bottom: 3rem;
+    }
+}

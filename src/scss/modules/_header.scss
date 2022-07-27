@@ -1,8 +1,5 @@
 .header {
-
-    @media (min-width: $screen-lg) {
-        border-bottom: 1px solid $color-main;
-    }
+    border-bottom: 1px solid $color-main;
 }
 
 .header__content {
@@ -13,22 +10,56 @@
 
 .header__logo-link {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     text-align: center;
     color: $color-main;
-    font-size: 3rem;
     font-weight: bold;
     line-height: 1.1;
     padding: 0.7rem 0;
     text-transform: uppercase;
-
-}
-
-.header__nav-trigger {
-    background: none;
+    white-space: nowrap;
 
     @media (min-width: $screen-lg) {
+        font-size: 3rem;
 
+    }
+
+    @media (max-width: ($screen-lg - 1)) {
+        font-size: 2.5rem;
+    }
+}
+
+.header__nav {
+    @media (max-width: ($screen-xl - 1)) {
+        display: flex;
+    }
+}
+
+.overflow {
+    -webkit-tap-highlight-color: transparent;
+    background: rgba(255, 255, 255, .8);
+    bottom: 0;
+    display: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 15;
+
+
+    &--visible {
+        @media (max-width: ($screen-xl - 1)) {
+            display: block;
+        }
+    }
+}
+
+.header__open-nav {
+    width: 30px;
+    height: 30px;
+    color: $color-main;
+
+    @media (min-width: $screen-xl) {
         display: none;
     }
 }

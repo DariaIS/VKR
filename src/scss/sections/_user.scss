@@ -17,13 +17,21 @@
 
 .user__add-result {
     text-align: center;
+    margin-bottom: 5rem;
 }
 
 .user__form-item {
-    width: fit-content;
 
     &:not(:last-child) {
         margin-bottom: 3rem;
+    }
+
+    @media (min-width: $screen-sm) {
+        width: fit-content;
+    }
+
+    @media (max-width: ($screen-sm - 1)) {
+        width: 100%;
     }
 }
 

@@ -22,7 +22,7 @@ export const AddPersonContent = () => {
     return (
         <div className="addPerson container">
             <div className="addPerson__forms section">
-                <span className="addPerson__title admin__title--section title title--medium">Добавление нового пользователя</span>
+                <span className="addPerson__title admin__title--section title title--medium">Добавление записи о владельце</span>
                 <form className='addPerson__form'>
                     <label className="addPerson__form-item form__item">
                         <input className="input input--medium input--default" type="text" name="lastName"
@@ -55,7 +55,7 @@ export const AddPersonContent = () => {
                             Сотрудник
                         </label>
                     </div>
-                    <Select className="byPerson__select select"
+                    <Select className="byPerson__select select select--medium"
                         onChange={(e) => handleChairSelect(e)}
                         options={chairList}
                         placeholder='Кафедра'
@@ -63,7 +63,7 @@ export const AddPersonContent = () => {
                     />
                 </div>
                 <div className="addPerson__add-result">
-                    <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Добавить пользователя</button>
+                    <button type='button' className="button button--blue signin__button" onClick={handleAcceptClick}>Добавить владельца</button>
                     {error !== '' && <span className="status status--warning status--center">{error}</span>}
                     {success !== '' && <span className="status status--success status--center">{success}</span>}
                 </div>

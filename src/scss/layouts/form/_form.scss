@@ -1,24 +1,11 @@
 .form {
 
     &:not(:last-child) {
-        margin-bottom: 10rem;
+        margin-bottom: 2rem;
     }
 }
 
 .form__item {
     display: inline-block;
     position: relative;
-}
-
-
-.select {
-    display: inline-block;
-
-    @media (min-width: $screen-lg) {
-        width: 452px;
-    }
-
-    @media (max-width: ($screen-lg - 1)) {
-        width: 320px;
-    }
 }

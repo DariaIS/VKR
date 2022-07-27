@@ -8,7 +8,7 @@ export const Security = () => {
 
     return (
         <>
-            <Header />
+            <Header isSecurity={true}/>
             <SecurityContent />
         </>
     )
